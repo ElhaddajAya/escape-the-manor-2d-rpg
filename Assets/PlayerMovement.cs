@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private Animator animator;
+    private bool facingRight = true; // Indique si le personnage fait face à la droite
 
     void Start()
     {
@@ -19,33 +20,57 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("Animator component is missing on the Player object.");
         }
 
-        // Prevent rotation due to physics interactions
         rb.freezeRotation = true;
+
+        // Assurer que le personnage démarre en Idle
+        animator.SetBool("isMoving", false);
     }
 
     void Update()
     {
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal"); 
+        movement.y = Input.GetAxisRaw("Vertical");
 
-        // Mettre à jour l'animation seulement si l'Animator est présent
-        if (animator != null)
+        // Vérifier si le joueur est en mouvement
+        bool isMoving = movement.sqrMagnitude > 0.01f;
+        animator.SetBool("isMoving", isMoving);
+
+        // Si le joueur bouge, on met à jour les valeurs MoveX et MoveY
+        if (isMoving)
         {
-            bool isMoving = movement.sqrMagnitude > 0.01f;
-            animator.SetBool("isMoving", isMoving);
+            animator.SetFloat("MoveX", movement.x);
+            animator.SetFloat("MoveY", movement.y);
 
-            // Mettre à jour la direction de l'animation si nécessaire
-            if (isMoving)
+            // Gérer l'inversion du sprite (flip)
+            if (movement.x > 0 && facingRight)
             {
-                animator.SetFloat("MoveX", movement.x);
-                animator.SetFloat("MoveY", movement.y);
+                Flip();
+            }
+            else if (movement.x < 0 && !facingRight)
+            {
+                Flip();
             }
         }
     }
 
     void FixedUpdate()
     {
-        rb.velocity = movement * moveSpeed;
+        if (animator.GetBool("isMoving"))
+        {
+            rb.velocity = movement * moveSpeed;
+        }
+        else
+        {
+            rb.velocity = Vector2.zero; // S'assurer que le personnage ne bouge pas en Idle
+        }
     }
 
+    // Fonction pour inverser le personnage horizontalement
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
 }
