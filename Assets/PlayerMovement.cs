@@ -16,7 +16,9 @@ public class PlayerMovement : MonoBehaviour
 
     // Reference to the Animator component to handle animations
     private Animator animator;
-    private bool facingRight = true; // Indique si le personnage fait face à la droite
+
+    // Indicates if the player is facing right
+    private bool facingRight = true;
 
     // Called once at the start of the game
     void Start()
@@ -36,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         // Prevent the player from rotating when colliding with objects
         rb.freezeRotation = true;
 
-        // Assurer que le personnage démarre en Idle
+        // Ensure the character starts in Idle state
         animator.SetBool("isMoving", false);
     }
 
@@ -44,23 +46,20 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Get movement input from arrow keys or WASD
-        movement.x = Input.GetAxis("Horizontal"); // Left (-1) / Right (+1)
-        movement.y = Input.GetAxis("Vertical");   // Down (-1) / Up (+1)
+        movement.x = Input.GetAxisRaw("Horizontal"); // Left (-1) / Right (+1)
+        movement.y = Input.GetAxisRaw("Vertical");   // Down (-1) / Up (+1)
 
-        // If the Animator component exists, update animations
-        if (animator != null)
-        {
-            // Check if the player is moving
-            bool isMoving = movement.sqrMagnitude > 0.01f;
-            animator.SetBool("isMoving", isMoving);
+        // Check if the player is moving
+        bool isMoving = movement.sqrMagnitude > 0.01f;
+        animator.SetBool("isMoving", isMoving);
 
-        // Si le joueur bouge, on met à jour les valeurs MoveX et MoveY
+        // Update animation parameters for movement direction
         if (isMoving)
         {
             animator.SetFloat("MoveX", movement.x);
             animator.SetFloat("MoveY", movement.y);
 
-            // Gérer l'inversion du sprite (flip)
+            // Flip character sprite based on movement direction
             if (movement.x > 0 && facingRight)
             {
                 Flip();
@@ -75,17 +74,18 @@ public class PlayerMovement : MonoBehaviour
     // Called at a fixed interval for physics-based movement
     void FixedUpdate()
     {
+        // If the player is moving, apply velocity
         if (animator.GetBool("isMoving"))
         {
             rb.velocity = movement * moveSpeed;
         }
         else
         {
-            rb.velocity = Vector2.zero; // S'assurer que le personnage ne bouge pas en Idle
+            rb.velocity = Vector2.zero; // Stop movement if idle
         }
     }
 
-    // Fonction pour inverser le personnage horizontalement
+    // Function to flip the character's direction
     void Flip()
     {
         facingRight = !facingRight;
