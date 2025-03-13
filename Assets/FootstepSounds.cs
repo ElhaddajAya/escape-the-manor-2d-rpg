@@ -1,11 +1,11 @@
-using UnityEngine; 
+using UnityEngine;
 
 public class FootstepSounds : MonoBehaviour
 {
     public AudioClip footstepClip; // Son des pas
-    public float stepInterval = 0.3f; // Temps entre chaque pas
+    public float stepInterval = 0.2f; // Temps entre chaque pas
     public float stepStartTime = 0.2f; // Début du son (ex: 0.5s dans l'audio)
-    public float stepDuration = 0.5f; // Durée du pas
+    public float stepDuration = 0.2f; // Durée du pas
     private AudioSource audioSource;
     private float stepTimer;
     private bool isPlayingStep = false;
