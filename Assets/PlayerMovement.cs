@@ -12,13 +12,15 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>(); // Récupérer l'Animator attaché au joueur
+        animator = GetComponent<Animator>();
 
-        // Vérifier si l'Animator est attaché
         if (animator == null)
         {
             Debug.LogError("Animator component is missing on the Player object.");
         }
+
+        // Prevent rotation due to physics interactions
+        rb.freezeRotation = true;
     }
 
     void Update()
@@ -43,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        rb.velocity = movement * moveSpeed;
     }
+
 }
