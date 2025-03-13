@@ -5,7 +5,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-
+// This file contains a script that manages the player object in a 2D game.
+// The player object can move and play animations based on user input.
 public class PlayerObj : MonoBehaviour
 {
     public SPUM_Prefabs _prefabs;
@@ -76,8 +77,8 @@ public class PlayerObj : MonoBehaviour
         transform.position += _dirMVec * _charMS * Time.deltaTime;
 
 
-        if (_dirMVec.x > 0) _prefabs.transform.localScale = new Vector3(-1, 1, 1);
-        else if (_dirMVec.x < 0) _prefabs.transform.localScale = new Vector3(1, 1, 1);
+        if (_dirMVec.x > 0) _prefabs.transform.localScale = new Vector3(-2, 2, 2);
+        else if (_dirMVec.x < 0) _prefabs.transform.localScale = new Vector3(2, 2, 2);
     }
 
     public void SetMovePos(Vector2 pos)
