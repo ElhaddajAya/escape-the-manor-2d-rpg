@@ -29,7 +29,13 @@ public class FootstepSounds : MonoBehaviour
         }
         else
         {
+            // Réinitialiser le stepTimer et arrêter le son des pas
             stepTimer = 0f;
+            if (isPlayingStep)
+            {
+                audioSource.Stop();
+                isPlayingStep = false;
+            }
         }
     }
 
