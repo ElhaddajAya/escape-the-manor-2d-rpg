@@ -2959,13 +2959,10 @@ GameObject:
   - component: {fileID: 243978157336016762}
   - component: {fileID: 1288973409154859346}
   - component: {fileID: 1421720037466192584}
-  - component: {fileID: 4365878142917074020}
   - component: {fileID: 7313453114028720326}
   - component: {fileID: 716528525545453934}
   - component: {fileID: 5185739573485847904}
   - component: {fileID: 3660551124463187364}
-  - component: {fileID: 6237435794388021639}
-  - component: {fileID: 5833290886867654607}
   m_Layer: 5
   m_Name: SPUM_20240911215639493
   m_TagString: Untagged
@@ -4931,19 +4928,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4365878142917074020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6108469982049807281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bed30c9a8968b04a879ab1c89b37f1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
 --- !u!82 &7313453114028720326
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4954,7 +4938,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -5131,43 +5115,7 @@ MonoBehaviour:
   _charMS: 4
   _goalPos: {x: 0, y: 0, z: 0}
   isAction: 0
---- !u!114 &6237435794388021639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6108469982049807281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8398e70fe56ad46b7635e168c5bed1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footstepClip: {fileID: 0}
-  stepInterval: 0.5
-  stepStartTime: 0
-  stepDuration: 0.3
---- !u!95 &5833290886867654607
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6108469982049807281}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  footstepsSound: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}
 --- !u!1 &6252385339453389582
 GameObject:
   m_ObjectHideFlags: 0

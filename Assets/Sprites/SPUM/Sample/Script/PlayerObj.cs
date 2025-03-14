@@ -18,8 +18,28 @@ public class PlayerObj : MonoBehaviour
     public Vector3 _goalPos;
     public bool isAction = false;
     public Dictionary<PlayerState, int> IndexPair = new();
+
+    public AudioClip footstepsSound; // Son des pas
+    private AudioSource audioSource; // Composant AudioSource
+    private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
+
     void Start()
     {
+        // Récupérer le composant AudioSource
+        audioSource = GetComponent<AudioSource>();
+
+        // Vérifiez si le clip audio des pas est assigné
+        if (footstepsSound == null)
+        {
+            Debug.LogError("Le clip audio des pas n'est pas assigné !");
+        }
+
+        // Assurez-vous que l'AudioSource est configuré pour la lecture en boucle
+        if (audioSource != null)
+        {
+            audioSource.loop = true; // Le son sera joué en boucle
+        }
+
         // Get the Rigidbody2D component attached to the player
         rb = GetComponent<Rigidbody2D>();
 
@@ -57,6 +77,23 @@ public class PlayerObj : MonoBehaviour
         if (inputDirection != Vector2.zero)
         {
             SetMovePos(transform.position + (Vector3)inputDirection);
+
+            // Jouer le son des pas si le joueur commence à bouger
+            if (!isFootstepPlaying)
+            {
+                audioSource.clip = footstepsSound;
+                audioSource.Play();
+                isFootstepPlaying = true;
+            }
+        }
+        else
+        {
+            // Arrêter le son des pas lorsque le joueur arrête de se déplacer
+            if (isFootstepPlaying)
+            {
+                audioSource.Stop();
+                isFootstepPlaying = false;
+            }
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
