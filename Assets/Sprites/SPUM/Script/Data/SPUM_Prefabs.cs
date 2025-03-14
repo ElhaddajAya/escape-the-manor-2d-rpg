@@ -19,7 +19,7 @@ public class SPUM_Prefabs : MonoBehaviour
     public float _version;
     public bool EditChk;
     public string _code;
-    public Animator _anim;
+    public Animator _anim => GetComponentInChildren<Animator>();
     private AnimatorOverrideController OverrideController;
 
     public string UnitType;

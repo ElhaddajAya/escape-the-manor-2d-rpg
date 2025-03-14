@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         // Get the Animator component attached to the player
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         // Check if the Animator component is missing and log an error if it is
         if (animator == null)

@@ -20,7 +20,7 @@ public class PlayerObj : MonoBehaviour
     {
         if (_prefabs == null)
         {
-            _prefabs = transform.GetChild(0).GetComponent<SPUM_Prefabs>();
+            _prefabs = GetComponent<SPUM_Prefabs>();
             if (!_prefabs.allListsHaveItemsExist())
             {
                 _prefabs.PopulateAnimationLists();
