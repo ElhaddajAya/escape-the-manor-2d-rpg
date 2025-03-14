@@ -10,14 +10,22 @@ using UnityEngine.Events;
 public class PlayerObj : MonoBehaviour
 {
     public SPUM_Prefabs _prefabs;
-    public float _charMS;
+    public float _charMS = 4f;
     private PlayerState _currentState;
 
+    // Reference to the Rigidbody2D component for physics-based movement
+    private Rigidbody2D rb;
     public Vector3 _goalPos;
     public bool isAction = false;
     public Dictionary<PlayerState, int> IndexPair = new();
     void Start()
     {
+        // Get the Rigidbody2D component attached to the player
+        rb = GetComponent<Rigidbody2D>();
+
+        // Prevent the player from rotating when colliding with objects
+        rb.freezeRotation = true;
+
         if (_prefabs == null)
         {
             _prefabs = GetComponent<SPUM_Prefabs>();
