@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 1064846153
+    locked: 0
+  - name: Walls
+    uniqueID: 2211625251
+    locked: 0
+  - name: Player
+    uniqueID: 2891902811
+    locked: 0
+  - name: OverHead
+    uniqueID: 3163931227
+    locked: 0
