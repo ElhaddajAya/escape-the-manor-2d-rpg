@@ -91,11 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ca17c8f8a47a24e8db0c0a9a272ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Room_1
+  sceneToLoad: Main_Scene
   doorSound: {fileID: 8300000, guid: 7587f51f839216340be322c5fd0ff70b, type: 3}
   audioSource: {fileID: 4664624419601620027}
-  fadeScreen: {fileID: 0}
-  fadeDuration: 2
+  animator: {fileID: 0}
 --- !u!82 &4664624419601620027
 AudioSource:
   m_ObjectHideFlags: 0
