@@ -92,9 +92,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: Room_1
-  blackScreen: {fileID: 0}
   doorSound: {fileID: 8300000, guid: 7587f51f839216340be322c5fd0ff70b, type: 3}
   audioSource: {fileID: 4664624419601620027}
+  fadeScreen: {fileID: 0}
+  fadeDuration: 2
 --- !u!82 &4664624419601620027
 AudioSource:
   m_ObjectHideFlags: 0
