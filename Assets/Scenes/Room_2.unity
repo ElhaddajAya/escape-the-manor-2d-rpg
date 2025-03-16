@@ -4068,13 +4068,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Global Light 2D
       objectReference: {fileID: 0}
+    - target: {fileID: 2466958771002506578, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466958771002506578, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
+      propertyPath: m_Color.g
+      value: 0.1254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466958771002506578, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
+      propertyPath: m_Color.r
+      value: 0.1254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466958771002506578, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
+      propertyPath: m_Intensity
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4.06
       objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 11.93
       objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4204,7 +4220,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1418907936}
+  m_Father: {fileID: 575447112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
 MonoBehaviour:
@@ -4447,12 +4463,28 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1937370027928616823, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937370027928616823, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937370027928616823, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937370027928616823, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
       propertyPath: m_Intensity
-      value: 1.5
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1937370027928616823, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
       propertyPath: m_PointLightInnerRadius
-      value: 1.7245256
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937370027928616823, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2106484503730612531, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
       propertyPath: m_Layer
@@ -4793,6 +4825,11 @@ PrefabInstance:
       addedObject: {fileID: 519420032}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
+--- !u!224 &575447112 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 243978157336016762, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
+  m_PrefabInstance: {fileID: 575447111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &660133799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -630056,3 +630093,4 @@ SceneRoots:
   - {fileID: 86371873}
   - {fileID: 660133799}
   - {fileID: 340290886}
+  - {fileID: 575447111}
