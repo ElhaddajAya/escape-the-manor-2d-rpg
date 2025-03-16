@@ -15,7 +15,7 @@ TagManager:
   - Player
   - 
   - 
-  - 
+  - Decoratives
   - 
   - OverHead
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 1064846153
+    locked: 0
+  - name: Decoratives
+    uniqueID: 2589751549
     locked: 0
   - name: Walls
     uniqueID: 2211625251
