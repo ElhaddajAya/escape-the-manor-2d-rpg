@@ -19,7 +19,7 @@ TagManager:
   - 
   - OverHead
   - 
-  - 
+  - Light layer
   - 
   - 
   - 
@@ -55,4 +55,7 @@ TagManager:
     locked: 0
   - name: OverHead
     uniqueID: 3163931227
+    locked: 0
+  - name: Light layer
+    uniqueID: 2318332365
     locked: 0
