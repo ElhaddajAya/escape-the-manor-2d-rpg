@@ -34,6 +34,8 @@ public class SceneTransition : MonoBehaviour
             yield return new WaitForSeconds(doorSound.length * 1f);
         }
 
+        yield return new WaitForSeconds(1f); // Attendre 1 seconde
+
         // Charger la scène
         SceneManager.LoadScene(sceneToLoad);
         
