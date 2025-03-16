@@ -23,6 +23,18 @@ public class PlayerObj : MonoBehaviour
     private AudioSource audioSource; // Composant AudioSource
     private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
 
+    void Awake()
+    {
+        // Vérifie s'il existe déjà un Player dans la scène
+        if (FindObjectsOfType<PlayerObj>().Length > 1)
+        {
+            Destroy(gameObject); // Évite les doublons
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject); // Empêche la destruction du Player entre les scènes
+    }
+
     void Start()
     {
         // Récupérer le composant AudioSource
