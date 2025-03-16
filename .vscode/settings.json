@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Escape The Manor.sln"
+    "dotnet.defaultSolution": "Escape The Manor.sln",
+    "editor.formatOnSave": false
 }

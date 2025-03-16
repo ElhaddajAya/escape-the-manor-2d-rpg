@@ -5112,7 +5112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabs: {fileID: 1288973409154859346}
-  _charMS: 4
+  _charMS: 8
   _goalPos: {x: 0, y: 0, z: 0}
   isAction: 0
   footstepsSound: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}

@@ -31,16 +31,16 @@ public class SceneTransition : MonoBehaviour
         // Attendre la fin du son avant de charger la scène
         if (doorSound != null)
         {
-            yield return new WaitForSeconds(doorSound.length * 0.5f);
+            yield return new WaitForSeconds(doorSound.length * 1f);
         }
 
+        // Charger la scène
+        SceneManager.LoadScene(sceneToLoad);
+        
         // Déclencher l'animation de fin
         animator.SetTrigger("End");
 
         // Attendre la fin de l'animation de fin
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-
-        // Charger la scène
-        SceneManager.LoadScene(sceneToLoad);
     }
 }
