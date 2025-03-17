@@ -3682,7 +3682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5337647400205712047, guid: afd070bf03a55f0478369ba1772227f0, type: 3}
       propertyPath: m_Volume
-      value: 0.15
+      value: 0.063
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4212,6 +4212,10 @@ PrefabInstance:
     - target: {fileID: 1937370027928616823, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
       propertyPath: m_PointLightOuterRadius
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259288522674073770, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5170412561905344072, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
       propertyPath: m_LocalPosition.z
