@@ -5165,10 +5165,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.576
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5338,7 +5338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabs: {fileID: 1288973409154859346}
-  _charMS: 8
+  _charMS: 4
   _goalPos: {x: 0, y: 0, z: 0}
   isAction: 0
   footstepsSound: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}
