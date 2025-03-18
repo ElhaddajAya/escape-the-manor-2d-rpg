@@ -186,13 +186,17 @@ PrefabInstance:
       propertyPath: blackScreenAnimator
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: targetSpawnPointName
+      value: SpawnPoint_Door_3
+      objectReference: {fileID: 0}
     - target: {fileID: 1509748427303191385, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 252.01
+      value: 130.12001
       objectReference: {fileID: 0}
     - target: {fileID: 1509748427303191385, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 128.71
+      value: 63.55001
       objectReference: {fileID: 0}
     - target: {fileID: 1509748427303191385, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3937,7 +3941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1476680553890467023, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2466958771002506578, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_Color.b
@@ -3957,11 +3961,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 252.65
+      value: 130.76001
       objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 131.62
+      value: 66.46
       objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4000,6 +4004,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
+--- !u!1 &826559763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 826559764}
+  m_Layer: 0
+  m_Name: Door_3_Exit
+  m_TagString: SpawnPoint
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &826559764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826559763}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 131.04001, y: 66.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &949810151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4111,7 +4146,7 @@ Transform:
   m_GameObject: {fileID: 1213075343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 258.99, y: 149.76, z: 0}
+  m_LocalPosition: {x: 137.1, y: 84.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4221,7 +4256,7 @@ Transform:
   m_GameObject: {fileID: 1277786657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 253.59521, y: 128.24995, z: -8.242547}
+  m_LocalPosition: {x: 131.70523, y: 63.08996, z: -8.242547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -628450,3 +628485,4 @@ SceneRoots:
   - {fileID: 949810151}
   - {fileID: 622640428}
   - {fileID: 1277786660}
+  - {fileID: 826559764}

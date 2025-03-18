@@ -132,11 +132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 532642207959300246, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_Size.y
-      value: 1.235537
+      value: 1.2954783
       objectReference: {fileID: 0}
     - target: {fileID: 532642207959300246, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_Offset.y
-      value: -1.4207976
+      value: -1.390827
       objectReference: {fileID: 0}
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: animator
@@ -150,13 +150,17 @@ PrefabInstance:
       propertyPath: sceneToLoad
       value: Main_Scene
       objectReference: {fileID: 0}
+    - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: targetSpawnPointName
+      value: SpawnPoint_Door_2
+      objectReference: {fileID: 0}
     - target: {fileID: 1509748427303191385, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.94
+      value: 135.06
       objectReference: {fileID: 0}
     - target: {fileID: 1509748427303191385, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.55
+      value: 66.149994
       objectReference: {fileID: 0}
     - target: {fileID: 1509748427303191385, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4065,7 +4069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1476680553890467023, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2466958771002506578, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_Color.b
@@ -4085,11 +4089,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.06
+      value: 138
       objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.93
+      value: 97.100006
       objectReference: {fileID: 0}
     - target: {fileID: 9071315302984117009, guid: 10ebc6f9fa646b445815013dde9f0d87, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4180,6 +4184,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneTransition
       objectReference: {fileID: 0}
+    - target: {fileID: 8948244503284935370, guid: 5b029601420d1054583c77617108a85a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4212,7 +4220,7 @@ Transform:
   m_GameObject: {fileID: 1059628665}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.86, y: 6, z: -8.251282}
+  m_LocalPosition: {x: 136.2, y: 64.619995, z: -8.251282}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4328,7 +4336,7 @@ Transform:
   m_GameObject: {fileID: 1213075343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalPosition: {x: 140, y: 59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6877,7 +6885,7 @@ Tilemap:
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -32, y: -26, z: 0}
-  m_Size: {x: 65, y: 76, z: 1}
+  m_Size: {x: 68, y: 81, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -6960,6 +6968,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &1940063937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1940063938}
+  m_Layer: 0
+  m_Name: Door_2_Exit
+  m_TagString: SpawnPoint
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1940063938
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940063937}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 135.97, y: 67.87, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1955018778
 GameObject:
   m_ObjectHideFlags: 0
@@ -629497,3 +629536,4 @@ SceneRoots:
   - {fileID: 660133799}
   - {fileID: 340290886}
   - {fileID: 1059628666}
+  - {fileID: 1940063938}

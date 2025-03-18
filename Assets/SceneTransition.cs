@@ -8,11 +8,16 @@ public class SceneTransition : MonoBehaviour
     [SerializeField] private AudioClip doorSound; // Effet sonore d'ouverture de porte
     [SerializeField] private AudioSource audioSource; // Source audio pour jouer le son
     [SerializeField] private Animator animator; // Référence à l'Animator
+    [SerializeField] private string targetSpawnPointName; // Nom du spawn point cible dans la scène principale
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) // Vérifie si c'est le joueur
+        if (other.CompareTag("Player"))
         {
+            // Stocker le spawn point cible dans un manager
+            SpawnPointManager.SetTargetSpawnPoint(targetSpawnPointName);
+
+            // Démarrer la coroutine de transition
             StartCoroutine(LoadScene());
         }
     }
@@ -34,7 +39,7 @@ public class SceneTransition : MonoBehaviour
             yield return new WaitForSeconds(doorSound.length * 1f);
         }
 
-        yield return new WaitForSeconds(1f); // Attendre 1 seconde
+        yield return new WaitForSeconds(1); // Attendre 1 seconde
 
         // Charger la scène
         SceneManager.LoadScene(sceneToLoad);
@@ -43,6 +48,7 @@ public class SceneTransition : MonoBehaviour
         animator.SetTrigger("End");
 
         // Attendre la fin de l'animation de fin
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(1);
     }
+
 }

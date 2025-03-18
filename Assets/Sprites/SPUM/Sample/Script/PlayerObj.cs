@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 // This file contains a script that manages the player object in a 2D game.
 // The player object can move and play animations based on user input.
@@ -23,6 +25,25 @@ public class PlayerObj : MonoBehaviour
     private AudioSource audioSource; // Composant AudioSource
     private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
 
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Scène chargée : " + scene.name);
+        
+        // Trouver le spawn point cible
+        Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
+
+        if (targetSpawnPoint != null)
+        {
+            Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
+            // Déplacer le joueur au spawn point
+            transform.position = targetSpawnPoint.position;
+        }
+        else
+        {
+            Debug.LogWarning("Le joueur n'a pas été déplacé car aucun spawn point n'a été trouvé.");
+        }
+    }
+    
     void Awake()
     {
         // Vérifie s'il existe déjà un Player dans la scène
@@ -33,6 +54,15 @@ public class PlayerObj : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject); // Empêche la destruction du Player entre les scènes
+
+        // Abonnez-vous à l'événement SceneManager.sceneLoaded
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        // Désabonnez-vous pour éviter les fuites de mémoire
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void Start()
