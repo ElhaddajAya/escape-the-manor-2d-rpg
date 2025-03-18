@@ -163,6 +163,10 @@ PrefabInstance:
       value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: sceneToLoad
+      value: Main_Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: doorSoundClip
       value: 
       objectReference: {fileID: 8300000, guid: 7587f51f839216340be322c5fd0ff70b, type: 3}
