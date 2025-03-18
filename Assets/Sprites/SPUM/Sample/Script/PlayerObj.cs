@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class PlayerObj : MonoBehaviour
 {
     public SPUM_Prefabs _prefabs;
-    public float _charMS = 4f;
+    public float _charMS; // Character Movement Speed
     private PlayerState _currentState;
 
     // Reference to the Rigidbody2D component for physics-based movement
@@ -28,7 +28,7 @@ public class PlayerObj : MonoBehaviour
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Scène chargée : " + scene.name);
-        
+
         // Trouver le spawn point cible
         Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
 

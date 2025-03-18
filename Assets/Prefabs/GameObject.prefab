@@ -92,8 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ca17c8f8a47a24e8db0c0a9a272ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Main_Scene
-  doorSound: {fileID: 8300000, guid: 7587f51f839216340be322c5fd0ff70b, type: 3}
+  sceneToLoad: 
+  doorSound: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
   audioSource: {fileID: 4664624419601620027}
   animator: {fileID: 0}
   targetSpawnPointName: 
