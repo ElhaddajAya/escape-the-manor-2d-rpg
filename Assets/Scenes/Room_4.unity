@@ -145,7 +145,7 @@ PrefabInstance:
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: doorSound
       value: 
-      objectReference: {fileID: 8300000, guid: 7587f51f839216340be322c5fd0ff70b, type: 3}
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: fadeImage
       value: 
@@ -230,6 +230,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4664624419601620027, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
     - target: {fileID: 4767632048997715568, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_Name
       value: Door_To_MainScene

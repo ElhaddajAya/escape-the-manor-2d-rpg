@@ -36,10 +36,10 @@ public class SceneTransition : MonoBehaviour
         // Attendre la fin du son avant de charger la scène
         if (doorSound != null)
         {
-            yield return new WaitForSeconds(doorSound.length * 1f);
+            yield return new WaitForSeconds(doorSound.length);
         }
 
-        yield return new WaitForSeconds(1); // Attendre 1 seconde
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length); // Attendre 1 seconde (durée de l'animation)
 
         // Charger la scène
         SceneManager.LoadScene(sceneToLoad);
@@ -48,7 +48,7 @@ public class SceneTransition : MonoBehaviour
         animator.SetTrigger("End");
 
         // Attendre la fin de l'animation de fin
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length); // Attendre 1 seconde (durée de l'animation)
     }
 
 }

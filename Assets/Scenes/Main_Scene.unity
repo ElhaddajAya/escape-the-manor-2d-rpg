@@ -271,6 +271,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 770330656}
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: doorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
+    - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: sceneToLoad
       value: Room_3
       objectReference: {fileID: 0}
@@ -318,6 +322,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4664624419601620027, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
     - target: {fileID: 4767632048997715568, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_Name
       value: Room_3_door
@@ -4161,6 +4169,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 770330656}
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: doorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
+    - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: sceneToLoad
       value: Room_2
       objectReference: {fileID: 0}
@@ -4212,6 +4224,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ec43939a3033cde4ea009d4d4a5ffb32, type: 2}
+    - target: {fileID: 4664624419601620027, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
     - target: {fileID: 4767632048997715568, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_Name
       value: Room_2_door
@@ -4434,6 +4450,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 770330656}
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: doorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
+    - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: sceneToLoad
       value: Room_4
       objectReference: {fileID: 0}
@@ -4481,6 +4501,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4664624419601620027, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
     - target: {fileID: 4767632048997715568, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_Name
       value: Room_4_door
@@ -11677,7 +11701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4664624419601620027, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4664624419601620027, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_audioClip
@@ -634412,7 +634436,7 @@ PrefabInstance:
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: doorSound
       value: 
-      objectReference: {fileID: 8300000, guid: 7587f51f839216340be322c5fd0ff70b, type: 3}
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: fadeImage
       value: 
@@ -634489,6 +634513,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4664624419601620027, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d1dd60e4a62431f439c25dc0bd417ca2, type: 3}
     - target: {fileID: 4767632048997715568, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_Name
       value: Room_1_door
