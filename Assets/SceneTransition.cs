@@ -24,7 +24,7 @@ public class SceneTransition : MonoBehaviour
 
     private IEnumerator LoadScene()
     {
-        // Déclencher l'animation de début
+        // Déclencher l'animation de fade in (Start)
         animator.SetTrigger("Start");
 
         // Jouer l'effet sonore de la porte
@@ -33,22 +33,20 @@ public class SceneTransition : MonoBehaviour
             audioSource.PlayOneShot(doorSound);
         }
 
-        // Attendre la fin du son avant de charger la scène
-        if (doorSound != null)
-        {
-            yield return new WaitForSeconds(doorSound.length);
-        }
-
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length); // Attendre 1 seconde (durée de l'animation)
+        // Attendre la fin de l'animation de fade in (1 seconde)
+        yield return new WaitForSeconds(1.5f);
 
         // Charger la scène
         SceneManager.LoadScene(sceneToLoad);
-        
-        // Déclencher l'animation de fin
+
+        // Attendre que la scène soit complètement chargée
+        yield return new WaitForEndOfFrame();
+
+        // Déclencher l'animation de fade out (End)
         animator.SetTrigger("End");
 
-        // Attendre la fin de l'animation de fin
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length); // Attendre 1 seconde (durée de l'animation)
+        // Attendre la fin de l'animation de fade out (1 seconde)
+        yield return new WaitForSeconds(1);
     }
 
 }
