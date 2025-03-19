@@ -67,6 +67,8 @@ public class PlayerObj : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Time.timeScale: " + Time.timeScale);
+        
         // Récupérer le composant AudioSource
         audioSource = GetComponent<AudioSource>();
 
@@ -148,6 +150,7 @@ public class PlayerObj : MonoBehaviour
                 DoMove();
                 break;
         }
+        
         PlayStateAnimation(_currentState);
     }
 
