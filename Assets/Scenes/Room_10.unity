@@ -192,7 +192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1481769188470522553, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: targetSpawnPointName
-      value: SpawnPoint_Scene_10
+      value: SpawnPoint_Room_10
       objectReference: {fileID: 0}
     - target: {fileID: 1509748427303191385, guid: 48ec02fcbda24454093a51af50b30b86, type: 3}
       propertyPath: m_LocalPosition.x
