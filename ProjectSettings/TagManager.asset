@@ -15,7 +15,7 @@ TagManager:
   - Walls
   - Decoratives
   - 
-  - 
+  - Enemy
   - Player
   - 
   - OverHead
@@ -50,6 +50,9 @@ TagManager:
     locked: 0
   - name: Walls
     uniqueID: 2211625251
+    locked: 0
+  - name: Enemy
+    uniqueID: 3443210339
     locked: 0
   - name: Player
     uniqueID: 2891902811
