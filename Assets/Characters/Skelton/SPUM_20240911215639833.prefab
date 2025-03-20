@@ -1378,7 +1378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8122707895925081391
 Transform:
   m_ObjectHideFlags: 0
@@ -4293,7 +4293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4066269095029606736
 Transform:
   m_ObjectHideFlags: 0
@@ -4484,7 +4484,6 @@ MonoBehaviour:
   _version: 170
   EditChk: 0
   _code: SPUM_20240911215639833
-  _anim: {fileID: 4768932681013849658}
   UnitType: Unit
   spumPackages:
   - Name: Legacy
