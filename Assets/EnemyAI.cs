@@ -2,119 +2,142 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform player;
-    public Transform waypointA; // First patrol point
-    public Transform waypointB; // Second patrol point
-    public float moveSpeed = 2f;
+    public float patrolSpeed = 2f;
+    public float chaseSpeed = 3f;
     public float detectionRange = 5f;
     public float attackRange = 1f;
-    public float attackCooldown = 2f;
-    
-    private float lastAttackTime;
-    private Rigidbody2D rb;
+    public Transform[] patrolPoints;
+    private int currentPatrolIndex = 0;
+    private Transform player;
     private Animator animator;
-    private Vector2 movementDirection;
-    private Transform currentTarget; // Current patrol target
+    private Rigidbody2D rb;
+    private bool isChasing = false;
+    public float obstacleAvoidanceDistance = 1f; // Distance pour détecter les obstacles
+    public LayerMask obstacleLayer; // Layer pour les obstacles
+    private int patrolDirection = 1; // 1 pour aller, -1 pour retour
 
-    private enum EnemyState { IDLE, PATROL, MOVE, ATTACK }
-    private EnemyState currentState = EnemyState.PATROL; // Start with patrolling
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0; // No gravity for 2D top-down
-        rb.freezeRotation = true; // Prevents rotation
-        currentTarget = waypointA; // Start patrolling towards waypointA
     }
 
     void Update()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= detectionRange)
+        if (distanceToPlayer < detectionRange)
         {
-            if (distanceToPlayer > attackRange)
+            isChasing = true;
+        }
+        else
+        {
+            isChasing = false;
+        }
+
+        if (isChasing)
+        {
+            ChasePlayer();
+            if (distanceToPlayer < attackRange)
             {
-                MoveTowardsPlayer();
-            }
-            else if (Time.time >= lastAttackTime + attackCooldown)
-            {
-                Attack();
+                AttackPlayer();
             }
         }
         else
         {
-            Patrol(); // Move between waypoints when no player detected
+            Patrol();
         }
 
-        UpdateZIndex();
-    }
-
-    void MoveTowardsPlayer()
-    {
-        Vector2 direction = (player.position - transform.position).normalized;
-        movementDirection = direction;
-
-        rb.velocity = direction * moveSpeed;
-
-        FlipSprite(direction);
-
-        animator.SetBool("1_Move", true);
-        animator.SetBool("2_Attack", false);
-
-        currentState = EnemyState.MOVE;
-    }
-
-    void Attack()
-    {
-        rb.velocity = Vector2.zero;
-        animator.SetBool("1_Move", false);
-        animator.SetBool("2_Attack", true);
-        animator.SetTrigger("attack");
-
-        lastAttackTime = Time.time;
-        Debug.Log("Enemy attacks the player!");
-
-        currentState = EnemyState.ATTACK;
+        UpdateAnimations();
+        UpdateFacingDirection();
     }
 
     void Patrol()
     {
-        if (currentState != EnemyState.PATROL)
+        Transform targetPoint = patrolPoints[currentPatrolIndex];
+        Vector2 direction = (targetPoint.position - transform.position).normalized;
+
+        // Éviter les obstacles
+        direction = AvoidObstacles(direction);
+
+        rb.velocity = direction * patrolSpeed;
+
+        if (Vector2.Distance(transform.position, targetPoint.position) < 0.1f)
         {
-            currentState = EnemyState.PATROL;
+            // Mettre à jour l'index du point de patrouille en fonction de la direction
+            currentPatrolIndex += patrolDirection;
+
+            // Inverser la direction si on atteint le début ou la fin du tableau
+            if (currentPatrolIndex >= patrolPoints.Length || currentPatrolIndex < 0)
+            {
+                patrolDirection *= -1; // Inverser la direction
+                currentPatrolIndex += patrolDirection; // Revenir au point précédent
+            }
+        }
+    }
+
+    void ChasePlayer()
+    {
+        Vector2 direction = (player.position - transform.position).normalized;
+
+        // Éviter les obstacles
+        direction = AvoidObstacles(direction);
+
+        rb.velocity = direction * chaseSpeed;
+    }
+
+    void AttackPlayer()
+    {
+        // Mettre ici la logique d'attaque
+        animator.SetTrigger("2_Attack");
+    }
+
+    void UpdateAnimations()
+    {
+        if (isChasing || rb.velocity.magnitude > 0.1f)
+        {
             animator.SetBool("1_Move", true);
         }
-
-        Vector2 direction = (currentTarget.position - transform.position).normalized;
-        rb.velocity = direction * (moveSpeed * 0.5f); // Slower speed for patrolling
-
-        FlipSprite(direction);
-
-        // Check if the enemy reached the current target
-        if (Vector2.Distance(transform.position, currentTarget.position) < 0.2f)
+        else
         {
-            currentTarget = (currentTarget == waypointA) ? waypointB : waypointA; // Switch target
+            animator.SetBool("1_Move", false);
         }
     }
 
-    void Idle()
+    void UpdateFacingDirection()
     {
-        rb.velocity = Vector2.zero;
-        animator.SetBool("1_Move", false);
-        animator.SetBool("2_Attack", false);
-        currentState = EnemyState.IDLE;
+        if (rb.velocity.x > 0)
+        {
+            transform.localScale = new Vector3(-2, 2, 2); // Faire face à droite
+        }
+        else if (rb.velocity.x < 0)
+        {
+            transform.localScale = new Vector3(2, 2, 2); // Faire face à gauche
+        }
     }
 
-    void FlipSprite(Vector2 direction)
+    Vector2 AvoidObstacles(Vector2 direction)
     {
-        if (direction.x > 0) transform.localScale = new Vector3(-2, 2, 2);
-        else if (direction.x < 0) transform.localScale = new Vector3(2, 2, 2);
+        // Eviter les objets ayant le tage "Obstacle"
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, obstacleAvoidanceDistance, obstacleLayer);
+
+        if (hit.collider != null)
+        {
+            // Inverser la direction si un obstacle est détecté
+            direction *= -1;
+        }
+
+        return direction;
     }
 
-    void UpdateZIndex()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * 0.01f);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Empêcher l'ennemi de pousser le joueur
+            rb.velocity = Vector2.zero;
+        }
     }
 }

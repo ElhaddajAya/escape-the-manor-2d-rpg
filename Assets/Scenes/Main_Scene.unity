@@ -3837,6 +3837,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 473881355118766676, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: m_Size.x
+      value: 0.49356732
+      objectReference: {fileID: 0}
+    - target: {fileID: 473881355118766676, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: m_Size.y
+      value: 0.29920056
+      objectReference: {fileID: 0}
+    - target: {fileID: 473881355118766676, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.003960237
+      objectReference: {fileID: 0}
+    - target: {fileID: 473881355118766676, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.1555502
+      objectReference: {fileID: 0}
     - target: {fileID: 599545361758836839, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -3962,6 +3978,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5195193185657777163, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195193185657777163, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: m_Interpolate
       value: 2
       objectReference: {fileID: 0}
@@ -3981,6 +4001,22 @@ PrefabInstance:
       propertyPath: waypointB
       value: 
       objectReference: {fileID: 1923813580}
+    - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: patrolPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: patrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1577914162}
+    - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: patrolPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1923813580}
+    - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
+      propertyPath: patrolPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1404597465}
     - target: {fileID: 5204157682768483100, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -4047,7 +4083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5375047960093657315, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00015256
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5375047960093657315, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4067,11 +4103,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5375047960093657315, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 126.23
+      value: 134.75
       objectReference: {fileID: 0}
     - target: {fileID: 5375047960093657315, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 62.52
+      value: 14.37
       objectReference: {fileID: 0}
     - target: {fileID: 5375047960093657315, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7108,7 +7144,7 @@ GameObject:
   - component: {fileID: 1375851403}
   m_Layer: 7
   m_Name: Decoratives
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7986,6 +8022,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bf4c54d34f844ab5ad8f561d24b0052, type: 3}
+--- !u!1 &1404597464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1404597465}
+  m_Layer: 0
+  m_Name: PatrolPointC
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1404597465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404597464}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 127.88, y: 14.34, z: -0.06813058}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1505796978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8078,7 +8145,7 @@ GameObject:
   - component: {fileID: 1562203310}
   m_Layer: 6
   m_Name: Walls
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19806,7 +19873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1577914162}
   m_Layer: 0
-  m_Name: WaypointA
+  m_Name: PatrolPointA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19821,7 +19888,7 @@ Transform:
   m_GameObject: {fileID: 1577914161}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 130.19, y: 62.75, z: 0.0015282392}
+  m_LocalPosition: {x: 134.34, y: 19.51, z: 0.0015282392}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20414,7 +20481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1923813580}
   m_Layer: 0
-  m_Name: WaypointB
+  m_Name: PatrolPointB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20429,7 +20496,7 @@ Transform:
   m_GameObject: {fileID: 1923813579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 117.09, y: 62.76, z: -0.06813058}
+  m_LocalPosition: {x: 134.02, y: 14.11, z: -0.06813058}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -643585,3 +643652,4 @@ SceneRoots:
   - {fileID: 389777849}
   - {fileID: 1577914162}
   - {fileID: 1923813580}
+  - {fileID: 1404597465}
