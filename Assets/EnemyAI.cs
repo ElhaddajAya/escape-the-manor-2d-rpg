@@ -15,7 +15,8 @@ public class EnemyAI : MonoBehaviour
     public float obstacleAvoidanceDistance = 1f; // Distance pour détecter les obstacles
     public LayerMask obstacleLayer; // Layer pour les obstacles
     private int patrolDirection = 1; // 1 pour aller, -1 pour retour
-
+    private float lastDirectionChangeTime = 0f;
+    public float directionChangeCooldown = 0.5f; // Délai minimum entre les changements de direction
 
     void Start()
     {
@@ -59,11 +60,15 @@ public class EnemyAI : MonoBehaviour
         Transform targetPoint = patrolPoints[currentPatrolIndex];
         Vector2 direction = (targetPoint.position - transform.position).normalized;
 
-        // Éviter les obstacles
-        direction = AvoidObstacles(direction);
+        // Si l'ennemi est bloqué, ajuster la direction
+        if (IsStuck())
+        {
+            direction = AvoidObstacles(direction);
+        }
 
         rb.velocity = direction * patrolSpeed;
 
+        // Vérifier si l'ennemi est proche du point de patrouille
         if (Vector2.Distance(transform.position, targetPoint.position) < 0.1f)
         {
             // Mettre à jour l'index du point de patrouille en fonction de la direction
@@ -88,14 +93,14 @@ public class EnemyAI : MonoBehaviour
         rb.velocity = direction * chaseSpeed;
     }
 
-void AttackPlayer()
-{
-    // Arrêter le mouvement de l'ennemi
-    rb.velocity = Vector2.zero;
-    
-    // Mettre ici la logique d'attaque
-    animator.SetTrigger("2_Attack");
-}
+    void AttackPlayer()
+    {
+        // Arrêter le mouvement de l'ennemi
+        rb.velocity = Vector2.zero;
+
+        // Mettre ici la logique d'attaque
+        animator.SetTrigger("2_Attack");
+    }
 
     void UpdateAnimations()
     {
@@ -123,24 +128,54 @@ void AttackPlayer()
 
     Vector2 AvoidObstacles(Vector2 direction)
     {
-        // Eviter les objets ayant le tage "Obstacle"
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, obstacleAvoidanceDistance, obstacleLayer);
-
-        if (hit.collider != null)
+        if (Time.time - lastDirectionChangeTime < directionChangeCooldown)
         {
-            // Inverser la direction si un obstacle est détecté
-            direction *= -1;
+            return direction; // Ne pas changer de direction pendant le cooldown
         }
 
-        return direction;
+        // Rayon pour détecter les obstacles
+        float rayDistance = obstacleAvoidanceDistance;
+        Vector2 rayOrigin = transform.position;
+
+        // Directions à tester : avant, gauche, droite, diagonales
+        Vector2[] testDirections = {
+            direction, // Avant
+            new Vector2(-direction.y, direction.x), // Gauche
+            new Vector2(direction.y, -direction.x), // Droite
+            (direction + new Vector2(-direction.y, direction.x)).normalized, // Diagonale gauche
+            (direction + new Vector2(direction.y, -direction.x)).normalized  // Diagonale droite
+        };
+
+        foreach (Vector2 testDir in testDirections)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, testDir, rayDistance, obstacleLayer);
+            if (hit.collider == null)
+            {
+                // Si aucune collision, utiliser cette direction
+                return testDir;
+            }
+        }
+
+        // Si toutes les directions sont bloquées, reculer
+        return -direction;
+    }
+
+    private bool IsStuck()
+    {
+        // Vérifier si l'ennemi est bloqué en détectant des collisions répétées
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, rb.velocity.normalized, obstacleAvoidanceDistance, obstacleLayer);
+        return hit.collider != null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.layer == obstacleLayer)
         {
-            // Empêcher l'ennemi de pousser le joueur
-            rb.velocity = Vector2.zero;
+            // Calculer une nouvelle direction pour éviter l'obstacle
+            Vector2 avoidDirection = (transform.position - collision.transform.position).normalized;
+
+            // Appliquer la nouvelle direction
+            rb.velocity = avoidDirection * patrolSpeed;
         }
     }
 }
