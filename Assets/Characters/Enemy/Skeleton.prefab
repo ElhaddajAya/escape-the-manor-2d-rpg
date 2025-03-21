@@ -4447,7 +4447,7 @@ GameObject:
   - component: {fileID: 5198352413539748064}
   - component: {fileID: 8079585398517083072}
   m_Layer: 5
-  m_Name: SPUM_20240911215639833
+  m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7461,13 +7461,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18aab9646565638409f364534772f28a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  waypointA: {fileID: 0}
-  waypointB: {fileID: 0}
-  moveSpeed: 2
+  patrolSpeed: 2
+  chaseSpeed: 3
   detectionRange: 5
   attackRange: 1
-  attackCooldown: 2
+  patrolPoints: []
+  obstacleAvoidanceDistance: 1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  directionChangeCooldown: 0.5
 --- !u!212 &8079585398517083072
 SpriteRenderer:
   m_ObjectHideFlags: 0
