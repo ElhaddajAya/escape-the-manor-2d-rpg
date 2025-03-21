@@ -88,11 +88,14 @@ public class EnemyAI : MonoBehaviour
         rb.velocity = direction * chaseSpeed;
     }
 
-    void AttackPlayer()
-    {
-        // Mettre ici la logique d'attaque
-        animator.SetTrigger("2_Attack");
-    }
+void AttackPlayer()
+{
+    // Arrêter le mouvement de l'ennemi
+    rb.velocity = Vector2.zero;
+    
+    // Mettre ici la logique d'attaque
+    animator.SetTrigger("2_Attack");
+}
 
     void UpdateAnimations()
     {
