@@ -5153,7 +5153,7 @@ Rigidbody2D:
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!82 &7313453114028720326
 AudioSource:
   m_ObjectHideFlags: 0

@@ -22,17 +22,24 @@ public class EnemyAI : MonoBehaviour
     public float attackCooldown = 1f;
     private float lastAttackTime = 0f;
     private bool isAttacking = false;
+    private int patrolDirection = 1; // 1 for forward, -1 for backward
+    private float lastDirection = 0f; // Tracks the last movement direction for sprite flipping
 
     void Start()
     {
-        seeker = GetComponent<Seeker>();
+         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
 
+        // Find player dynamically to avoid missing reference issues
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
         target = patrolPoints[currentPatrolIndex];
 
-        // Update path every 0.5s for faster response
-        InvokeRepeating(nameof(UpdatePath), 0f, 0.5f);
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // Update path every 1 second
+        InvokeRepeating(nameof(UpdatePath), 0f, 1f);
     }
 
     void Update()
@@ -89,6 +96,16 @@ public class EnemyAI : MonoBehaviour
         rb.velocity = direction * speed;
         animator.SetBool("1_Move", rb.velocity.magnitude > 0.1f);
 
+        // Flip sprite based on movement direction
+        if (Mathf.Abs(rb.velocity.x) > 0.1f)
+        {
+            float newDirection = Mathf.Sign(rb.velocity.x);
+            if (Mathf.Abs(newDirection - lastDirection) > 0.5f) // Prevents instant flips
+            {
+                transform.localScale = new Vector3(-2 * newDirection, 2, 2);
+                lastDirection = Mathf.Lerp(lastDirection, newDirection, Time.deltaTime * 5);
+            }
+        }
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
         if (distance < nextWaypointDistance)
         {
@@ -98,7 +115,16 @@ public class EnemyAI : MonoBehaviour
         // Patrol logic
         if (!isChasing && Vector2.Distance(rb.position, target.position) < 0.5f)
         {
-            currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+            // Update patrol index based on direction
+            currentPatrolIndex += patrolDirection;
+
+            // Reverse direction if at the end or start of patrol points
+            if (currentPatrolIndex >= patrolPoints.Length || currentPatrolIndex < 0)
+            {
+                patrolDirection *= -1; // Reverse direction
+                currentPatrolIndex += patrolDirection; // Correct the index
+            }
+
             target = patrolPoints[currentPatrolIndex];
         }
     }
@@ -119,5 +145,14 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f); // Adjust based on attack animation duration
         isAttacking = false;
+    }
+
+    // Prevent enemy from pushing Player and preventing Player from sliding off
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            rb.velocity = Vector2.zero;
+        }
     }
 }
