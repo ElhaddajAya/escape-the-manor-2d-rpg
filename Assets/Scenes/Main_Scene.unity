@@ -4035,10 +4035,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1923813580}
     - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
-      propertyPath: obstacleLayer.m_Bits
-      value: 192
-      objectReference: {fileID: 0}
-    - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: obstacleLayer1.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -4053,10 +4049,6 @@ PrefabInstance:
     - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: directionChangeCooldown
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: obstacleAvoidanceDistance
@@ -5101,10 +5093,6 @@ PrefabInstance:
       propertyPath: waypointB
       value: 
       objectReference: {fileID: 1923813580}
-    - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
-      propertyPath: obstacleLayer.m_Bits
-      value: 192
-      objectReference: {fileID: 0}
     - target: {fileID: 5198352413539748064, guid: 64359be8b124840d0bb4846426882691, type: 3}
       propertyPath: obstacleLayer1.m_Bits
       value: 64

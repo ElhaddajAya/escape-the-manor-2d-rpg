@@ -7465,12 +7465,13 @@ MonoBehaviour:
   chaseSpeed: 3
   detectionRange: 5
   attackRange: 1
-  patrolPoints: []
-  obstacleAvoidanceDistance: 1
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
-  directionChangeCooldown: 0.5
+    m_Bits: 192
 --- !u!212 &8079585398517083072
 SpriteRenderer:
   m_ObjectHideFlags: 0
