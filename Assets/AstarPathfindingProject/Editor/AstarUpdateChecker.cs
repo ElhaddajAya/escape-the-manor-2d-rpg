@@ -148,9 +148,9 @@ namespace Pathfinding {
 		/// </summary>
 		static void UpdateCheckLoop () {
 			// Go on until the update check has been completed
-			// if (!CheckForUpdates()) {
-			// 	EditorApplication.update -= UpdateCheckLoop;
-			// }
+			if (!CheckForUpdates()) {
+				EditorApplication.update -= UpdateCheckLoop;
+			}
 		}
 
 		/// <summary>
@@ -220,8 +220,8 @@ namespace Pathfinding {
 						   "&branch="+AstarPath.Branch;
 
 #if UNITY_2018_1_OR_NEWER
-			// updateCheckDownload = UnityWebRequest.Get(query);
-			// updateCheckDownload.SendWebRequest();
+			updateCheckDownload = UnityWebRequest.Get(query);
+			updateCheckDownload.SendWebRequest();
 #else
 			updateCheckDownload = new WWW(query);
 #endif
