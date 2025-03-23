@@ -129,22 +129,29 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void Attack()
-    {
+    void Attack() {
+        if (isAttacking || player.GetComponent<PlayerObj>().isAction) return; // Prevent infinite attack loop
+
         isAttacking = true;
         rb.velocity = Vector2.zero; // Stop movement while attacking
         animator.SetTrigger("2_Attack");
         animator.SetBool("1_Move", false);
         lastAttackTime = Time.time;
 
-        // Resume movement after attack
+        // Trigger damage animation on Player
+        PlayerObj playerObj = player.GetComponent<PlayerObj>();
+        if (playerObj != null) {
+            playerObj.TakeDamage();
+        }
+
         StartCoroutine(ResumeAfterAttack());
     }
 
     IEnumerator ResumeAfterAttack()
     {
-        yield return new WaitForSeconds(0.5f); // Adjust based on attack animation duration
+        yield return new WaitForSeconds(0.3f); // Adjust based on attack animation duration
         isAttacking = false;
+        seeker.enabled = true; // Re-enable pathfinding
     }
 
     // Prevent enemy from pushing Player and preventing Player from sliding off

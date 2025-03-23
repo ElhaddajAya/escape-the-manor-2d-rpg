@@ -24,6 +24,8 @@ public class PlayerObj : MonoBehaviour
     public AudioClip footstepsSound; // Son des pas
     private AudioSource audioSource; // Composant AudioSource
     private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
+    private Animator animator;
+    private int health = 100;
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
@@ -103,15 +105,20 @@ public class PlayerObj : MonoBehaviour
         {
             IndexPair[state] = 0;
         }
+
+        animator = GetComponentInChildren<Animator>();
     }
+
     public void SetStateAnimationIndex(PlayerState state, int index = 0)
     {
         IndexPair[state] = index;
     }
+
     public void PlayStateAnimation(PlayerState state)
     {
         _prefabs.PlayAnimation(state, IndexPair[state]);
     }
+
     void Update()
     {
         if (isAction) return;
@@ -177,4 +184,70 @@ public class PlayerObj : MonoBehaviour
         _goalPos = pos;
         _currentState = PlayerState.MOVE;
     }
+
+    public void TakeDamage() {
+        if (isAction) return; // Prevent taking damage multiple times rapidly
+
+        // Play the damaged animation
+        animator.SetTrigger("3_Damaged");
+
+        // Stop movement
+        rb.velocity = Vector2.zero;
+        isAction = true; // Temporarily prevent movement
+
+        // Reduce health
+        health -= 10;
+        if (health <= 0) {
+            Die();
+            return;
+        }
+
+        // Knockback effect (push player slightly away from the enemy)
+        GameObject enemy = GameObject.FindWithTag("Enemy"); // Assuming the enemy has the tag "Enemy"
+        if (enemy != null)
+        {
+            Vector2 knockbackDirection = (transform.position - enemy.transform.position).normalized;
+            rb.AddForce(knockbackDirection * 3f, ForceMode2D.Impulse); // Adjust knockback force
+        }
+
+        // Prevent sliding by resetting velocity after a short delay
+        StartCoroutine(ResetVelocityAfterKnockback());
+    }
+
+    IEnumerator ResetVelocityAfterKnockback() {
+        yield return new WaitForSeconds(0.15f); // Short delay before stopping sliding
+        rb.velocity = Vector2.zero; // Stop any unwanted sliding
+        isAction = false; // Allow movement again
+    }
+    
+    IEnumerator RecoverFromHit() {
+        yield return new WaitForSeconds(0.3f); // Time to recover
+        isAction = false; // Allow movement again
+    }
+
+    public void Die() {
+        animator.SetTrigger("4_Death");
+        Debug.Log("Player has died!");
+
+        rb.velocity = Vector2.zero;
+        rb.simulated = false;
+        isAction = true;
+
+        StartCoroutine(RespawnCoroutine()); // Call coroutine instead of using WaitForSeconds directly
+    }
+
+    IEnumerator RespawnCoroutine() {
+        yield return new WaitForSeconds(5f); // Wait before respawning
+        Respawn();
+    }
+
+    public void Respawn() {
+        health = 100;
+        transform.position = GameObject.Find("DefaultSpawnPoint").transform.position;
+
+        rb.simulated = true;
+        isAction = false;
+        Debug.Log("Player has respawned with full health!");
+    }
+
 }
