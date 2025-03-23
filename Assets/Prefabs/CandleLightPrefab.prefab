@@ -96,5 +96,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minIntensity: 1
-  maxIntensity: 2.5
-  flickerSpeed: 5
+  maxIntensity: 3
+  flickerSpeed: 6

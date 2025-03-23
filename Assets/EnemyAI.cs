@@ -5,7 +5,7 @@ using Pathfinding;
 public class EnemyAI : MonoBehaviour
 {
     public Transform[] patrolPoints;
-    public float speed = 2f;
+    public float speed = 4f;
     public float nextWaypointDistance = 0.5f;
     
     private int currentPatrolIndex = 0;
