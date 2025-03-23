@@ -46,6 +46,14 @@ public class EnemyAI : MonoBehaviour
     {
         if (isAttacking) return; // Prevent movement while attacking
 
+        if (player == null || player.GetComponent<PlayerObj>().health <= 0) 
+        {
+            // Player is dead, stop chasing and return to patrol
+            isChasing = false;
+            target = patrolPoints[currentPatrolIndex];
+            return;
+        }
+
         float playerDistance = Vector2.Distance(transform.position, player.position);
 
         if (playerDistance < attackRange && Time.time > lastAttackTime + attackCooldown)

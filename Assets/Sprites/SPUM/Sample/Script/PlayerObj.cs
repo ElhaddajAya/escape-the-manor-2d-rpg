@@ -25,7 +25,7 @@ public class PlayerObj : MonoBehaviour
     private AudioSource audioSource; // Composant AudioSource
     private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
     private Animator animator;
-    private int health = 100;
+    public int health = 100;
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
