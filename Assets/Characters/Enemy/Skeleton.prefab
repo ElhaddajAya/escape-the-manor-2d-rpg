@@ -4537,7 +4537,7 @@ GameObject:
   - component: {fileID: -8056551336883266935}
   - component: {fileID: 9039520389439625298}
   - component: {fileID: 8079580111076465977}
-  - component: {fileID: 2988455013201756584}
+  - component: {fileID: 8097827046781353908}
   m_Layer: 9
   m_Name: Skeleton
   m_TagString: Enemy
@@ -7735,7 +7735,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.15491486}
   serializedVersion: 2
   m_Radius: 1.9356308
---- !u!114 &2988455013201756584
+--- !u!114 &8097827046781353908
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7755,16 +7755,16 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 000000004943783ffd785c9a23b9d28363383bcd5bef5eac5bc295bccdf12e8a
   m_ShapePath:
-  - {x: 0.41598436, y: -0.12871696, z: 0.0000009540278}
-  - {x: -0.40713686, y: -0.12067082, z: 0.000003372727}
-  - {x: -0.460235, y: 0.6838124, z: 0.0000023679079}
-  - {x: 0.33633187, y: 0.69185793, z: 0.000002153329}
-  m_ShapePathHash: -1243694188
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -10670
+  m_InstanceId: -41730
   m_LocalBounds:
-    m_Center: {x: -0.022125304, y: 0.2815705, z: 0}
-    m_Extent: {x: 0.4381097, y: 0.41028744, z: 0}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &8827643254797090275
 GameObject:
   m_ObjectHideFlags: 0
