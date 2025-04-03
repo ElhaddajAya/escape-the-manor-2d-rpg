@@ -3203,8 +3203,8 @@ RectTransform:
   m_GameObject: {fileID: 6108469982049807281}
   m_LocalRotation: {x: -0, y: 0.008726557, z: -0, w: 0.9999619}
   m_LocalPosition: {x: 0, y: 0, z: 0.00015256465}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5371244793652635068}
   - {fileID: 5348304853725303605}
@@ -5342,6 +5342,7 @@ MonoBehaviour:
   _goalPos: {x: 0, y: 0, z: 0}
   isAction: 0
   footstepsSound: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}
+  health: 100
 --- !u!212 &7082069840265155860
 SpriteRenderer:
   m_ObjectHideFlags: 0

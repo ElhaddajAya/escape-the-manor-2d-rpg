@@ -110,7 +110,7 @@ public class EnemyAI : MonoBehaviour
             float newDirection = Mathf.Sign(rb.velocity.x);
             if (Mathf.Abs(newDirection - lastDirection) > 0.5f) // Prevents instant flips
             {
-                transform.localScale = new Vector3(-2 * newDirection, 2, 2);
+                transform.localScale = new Vector3(-1.4f * newDirection, 1.4f, 1.4f);
                 lastDirection = Mathf.Lerp(lastDirection, newDirection, Time.deltaTime * 5);
             }
         }
