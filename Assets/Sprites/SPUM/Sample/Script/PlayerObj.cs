@@ -174,8 +174,8 @@ public class PlayerObj : MonoBehaviour
         transform.position += _dirMVec * _charMS * Time.deltaTime;
 
 
-        if (_dirMVec.x > 0) _prefabs.transform.localScale = new Vector3(-1.3f, 1.3f, 1.3f);
-        else if (_dirMVec.x < 0) _prefabs.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        if (_dirMVec.x > 0) _prefabs.transform.localScale = new Vector3(-1.45f, 1.45f, 1.45f);
+        else if (_dirMVec.x < 0) _prefabs.transform.localScale = new Vector3(1.45f, 1.45f, 1.45f);
     }
 
     public void SetMovePos(Vector2 pos)
