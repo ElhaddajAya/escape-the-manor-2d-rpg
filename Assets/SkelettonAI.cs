@@ -20,6 +20,7 @@ public class SkeletonAI : EnemyAIBase
     {
         base.Attack();
 
+        // Lorseque le Player est touchée par l'attaque du démon, activer le damage
         PlayerObj playerObj = player.GetComponent<PlayerObj>();
         if (playerObj != null)
         {

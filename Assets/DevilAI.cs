@@ -30,22 +30,10 @@ public class DevilAI : EnemyAIBase
 
     protected override void Attack()
     {
-        if (isAttacking) return;
-
-        isAttacking = true;
-        rb.velocity = Vector2.zero;
-        animator.SetTrigger("2_Attack");
-        animator.SetBool("1_Move", false);
-        lastAttackTime = Time.time;
+        base.Attack();
 
         // Lancer le feu immédiatement après une courte pause pour que l'animation d'attaque se déclenche
         StartCoroutine(FireAttack());
-
-        // PlayerObj playerObj = player.GetComponent<PlayerObj>();
-        // if (playerObj != null)
-        // {
-        //     playerObj.TakeDamage();
-        // }
 
         StartCoroutine(ResumeAfterAttack());
     }
