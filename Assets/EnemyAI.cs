@@ -19,7 +19,7 @@ public class EnemyAIBase : MonoBehaviour
     protected Transform player;
     protected bool isChasing = false;
     protected bool isAttacking = false;
-    private float lastAttackTime = 0f;
+    protected float lastAttackTime = 0f;
     private int patrolDirection = 1;
     private float lastDirection = 0f;
 
@@ -125,7 +125,7 @@ public class EnemyAIBase : MonoBehaviour
         StartCoroutine(ResumeAfterAttack());
     }
 
-    IEnumerator ResumeAfterAttack()
+    public IEnumerator ResumeAfterAttack()
     {
         yield return new WaitForSeconds(0.3f);
         isAttacking = false;

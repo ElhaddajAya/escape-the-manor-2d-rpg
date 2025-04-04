@@ -4162,7 +4162,7 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 5
-  attackRange: 1
+  attackRange: 3
   attackCooldown: 1
 --- !u!114 &7397214174429206397
 MonoBehaviour:
@@ -4190,6 +4190,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd86a255bb4c03b488d3621dd9537f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPoints: []
+  speed: 4
+  chaseRange: 5
+  attackRange: 3
+  attackCooldown: 1
 --- !u!1 &1253027004482661863
 GameObject:
   m_ObjectHideFlags: 0

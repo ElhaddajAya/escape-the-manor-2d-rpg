@@ -4042,7 +4042,7 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 5
-  attackRange: 1
+  attackRange: 3
   attackCooldown: 1
 --- !u!114 &5783935268899546043
 MonoBehaviour:
@@ -4056,6 +4056,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ce7533cfc543343beaff135364815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPoints: []
+  speed: 4
+  chaseRange: 5
+  attackRange: 3
+  attackCooldown: 1
+  firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
+  retreatRange: 2
+  fireSpeed: 7
 --- !u!1 &1694226004405638191
 GameObject:
   m_ObjectHideFlags: 0
