@@ -26,7 +26,7 @@ public class PlayerObj : MonoBehaviour
     private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
     private Animator animator;
     public int health = 100;
-
+    private bool isAttacking = false;
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Scène chargée : " + scene.name);
@@ -118,11 +118,29 @@ public class PlayerObj : MonoBehaviour
     {
         _prefabs.PlayAnimation(state, IndexPair[state]);
     }
-
+    IEnumerator PerformAttack()
+{
+    isAttacking = true;
+    isAction = true;
+    
+    // Immediately trigger the animation
+    animator.Play("ATTACK", -1, 0f); // Forces animation to start from frame 0
+    animator.SetTrigger("2_Attack");
+    
+    // Allow movement after 80% of the animation (adjust based on your animation)
+    yield return new WaitForSeconds(0.3f); // Example: 0.3s for a 0.5s animation
+    isAction = false;
+    
+    yield return new WaitForSeconds(0.2f); // Remaining animation time
+    isAttacking = false;
+}
     void Update()
     {
-        if (isAction) return;
-
+        if (Input.GetKeyDown(KeyCode.Space) && !isAttacking)
+    {
+        StartCoroutine(PerformAttack());
+    }
+    if (isAction) return;
         // Handle player input for movement
         Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (inputDirection != Vector2.zero)
@@ -145,6 +163,12 @@ public class PlayerObj : MonoBehaviour
                 audioSource.Stop();
                 isFootstepPlaying = false;
             }
+        }
+
+        // Attack input (Space key)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TriggerAttackAnimation();
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
@@ -173,7 +197,6 @@ public class PlayerObj : MonoBehaviour
         Vector3 _dirMVec = _dirVec.normalized;
         transform.position += _dirMVec * _charMS * Time.deltaTime;
 
-
         if (_dirMVec.x > 0) _prefabs.transform.localScale = new Vector3(-1.45f, 1.45f, 1.45f);
         else if (_dirMVec.x < 0) _prefabs.transform.localScale = new Vector3(1.45f, 1.45f, 1.45f);
     }
@@ -183,6 +206,21 @@ public class PlayerObj : MonoBehaviour
         isAction = false;
         _goalPos = pos;
         _currentState = PlayerState.MOVE;
+    }
+
+    private void TriggerAttackAnimation()
+    {
+        if (isAction) return;
+        
+        animator.SetTrigger("2_Attack");
+        isAction = true;
+        StartCoroutine(ResetAfterAttack());
+    }
+
+    IEnumerator ResetAfterAttack()
+    {
+        yield return new WaitForSeconds(0.5f); // Match this to your attack animation length
+        isAction = false;
     }
 
     public void TakeDamage() {
@@ -249,5 +287,4 @@ public class PlayerObj : MonoBehaviour
         isAction = false;
         Debug.Log("Player has respawned with full health!");
     }
-
 }
