@@ -4721,12 +4721,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1209665655002790913, guid: 54bf9038dcc79c641a3df4632c90f581, type: 3}
       propertyPath: m_Name
-      value: Demon
+      value: Demon1
       objectReference: {fileID: 0}
     - target: {fileID: 7306730281916816440, guid: 54bf9038dcc79c641a3df4632c90f581, type: 3}
       propertyPath: maxSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8913958282562832306, guid: 54bf9038dcc79c641a3df4632c90f581, type: 3}
+      propertyPath: patrolPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913958282562832306, guid: 54bf9038dcc79c641a3df4632c90f581, type: 3}
+      propertyPath: patrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 922835266}
+    - target: {fileID: 8913958282562832306, guid: 54bf9038dcc79c641a3df4632c90f581, type: 3}
+      propertyPath: patrolPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 355997206}
+    - target: {fileID: 8913958282562832306, guid: 54bf9038dcc79c641a3df4632c90f581, type: 3}
+      propertyPath: patrolPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 649793140}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

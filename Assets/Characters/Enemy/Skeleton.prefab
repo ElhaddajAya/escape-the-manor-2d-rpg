@@ -1172,7 +1172,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: -227387616865308203, guid: e2579aadb18ab4cf1b2461fb9e0f0cdf, type: 3}
-  m_Color: {r: 0.8901961, g: 0.35686275, b: 0.8901961, a: 1}
+  m_Color: {r: 0.8117647, g: 0.12156863, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3942,7 +3942,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 7
   m_Sprite: {fileID: -227387616865308203, guid: e2579aadb18ab4cf1b2461fb9e0f0cdf, type: 3}
-  m_Color: {r: 0.8901961, g: 0.35686275, b: 0.8901961, a: 1}
+  m_Color: {r: 0.8113208, g: 0.12199993, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4380,7 +4380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4066269095029606736
 Transform:
   m_ObjectHideFlags: 0
@@ -4538,6 +4538,7 @@ GameObject:
   - component: {fileID: 9039520389439625298}
   - component: {fileID: 8079580111076465977}
   - component: {fileID: 8097827046781353908}
+  - component: {fileID: 3686580583304941618}
   m_Layer: 9
   m_Name: Skeleton
   m_TagString: Enemy
@@ -7695,9 +7696,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   speed: 3
-  nextWaypointDistance: 0.5
-  player: {fileID: 0}
-  chaseRange: 5
+  chaseRange: 4
   attackRange: 1
   attackCooldown: 1
 --- !u!58 &8079580111076465977
@@ -7761,10 +7760,22 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -41730
+  m_InstanceId: 67818
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+--- !u!114 &3686580583304941618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8717663361120014766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd90ceafe2fec64e8b25106c559b5fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8827643254797090275
 GameObject:
   m_ObjectHideFlags: 0
