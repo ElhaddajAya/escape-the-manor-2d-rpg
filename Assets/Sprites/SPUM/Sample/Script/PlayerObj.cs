@@ -147,6 +147,12 @@ public class PlayerObj : MonoBehaviour
             }
         }
 
+        // Attack input (Space key)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TriggerAttackAnimation();
+        }
+
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
         switch (_currentState)
         {
@@ -173,7 +179,6 @@ public class PlayerObj : MonoBehaviour
         Vector3 _dirMVec = _dirVec.normalized;
         transform.position += _dirMVec * _charMS * Time.deltaTime;
 
-
         if (_dirMVec.x > 0) _prefabs.transform.localScale = new Vector3(-1.45f, 1.45f, 1.45f);
         else if (_dirMVec.x < 0) _prefabs.transform.localScale = new Vector3(1.45f, 1.45f, 1.45f);
     }
@@ -183,6 +188,21 @@ public class PlayerObj : MonoBehaviour
         isAction = false;
         _goalPos = pos;
         _currentState = PlayerState.MOVE;
+    }
+
+    private void TriggerAttackAnimation()
+    {
+        if (isAction) return;
+        
+        animator.SetTrigger("2_Attack");
+        isAction = true;
+        StartCoroutine(ResetAfterAttack());
+    }
+
+    IEnumerator ResetAfterAttack()
+    {
+        yield return new WaitForSeconds(0.5f); // Match this to your attack animation length
+        isAction = false;
     }
 
     public void TakeDamage() {
@@ -249,5 +269,4 @@ public class PlayerObj : MonoBehaviour
         isAction = false;
         Debug.Log("Player has respawned with full health!");
     }
-
 }
