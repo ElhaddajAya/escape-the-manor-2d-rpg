@@ -22,6 +22,10 @@ public class EnemyAIBase : MonoBehaviour
     protected float lastAttackTime = 0f;
     private int patrolDirection = 1;
     private float lastDirection = 0f;
+    public int maxHealth = 5; // New variable
+    protected int currentHealth; // New variable
+    public float deathAnimationTime = 1f; // New variable
+
 
     protected virtual void Start()
     {
@@ -31,9 +35,41 @@ public class EnemyAIBase : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         target = patrolPoints[currentPatrolIndex];
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        InvokeRepeating(nameof(UpdatePath), 0f, 1f);
+
+        currentHealth = maxHealth; // Initialize health
+    }
+
+    // NEW METHOD: Handle taking damage
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
         
-        // Diminuer l'intervalle pour mettre à jour le path plus rapidement (par exemple, 0.5 seconde au lieu de 1 seconde)
-        InvokeRepeating(nameof(UpdatePath), 0f, 0.5f);
+        // Play hurt animation if not already attacking/dying
+        if (currentHealth > 0 && !isAttacking)
+        {
+            animator.SetTrigger("3_Damaged");
+        }
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    // NEW METHOD: Handle death
+    protected virtual void Die()
+    {
+        // Disable all enemy functionality
+        isAttacking = true;
+        rb.velocity = Vector2.zero;
+        this.enabled = false; // Disables the entire script
+        GetComponent<Collider2D>().enabled = false; // Disable collisions
+        
+        // Play death animation
+        animator.SetTrigger("4_Death");
+        
+        // Destroy after animation completes
+        Destroy(gameObject, deathAnimationTime);
     }
 
     protected virtual void Update()

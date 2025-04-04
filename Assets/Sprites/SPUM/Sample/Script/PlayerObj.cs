@@ -29,6 +29,9 @@ public class PlayerObj : MonoBehaviour
     private bool isAttacking = false;
     private bool isDead = false; // New flag to track if the player is dead
 
+    public float attackRange = 1.5f; // Add this new variable
+    public LayerMask enemyLayer; // Add this and set it in Inspector to "Enemy" layer
+
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Scène chargée : " + scene.name);
@@ -120,23 +123,40 @@ public class PlayerObj : MonoBehaviour
     {
         _prefabs.PlayAnimation(state, IndexPair[state]);
     }
+
+    // Replaced PerformAttack
     IEnumerator PerformAttack()
     {
         isAttacking = true;
         isAction = true;
         
-        // Immediately trigger the animation
-        animator.Play("ATTACK", -1, 0f); // Forces animation to start from frame 0
+        // Play attack animation immediately
+        animator.Play("ATTACK", -1, 0f);
         animator.SetTrigger("2_Attack");
         
-        // Allow movement after 80% of the animation (adjust based on your animation)
-        yield return new WaitForSeconds(0.3f); // Example: 0.3s for a 0.5s animation
+        // Detect and damage enemies
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
+            transform.position, 
+            attackRange, 
+            enemyLayer
+        );
+        
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy.TryGetComponent<EnemyAIBase>(out var enemyAI))
+            {
+                enemyAI.TakeDamage(1); // Deal 1 damage per hit
+            }
+        }
+
+        // Allow movement after 60% of animation
+        yield return new WaitForSeconds(0.3f);
         isAction = false;
         
-        yield return new WaitForSeconds(0.2f); // Remaining animation time
+        // Full attack cooldown
+        yield return new WaitForSeconds(0.2f);
         isAttacking = false;
     }
-
     void Update()
     {
         // If the player is dead, stop all movement, actions, and footstep sounds
