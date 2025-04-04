@@ -5,7 +5,7 @@ using Pathfinding;
 public class EnemyAI : MonoBehaviour
 {
     public Transform[] patrolPoints;
-    public float speed = 4f;
+    public float speed = 3f; // Speed of the enemy
     public float nextWaypointDistance = 0.5f;
     
     private int currentPatrolIndex = 0;
@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     public Transform player;
-    public float chaseRange = 5f;
+    public float chaseRange = 4f; //range to chase the player
     private bool isChasing = false;
     public float attackRange = 1f;
     public float attackCooldown = 1f;
