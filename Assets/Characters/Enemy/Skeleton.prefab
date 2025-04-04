@@ -7776,6 +7776,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd90ceafe2fec64e8b25106c559b5fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPoints: []
+  speed: 4
+  chaseRange: 4
+  attackRange: 1
+  attackCooldown: 1
 --- !u!1 &8827643254797090275
 GameObject:
   m_ObjectHideFlags: 0

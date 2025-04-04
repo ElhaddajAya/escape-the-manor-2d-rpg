@@ -31,7 +31,9 @@ public class EnemyAIBase : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         target = patrolPoints[currentPatrolIndex];
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        InvokeRepeating(nameof(UpdatePath), 0f, 1f);
+        
+        // Diminuer l'intervalle pour mettre à jour le path plus rapidement (par exemple, 0.5 seconde au lieu de 1 seconde)
+        InvokeRepeating(nameof(UpdatePath), 0f, 0.5f);
     }
 
     protected virtual void Update()
@@ -115,12 +117,6 @@ public class EnemyAIBase : MonoBehaviour
         animator.SetTrigger("2_Attack");
         animator.SetBool("1_Move", false);
         lastAttackTime = Time.time;
-
-        PlayerObj playerObj = player.GetComponent<PlayerObj>();
-        if (playerObj != null)
-        {
-            playerObj.TakeDamage();
-        }
 
         StartCoroutine(ResumeAfterAttack());
     }

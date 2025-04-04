@@ -27,6 +27,8 @@ public class PlayerObj : MonoBehaviour
     private Animator animator;
     public int health = 100;
     private bool isAttacking = false;
+    private bool isDead = false; // New flag to track if the player is dead
+
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Scène chargée : " + scene.name);
@@ -119,70 +121,77 @@ public class PlayerObj : MonoBehaviour
         _prefabs.PlayAnimation(state, IndexPair[state]);
     }
     IEnumerator PerformAttack()
-{
-    isAttacking = true;
-    isAction = true;
-    
-    // Immediately trigger the animation
-    animator.Play("ATTACK", -1, 0f); // Forces animation to start from frame 0
-    animator.SetTrigger("2_Attack");
-    
-    // Allow movement after 80% of the animation (adjust based on your animation)
-    yield return new WaitForSeconds(0.3f); // Example: 0.3s for a 0.5s animation
-    isAction = false;
-    
-    yield return new WaitForSeconds(0.2f); // Remaining animation time
-    isAttacking = false;
-}
+    {
+        isAttacking = true;
+        isAction = true;
+        
+        // Immediately trigger the animation
+        animator.Play("ATTACK", -1, 0f); // Forces animation to start from frame 0
+        animator.SetTrigger("2_Attack");
+        
+        // Allow movement after 80% of the animation (adjust based on your animation)
+        yield return new WaitForSeconds(0.3f); // Example: 0.3s for a 0.5s animation
+        isAction = false;
+        
+        yield return new WaitForSeconds(0.2f); // Remaining animation time
+        isAttacking = false;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isAttacking)
-    {
-        StartCoroutine(PerformAttack());
-    }
-    if (isAction) return;
+        // If the player is dead, stop all movement, actions, and footstep sounds
+        if (isDead)
+        {
+            isFootstepPlaying = false; // Stop footstep sound
+            audioSource.Stop(); // Stop any playing sound
+            return; // Skip the rest of the update logic when dead
+        }
+
         // Handle player input for movement
-        Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        if (inputDirection != Vector2.zero)
+        if (!isDead)
         {
-            SetMovePos(transform.position + (Vector3)inputDirection);
-
-            // Jouer le son des pas si le joueur commence à bouger
-            if (!isFootstepPlaying)
+            Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            if (inputDirection != Vector2.zero)
             {
-                audioSource.clip = footstepsSound;
-                audioSource.Play();
-                isFootstepPlaying = true;
+                SetMovePos(transform.position + (Vector3)inputDirection);
+
+                // Play footstep sound if player starts moving
+                if (!isFootstepPlaying)
+                {
+                    audioSource.clip = footstepsSound;
+                    audioSource.Play();
+                    isFootstepPlaying = true;
+                }
             }
-        }
-        else
-        {
-            // Arrêter le son des pas lorsque le joueur arrête de se déplacer
-            if (isFootstepPlaying)
+            else
             {
-                audioSource.Stop();
-                isFootstepPlaying = false;
+                // Stop footstep sound when the player stops moving
+                if (isFootstepPlaying)
+                {
+                    audioSource.Stop();
+                    isFootstepPlaying = false;
+                }
             }
-        }
 
-        // Attack input (Space key)
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TriggerAttackAnimation();
-        }
+            // Attack input (Space key)
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TriggerAttackAnimation();
+            }
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
-        switch (_currentState)
-        {
-            case PlayerState.IDLE:
-                break;
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
+            switch (_currentState)
+            {
+                case PlayerState.IDLE:
+                    break;
 
-            case PlayerState.MOVE:
-                DoMove();
-                break;
+                case PlayerState.MOVE:
+                    DoMove();
+                    break;
+            }
+
+            PlayStateAnimation(_currentState);
         }
-        
-        PlayStateAnimation(_currentState);
     }
 
     void DoMove()
@@ -268,10 +277,11 @@ public class PlayerObj : MonoBehaviour
         Debug.Log("Player has died!");
 
         rb.velocity = Vector2.zero;
-        rb.simulated = false;
+        rb.simulated = false;  // Stop physics simulation
         isAction = true;
+        isDead = true;  // Set player as dead
 
-        StartCoroutine(RespawnCoroutine()); // Call coroutine instead of using WaitForSeconds directly
+        StartCoroutine(RespawnCoroutine()); // Start respawn process
     }
 
     IEnumerator RespawnCoroutine() {
@@ -283,8 +293,17 @@ public class PlayerObj : MonoBehaviour
         health = 100;
         transform.position = GameObject.Find("DefaultSpawnPoint").transform.position;
 
-        rb.simulated = true;
-        isAction = false;
+        rb.velocity = Vector2.zero;  // Ensure any residual velocity is cleared.
+        rb.simulated = true;  // Resume physics simulation
+
+        isDead = false;  // Set player as alive
+        isAction = false;  // Allow movement again
+
+        // Make sure the player is not holding any previous directional input
+        _goalPos = transform.position;  // Reset the goal position to the spawn point
+        _currentState = PlayerState.IDLE;  // Make sure the player starts in the idle state
+
         Debug.Log("Player has respawned with full health!");
     }
+
 }

@@ -6,13 +6,14 @@ public class DevilAI : EnemyAIBase
     public GameObject firePrefab; // Assigné dans l'inspecteur
     public float retreatRange = 2f;
     public float fireSpeed = 7f;
+    public Transform firePoint; // Référence au point où le feu doit sortir
 
     protected override void Start()
     {
         base.Start();
         speed = 5.5f;
         chaseRange = 7f;
-        attackRange = 1.8f;
+        attackRange = 3f;
     }
 
     protected override void Update()
@@ -37,28 +38,36 @@ public class DevilAI : EnemyAIBase
         animator.SetBool("1_Move", false);
         lastAttackTime = Time.time;
 
-        // Lancer le feu après un court délai pour correspondre à l'animation
+        // Lancer le feu immédiatement après une courte pause pour que l'animation d'attaque se déclenche
         StartCoroutine(FireAttack());
+
+        // PlayerObj playerObj = player.GetComponent<PlayerObj>();
+        // if (playerObj != null)
+        // {
+        //     playerObj.TakeDamage();
+        // }
 
         StartCoroutine(ResumeAfterAttack());
     }
 
     IEnumerator FireAttack()
     {
-        yield return new WaitForSeconds(0.2f); // Synchroniser avec l'animation
+        // Attendre que l'animation d'attaque commence (ajuster ce délai selon ton animation)
+        yield return new WaitForSeconds(0.1f); // Attendre un peu pour que l'animation se lance
 
-        if (firePrefab != null)
+        // Lancer le feu à la position des bras (firePoint)
+        if (firePrefab != null && firePoint != null)
         {
-            GameObject fireball = Instantiate(firePrefab, transform.position, Quaternion.identity);
+            GameObject fireball = Instantiate(firePrefab, firePoint.position, Quaternion.identity); // Utiliser firePoint
             FireProjectile fireScript = fireball.GetComponent<FireProjectile>();
 
             if (fireScript != null)
             {
-                Vector2 direction = ((Vector2)player.position - (Vector2)transform.position).normalized;
+                // Calculer la direction du feu par rapport à l'ennemi
+                Vector2 direction = (player.position - firePoint.position).normalized; // Utiliser firePoint
                 fireScript.Launch(direction, fireSpeed);
             }
         }
-
     }
     
     void Retreat()

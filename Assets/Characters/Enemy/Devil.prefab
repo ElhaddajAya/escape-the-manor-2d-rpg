@@ -4041,7 +4041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolPoints: []
   speed: 4
-  chaseRange: 5
+  chaseRange: 7
   attackRange: 3
   attackCooldown: 1
 --- !u!114 &5783935268899546043
@@ -4058,12 +4058,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolPoints: []
   speed: 4
-  chaseRange: 5
+  chaseRange: 7
   attackRange: 3
   attackCooldown: 1
   firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
   retreatRange: 2
   fireSpeed: 7
+  firePoint: {fileID: 3520298012918599002}
 --- !u!1 &1694226004405638191
 GameObject:
   m_ObjectHideFlags: 0
@@ -4603,6 +4604,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c562f92f3b8b435d98ac3b65547b755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2501151425641707024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3520298012918599002}
+  m_Layer: 9
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3520298012918599002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2501151425641707024}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.015, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4055827116187663264}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2584284677610110144
 GameObject:
   m_ObjectHideFlags: 0
@@ -6676,6 +6708,7 @@ Transform:
   m_Children:
   - {fileID: 3977021884973101119}
   - {fileID: 2227651891834106453}
+  - {fileID: 3520298012918599002}
   m_Father: {fileID: 7368905217690073644}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8993145564767283999
