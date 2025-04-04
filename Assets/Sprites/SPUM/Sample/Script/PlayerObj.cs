@@ -26,7 +26,7 @@ public class PlayerObj : MonoBehaviour
     private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
     private Animator animator;
     public int health = 100;
-
+    private bool isAttacking = false;
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
         Debug.Log("Scène chargée : " + scene.name);
@@ -118,11 +118,29 @@ public class PlayerObj : MonoBehaviour
     {
         _prefabs.PlayAnimation(state, IndexPair[state]);
     }
-
+    IEnumerator PerformAttack()
+{
+    isAttacking = true;
+    isAction = true;
+    
+    // Immediately trigger the animation
+    animator.Play("ATTACK", -1, 0f); // Forces animation to start from frame 0
+    animator.SetTrigger("2_Attack");
+    
+    // Allow movement after 80% of the animation (adjust based on your animation)
+    yield return new WaitForSeconds(0.3f); // Example: 0.3s for a 0.5s animation
+    isAction = false;
+    
+    yield return new WaitForSeconds(0.2f); // Remaining animation time
+    isAttacking = false;
+}
     void Update()
     {
-        if (isAction) return;
-
+        if (Input.GetKeyDown(KeyCode.Space) && !isAttacking)
+    {
+        StartCoroutine(PerformAttack());
+    }
+    if (isAction) return;
         // Handle player input for movement
         Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (inputDirection != Vector2.zero)
