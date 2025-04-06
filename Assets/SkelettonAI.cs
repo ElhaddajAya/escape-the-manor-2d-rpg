@@ -9,13 +9,6 @@ public class SkeletonAI : EnemyAIBase
         maxHealth = 5; // Skeletons die in 5 hits
     }
 
-    protected override void Die()
-    {
-        base.Die();
-        // Add any skeleton-specific death behavior here
-        
-    }
-
     protected override void Attack()
     {
         base.Attack();

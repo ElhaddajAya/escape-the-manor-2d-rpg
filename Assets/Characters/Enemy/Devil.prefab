@@ -4042,8 +4042,10 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 3
-  attackCooldown: 1
+  attackRange: 2
+  attackCooldown: 3
+  maxHealth: 6
+  deathAnimationTime: 1
 --- !u!114 &5783935268899546043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4059,12 +4061,14 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 3
-  attackCooldown: 1
+  attackRange: 2
+  attackCooldown: 5
+  maxHealth: 5
+  deathAnimationTime: 3
   firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
   retreatRange: 2
   fireSpeed: 7
-  firePoint: {fileID: 3520298012918599002}
+  firePoint: {fileID: 4055827116187663264}
 --- !u!1 &1694226004405638191
 GameObject:
   m_ObjectHideFlags: 0
@@ -4629,7 +4633,7 @@ Transform:
   m_GameObject: {fileID: 2501151425641707024}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.015, z: -0}
+  m_LocalPosition: {x: -0, y: 0.087, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

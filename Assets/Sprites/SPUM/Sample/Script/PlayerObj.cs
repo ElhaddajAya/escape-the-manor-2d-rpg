@@ -25,12 +25,15 @@ public class PlayerObj : MonoBehaviour
     private AudioSource audioSource; // Composant AudioSource
     private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
     private Animator animator;
-    public int health = 100;
+    public int health = 150;
     private bool isAttacking = false;
     private bool isDead = false; // New flag to track if the player is dead
 
-    public float attackRange = 1.5f; // Add this new variable
+    public float attackRange = 3f; // Add this new variable
     public LayerMask enemyLayer; // Add this and set it in Inspector to "Enemy" layer
+    public GameObject firePrefab; // Le feu à lancer (prefab avec animation)
+    public Transform fireSpawnPoint; // Point de départ du feu (ex: la main du joueur)
+    public GameObject batonObject; // L’objet "Bâton" dans la hiérarchie
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
@@ -129,34 +132,51 @@ public class PlayerObj : MonoBehaviour
     {
         isAttacking = true;
         isAction = true;
-        
-        // Play attack animation immediately
-        animator.Play("ATTACK", -1, 0f);
+
+        // Jouer l'animation d'attaque
         animator.SetTrigger("2_Attack");
-        
-        // Detect and damage enemies
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(
-            transform.position, 
-            attackRange, 
-            enemyLayer
-        );
-        
+
+        yield return new WaitForSeconds(0.5f); // Petit délai avant d'agir
+
+        // 🎯 Attaque au corps (mains)
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
         foreach (Collider2D enemy in hitEnemies)
         {
             if (enemy.TryGetComponent<EnemyAIBase>(out var enemyAI))
             {
-                enemyAI.TakeDamage(1); // Deal 1 damage per hit
+                enemyAI.TakeDamage(1);
             }
         }
 
-        // Allow movement after 60% of animation
-        yield return new WaitForSeconds(0.3f);
+        // 🔥 Attaque magique si le bâton est actif
+        if (batonObject != null && batonObject.activeInHierarchy)
+        {
+            // Calcule la direction vers la souris ou un clic
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = (mouseWorldPos - fireSpawnPoint.position).normalized;
+
+            // Créer une étincelle à la fin du bâton
+            CreateSparkEffect(fireSpawnPoint.position); // Nouvelle fonction pour gérer l'étincelle
+        }
+
+        // Attendre avant de pouvoir attaquer de nouveau
+        // yield return new WaitForSeconds(0.3f);
         isAction = false;
-        
-        // Full attack cooldown
+
+        // Cooldown d'attaque
         yield return new WaitForSeconds(0.2f);
         isAttacking = false;
     }
+
+    void CreateSparkEffect(Vector3 spawnPosition)
+    {
+        // Crée une petite étincelle ou un effet visuel au bout du bâton
+        // Utilise ton prefab d'étincelle, ici je suppose que tu as un prefab SparkPrefab
+        GameObject spark = Instantiate(firePrefab, spawnPosition, Quaternion.identity); 
+        // Tu peux personnaliser la durée de l'étincelle si nécessaire
+        Destroy(spark, 0.2f); // Supprimer l'étincelle après un court délai
+    }
+
     void Update()
     {
         // If the player is dead, stop all movement, actions, and footstep sounds
@@ -193,10 +213,10 @@ public class PlayerObj : MonoBehaviour
                 }
             }
 
-            // Attack input (Space key)
-            if (Input.GetKeyDown(KeyCode.Space))
+            // Attack input (Mouse button left or right)
+            if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) && !isAttacking)
             {
-                TriggerAttackAnimation();
+                StartCoroutine(PerformAttack());
             }
 
             transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);

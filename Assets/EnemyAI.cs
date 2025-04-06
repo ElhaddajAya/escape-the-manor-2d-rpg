@@ -19,12 +19,12 @@ public class EnemyAIBase : MonoBehaviour
     protected Transform player;
     protected bool isChasing = false;
     protected bool isAttacking = false;
-    protected float lastAttackTime = 0f;
+    protected float lastAttackTime = 0.5f;
     private int patrolDirection = 1;
     private float lastDirection = 0f;
     public int maxHealth = 5; // New variable
     protected int currentHealth; // New variable
-    public float deathAnimationTime = 1f; // New variable
+    public float deathAnimationTime = 3f; // New variable
 
 
     protected virtual void Start()
@@ -44,30 +44,55 @@ public class EnemyAIBase : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        
-        // Play hurt animation if not already attacking/dying
-        if (currentHealth > 0 && !isAttacking)
-        {
-            animator.SetTrigger("3_Damaged");
-        }
 
         if (currentHealth <= 0)
         {
-            Die();
+            animator.SetTrigger("4_Death"); // joue l’anim
+            rb.velocity = Vector2.zero;
+            rb.simulated = false;
+
+            StartCoroutine(DelayedDestroy());
+        }
+        else
+        {
+            animator.SetTrigger("3_Damaged"); // joue l’anim de dégât
+            StartCoroutine(DamageFeedback());
         }
     }
+
+    IEnumerator DamageFeedback()
+    {
+        // optionnel : effet visuel ou freeze
+        yield return new WaitForSeconds(2f); // laisse l’anim de dégât se jouer
+    }
+
+    IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(3f); // durée de l'animation de mort
+        Destroy(gameObject); // supprime l’ennemi après
+    }
+
     // NEW METHOD: Handle death
     protected virtual void Die()
     {
         // Disable all enemy functionality
         isAttacking = true;
-        rb.velocity = Vector2.zero;
-        this.enabled = false; // Disables the entire script
+        isChasing = false;
+        rb.velocity = Vector2.zero; // Stop all movement
+        rb.simulated = false; // Disable physics simulation
+        this.enabled = false; // Disable the script
         GetComponent<Collider2D>().enabled = false; // Disable collisions
-        
+
+        // Stop pathfinding
+        if (seeker != null)
+        {
+            seeker.enabled = false; // Disable the Seeker component
+        }
+        path = null; // Clear the current path
+
         // Play death animation
         animator.SetTrigger("4_Death");
-        
+
         // Destroy after animation completes
         Destroy(gameObject, deathAnimationTime);
     }

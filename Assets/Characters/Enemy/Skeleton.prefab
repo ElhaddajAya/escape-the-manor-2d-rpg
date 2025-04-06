@@ -7698,7 +7698,9 @@ MonoBehaviour:
   speed: 3
   chaseRange: 4
   attackRange: 1
-  attackCooldown: 1
+  attackCooldown: 3
+  maxHealth: 5
+  deathAnimationTime: 3
 --- !u!58 &8079580111076465977
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7760,7 +7762,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 67818
+  m_InstanceId: 118742
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -7780,7 +7782,9 @@ MonoBehaviour:
   speed: 4
   chaseRange: 4
   attackRange: 1
-  attackCooldown: 1
+  attackCooldown: 3
+  maxHealth: 4
+  deathAnimationTime: 3
 --- !u!1 &8827643254797090275
 GameObject:
   m_ObjectHideFlags: 0

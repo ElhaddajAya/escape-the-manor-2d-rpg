@@ -4162,8 +4162,10 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 5
-  attackRange: 3
-  attackCooldown: 1
+  attackRange: 2
+  attackCooldown: 3
+  maxHealth: 5
+  deathAnimationTime: 3
 --- !u!114 &7397214174429206397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4193,8 +4195,10 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 5
-  attackRange: 3
-  attackCooldown: 1
+  attackRange: 2
+  attackCooldown: 5
+  maxHealth: 5
+  deathAnimationTime: 3
 --- !u!1 &1253027004482661863
 GameObject:
   m_ObjectHideFlags: 0
