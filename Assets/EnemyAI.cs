@@ -62,8 +62,27 @@ public class EnemyAIBase : MonoBehaviour
 
     IEnumerator DamageFeedback()
     {
-        // optionnel : effet visuel ou freeze
-        yield return new WaitForSeconds(2f); // laisse l’anim de dégât se jouer
+        // Knockback effect (push enemy slightly away from the enemy)
+        GameObject player = GameObject.FindWithTag("Player"); // Assuming the player has the tag "Player"
+        if (player != null)
+        {
+            Vector2 knockbackDirection = (transform.position - player.transform.position).normalized;
+            rb.AddForce(knockbackDirection * 4f, ForceMode2D.Impulse); // Adjust knockback force
+        }
+
+        // Stop all movement and path updating
+        rb.velocity = Vector2.zero;
+        isChasing = false;
+        isAttacking = true;
+        seeker.enabled = false;
+
+        // Wait for the knockback effect to complete
+        yield return new WaitForSeconds(1.5f);
+
+        // Resume movement and path updating
+        isAttacking = false;
+        seeker.enabled = true;
+        rb.velocity = Vector2.zero;
     }
 
     IEnumerator DelayedDestroy()

@@ -7653,14 +7653,14 @@ MonoBehaviour:
     mode: 2
     interval: 0.5
     sensitivity: 7.7
-    maximumInterval: 2
+    maximumInterval: 0.5
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.6
-  pickNextWaypointDist: 2
-  endReachedDistance: 0.2
+  slowdownDistance: 10
+  pickNextWaypointDist: 3
+  endReachedDistance: 10
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -7762,7 +7762,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 118742
+  m_InstanceId: 92772
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
