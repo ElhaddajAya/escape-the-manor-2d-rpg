@@ -8,6 +8,7 @@ public class SkeletonAI : EnemyAIBase
         attackRange = 1f;
         attackCooldown = 2f;
         maxHealth = 5; // Skeletons die in 5 hits
+        damageForce = 5; 
     }
 
     protected override void Attack()

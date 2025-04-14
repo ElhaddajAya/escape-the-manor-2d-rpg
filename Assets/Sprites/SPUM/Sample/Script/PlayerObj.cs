@@ -272,7 +272,7 @@ public class PlayerObj : MonoBehaviour
         isAction = false;
     }
 
-    public void TakeDamage() {
+    public void TakeDamage(int damage) {
         if (isAction) return; // Prevent taking damage multiple times rapidly
 
         // Play the damaged animation
@@ -283,7 +283,7 @@ public class PlayerObj : MonoBehaviour
         isAction = true; // Temporarily prevent movement
 
         // Reduce health
-        health -= 10;
+        health -= damage;
         if (health <= 0) {
             Die();
             return;

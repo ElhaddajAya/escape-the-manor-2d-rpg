@@ -4121,7 +4121,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 4
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -4166,6 +4166,7 @@ MonoBehaviour:
   attackCooldown: 3
   maxHealth: 7
   deathAnimationTime: 3
+  damageForce: 10
 --- !u!114 &7397214174429206397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4199,6 +4200,7 @@ MonoBehaviour:
   attackCooldown: 5
   maxHealth: 7
   deathAnimationTime: 3
+  damageForce: 10
 --- !u!1 &1253027004482661863
 GameObject:
   m_ObjectHideFlags: 0

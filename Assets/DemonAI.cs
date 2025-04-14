@@ -10,6 +10,7 @@ public class DemonAI : EnemyAIBase
         attackRange = 1f;
         attackCooldown = 2f;
         maxHealth = 7; // Le démon meurt en 7 coups
+        damageForce = 7; 
     }
 
     protected override void Attack()

@@ -25,7 +25,7 @@ public class EnemyAIBase : MonoBehaviour
     public int maxHealth; // New variable
     protected int currentHealth; // New variable
     public float deathAnimationTime = 3f; // New variable
-
+    public int damageForce = 10; // default damage value for player
 
     protected virtual void Start()
     {
@@ -195,7 +195,7 @@ public class EnemyAIBase : MonoBehaviour
                 float playerDistance = Vector2.Distance(transform.position, playerObj.transform.position);
                 if (playerDistance <= attackRange)
                 {
-                    playerObj.TakeDamage();
+                    playerObj.TakeDamage(damageForce);
                 }
             }
         }

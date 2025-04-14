@@ -3,6 +3,7 @@ using UnityEngine;
 public class FireProjectile : MonoBehaviour
 {
     public float lifetime = 2f;
+    public int damageForce = 10;
     private Rigidbody2D rb;
 
     private void Awake() // ✅ Initialisation plus tôt dans le cycle de vie
@@ -29,7 +30,7 @@ public class FireProjectile : MonoBehaviour
             PlayerObj player = collision.GetComponent<PlayerObj>();
             if (player != null)
             {
-                player.TakeDamage();
+                player.TakeDamage(damageForce);
             }
             Destroy(gameObject);
         }

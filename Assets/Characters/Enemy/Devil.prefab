@@ -4001,7 +4001,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 4
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -4046,6 +4046,7 @@ MonoBehaviour:
   attackCooldown: 4
   maxHealth: 10
   deathAnimationTime: 1
+  damageForce: 10
 --- !u!114 &5783935268899546043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4065,6 +4066,7 @@ MonoBehaviour:
   attackCooldown: 4
   maxHealth: 10
   deathAnimationTime: 3
+  damageForce: 10
   firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
   retreatRange: 2
   fireSpeed: 7
