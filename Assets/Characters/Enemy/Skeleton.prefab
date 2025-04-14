@@ -7639,7 +7639,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 5
+  maxSpeed: 4
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -7778,8 +7778,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd90ceafe2fec64e8b25106c559b5fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints: []
-  speed: 3
+  patrolPoints:
+  - {fileID: 0}
+  speed: 4
   chaseRange: 4
   attackRange: 1
   attackCooldown: 3
