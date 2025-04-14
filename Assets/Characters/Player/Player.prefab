@@ -5344,7 +5344,7 @@ MonoBehaviour:
   isAction: 0
   footstepsSound: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}
   health: 100
-  attackRange: 4
+  attackRange: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512

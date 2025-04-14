@@ -173,6 +173,9 @@ public class EnemyAIBase : MonoBehaviour
     {
         if (isAttacking || player.GetComponent<PlayerObj>().isAction) return;
 
+        float playerDistance = Vector2.Distance(transform.position, player.position);
+        if (playerDistance > attackRange) return; // add this check
+
         isAttacking = true;
         rb.velocity = Vector2.zero;
         animator.SetTrigger("2_Attack");
@@ -187,9 +190,13 @@ public class EnemyAIBase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerObj playerObj = collision.GetComponent<PlayerObj>();
-            if (playerObj != null && Vector2.Distance(transform.position, playerObj.transform.position) <= attackRange)
+            if (playerObj != null)
             {
-                playerObj.TakeDamage();
+                float playerDistance = Vector2.Distance(transform.position, playerObj.transform.position);
+                if (playerDistance <= attackRange)
+                {
+                    playerObj.TakeDamage();
+                }
             }
         }
     }
