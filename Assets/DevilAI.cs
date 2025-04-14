@@ -13,7 +13,9 @@ public class DevilAI : EnemyAIBase
         base.Start();
         speed = 5.5f;
         chaseRange = 7f;
-        attackRange = 3f;
+        attackRange = 1f;
+        attackCooldown = 4f;
+        maxHealth = 10; 
     }
 
     protected override void Update()

@@ -4140,9 +4140,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.6
+  slowdownDistance: 1.2
   pickNextWaypointDist: 2
-  endReachedDistance: 0.2
+  endReachedDistance: 1
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -4162,9 +4162,9 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 5
-  attackRange: 2
+  attackRange: 1
   attackCooldown: 3
-  maxHealth: 5
+  maxHealth: 7
   deathAnimationTime: 3
 --- !u!114 &7397214174429206397
 MonoBehaviour:
@@ -4195,9 +4195,9 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 5
-  attackRange: 2
+  attackRange: 1
   attackCooldown: 5
-  maxHealth: 5
+  maxHealth: 7
   deathAnimationTime: 3
 --- !u!1 &1253027004482661863
 GameObject:

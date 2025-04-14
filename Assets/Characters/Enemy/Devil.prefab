@@ -4020,9 +4020,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.6
+  slowdownDistance: 1.2
   pickNextWaypointDist: 2
-  endReachedDistance: 0.2
+  endReachedDistance: 1
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -4042,9 +4042,9 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 2
-  attackCooldown: 3
-  maxHealth: 6
+  attackRange: 1
+  attackCooldown: 4
+  maxHealth: 10
   deathAnimationTime: 1
 --- !u!114 &5783935268899546043
 MonoBehaviour:
@@ -4061,9 +4061,9 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 2
-  attackCooldown: 5
-  maxHealth: 5
+  attackRange: 1
+  attackCooldown: 4
+  maxHealth: 10
   deathAnimationTime: 3
   firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
   retreatRange: 2

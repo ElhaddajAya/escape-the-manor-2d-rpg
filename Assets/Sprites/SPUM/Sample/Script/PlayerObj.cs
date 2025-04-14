@@ -164,7 +164,7 @@ public class PlayerObj : MonoBehaviour
         isAction = false;
 
         // Cooldown d'attaque
-        yield return new WaitForSeconds(0.2f);
+        // yield return new WaitForSeconds(0.2f);
         isAttacking = false;
     }
 

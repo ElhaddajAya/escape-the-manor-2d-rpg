@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FireProjectile : MonoBehaviour
 {
-    public float lifetime = 3f;
+    public float lifetime = 2f;
     private Rigidbody2D rb;
 
     private void Awake() // ✅ Initialisation plus tôt dans le cycle de vie

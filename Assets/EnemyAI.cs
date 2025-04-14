@@ -5,10 +5,10 @@ using Pathfinding;
 public class EnemyAIBase : MonoBehaviour
 {
     public Transform[] patrolPoints;
-    public float speed = 4f;
-    public float chaseRange = 5f;
+    public float speed;
+    public float chaseRange;
     public float attackRange = 1f;
-    public float attackCooldown = 1f;
+    public float attackCooldown;
     protected int currentPatrolIndex = 0;
     protected Transform target;
     protected Seeker seeker;
@@ -22,7 +22,7 @@ public class EnemyAIBase : MonoBehaviour
     protected float lastAttackTime = 0.5f;
     private int patrolDirection = 1;
     private float lastDirection = 0f;
-    public int maxHealth = 5; // New variable
+    public int maxHealth; // New variable
     protected int currentHealth; // New variable
     public float deathAnimationTime = 3f; // New variable
 
@@ -180,6 +180,18 @@ public class EnemyAIBase : MonoBehaviour
         lastAttackTime = Time.time;
 
         StartCoroutine(ResumeAfterAttack());
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            PlayerObj playerObj = collision.GetComponent<PlayerObj>();
+            if (playerObj != null && Vector2.Distance(transform.position, playerObj.transform.position) <= attackRange)
+            {
+                playerObj.TakeDamage();
+            }
+        }
     }
 
     public IEnumerator ResumeAfterAttack()
