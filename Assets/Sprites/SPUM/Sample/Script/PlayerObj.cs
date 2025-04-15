@@ -34,6 +34,7 @@ public class PlayerObj : MonoBehaviour
     public GameObject firePrefab; // Le feu à lancer (prefab avec animation)
     public Transform fireSpawnPoint; // Point de départ du feu (ex: la main du joueur)
     public GameObject batonObject; // L’objet "Bâton" dans la hiérarchie
+    public HealthBar healthBar;
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
@@ -86,6 +87,11 @@ public class PlayerObj : MonoBehaviour
         if (footstepsSound == null)
         {
             Debug.LogError("Le clip audio des pas n'est pas assigné !");
+        }
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(health);
         }
 
         // Assurez-vous que l'AudioSource est configuré pour la lecture en boucle
@@ -284,6 +290,13 @@ public class PlayerObj : MonoBehaviour
 
         // Reduce health
         health -= damage;
+
+        // Mettre à jour la barre de vie
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(health);
+        }
+
         if (health <= 0) {
             Die();
             return;
@@ -338,6 +351,12 @@ public class PlayerObj : MonoBehaviour
 
         isDead = false;  // Set player as alive
         isAction = false;  // Allow movement again
+
+        // Refill health
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(health);
+        }
 
         // Make sure the player is not holding any previous directional input
         _goalPos = transform.position;  // Reset the goal position to the spawn point
