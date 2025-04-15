@@ -4161,12 +4161,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolPoints: []
   speed: 4
-  chaseRange: 5
+  chaseRange: 7
   attackRange: 1
   attackCooldown: 3
   maxHealth: 7
   deathAnimationTime: 3
   damageForce: 10
+  healthBar: {fileID: 0}
 --- !u!114 &7397214174429206397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4195,12 +4196,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolPoints: []
   speed: 4
-  chaseRange: 5
+  chaseRange: 7
   attackRange: 1
   attackCooldown: 5
   maxHealth: 7
   deathAnimationTime: 3
   damageForce: 10
+  healthBar: {fileID: 0}
 --- !u!1 &1253027004482661863
 GameObject:
   m_ObjectHideFlags: 0

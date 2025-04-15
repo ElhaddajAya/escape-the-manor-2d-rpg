@@ -26,6 +26,7 @@ public class EnemyAIBase : MonoBehaviour
     protected int currentHealth; // New variable
     public float deathAnimationTime = 3f; // New variable
     public int damageForce = 10; // default damage value for player
+    public HealthBar healthBar;
 
     protected virtual void Start()
     {
@@ -38,12 +39,22 @@ public class EnemyAIBase : MonoBehaviour
         InvokeRepeating(nameof(UpdatePath), 0f, 1f);
 
         currentHealth = maxHealth; // Initialize health
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+        }
     }
 
     // NEW METHOD: Handle taking damage
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
 
         if (currentHealth <= 0)
         {
