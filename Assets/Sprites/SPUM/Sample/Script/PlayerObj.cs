@@ -92,6 +92,7 @@ public class PlayerObj : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(health);
+            healthBar.Hide(); // la cache au départ
         }
 
         // Assurez-vous que l'AudioSource est configuré pour la lecture en boucle
@@ -295,6 +296,10 @@ public class PlayerObj : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.SetHealth(health);
+            if (healthBar != null && !healthBar.gameObject.activeSelf)
+            {
+                healthBar.Show(); // Afficher la barre de vie
+            }
         }
 
         if (health <= 0) {

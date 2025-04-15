@@ -43,6 +43,7 @@ public class EnemyAIBase : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(maxHealth);
+            healthBar.Hide(); // la cache au départ
         }
     }
 
@@ -54,6 +55,10 @@ public class EnemyAIBase : MonoBehaviour
         if (healthBar != null)
         {
             healthBar.SetHealth(currentHealth);
+            if (healthBar != null && !healthBar.gameObject.activeSelf)
+            {
+                healthBar.Show(); // Afficher la barre de vie
+            }
         }
 
         if (currentHealth <= 0)

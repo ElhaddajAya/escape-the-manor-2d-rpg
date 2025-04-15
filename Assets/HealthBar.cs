@@ -19,4 +19,15 @@ public class HealthBar : MonoBehaviour
     {
         slider.value = health;
     }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
 }
