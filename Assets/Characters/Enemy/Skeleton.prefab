@@ -7639,7 +7639,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 3
+  maxSpeed: 4
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -7695,13 +7695,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  speed: 3
+  speed: 4
   chaseRange: 4
   attackRange: 1
   attackCooldown: 3
   maxHealth: 5
   deathAnimationTime: 3
   damageForce: 10
+  healthBar: {fileID: 0}
 --- !u!58 &8079580111076465977
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7763,7 +7764,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 118742
+  m_InstanceId: 55636
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -7788,6 +7789,7 @@ MonoBehaviour:
   maxHealth: 5
   deathAnimationTime: 3
   damageForce: 10
+  healthBar: {fileID: 0}
 --- !u!1 &8827643254797090275
 GameObject:
   m_ObjectHideFlags: 0

@@ -4042,11 +4042,12 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 1
+  attackRange: 3
   attackCooldown: 4
   maxHealth: 10
   deathAnimationTime: 1
   damageForce: 10
+  healthBar: {fileID: 0}
 --- !u!114 &5783935268899546043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4062,11 +4063,12 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 1
+  attackRange: 3
   attackCooldown: 4
   maxHealth: 10
   deathAnimationTime: 3
   damageForce: 10
+  healthBar: {fileID: 0}
   firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
   retreatRange: 2
   fireSpeed: 7

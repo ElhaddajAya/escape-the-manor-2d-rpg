@@ -4121,7 +4121,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 4
+  maxSpeed: 5
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -4160,13 +4160,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoints: []
-  speed: 4
+  speed: 5
   chaseRange: 7
   attackRange: 1
   attackCooldown: 3
   maxHealth: 7
   deathAnimationTime: 3
-  damageForce: 10
+  damageForce: 7
   healthBar: {fileID: 0}
 --- !u!114 &7397214174429206397
 MonoBehaviour:
@@ -4195,13 +4195,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoints: []
-  speed: 4
+  speed: 5
   chaseRange: 7
   attackRange: 1
   attackCooldown: 5
   maxHealth: 7
   deathAnimationTime: 3
-  damageForce: 10
+  damageForce: 7
   healthBar: {fileID: 0}
 --- !u!1 &1253027004482661863
 GameObject:
