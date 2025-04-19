@@ -7699,7 +7699,7 @@ MonoBehaviour:
   chaseRange: 4
   attackRange: 1
   attackCooldown: 3
-  maxHealth: 5
+  maxHealth: 50
   deathAnimationTime: 3
   damageForce: 10
   healthBar: {fileID: 0}
@@ -7786,7 +7786,7 @@ MonoBehaviour:
   chaseRange: 4
   attackRange: 1
   attackCooldown: 3
-  maxHealth: 5
+  maxHealth: 50
   deathAnimationTime: 3
   damageForce: 10
   healthBar: {fileID: 0}

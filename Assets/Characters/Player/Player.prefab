@@ -5343,7 +5343,7 @@ MonoBehaviour:
   _goalPos: {x: 0, y: 0, z: 0}
   isAction: 0
   footstepsSound: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}
-  health: 100
+  health: 150
   attackRange: 0
   enemyLayer:
     serializedVersion: 2

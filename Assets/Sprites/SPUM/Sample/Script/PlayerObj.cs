@@ -151,7 +151,7 @@ public class PlayerObj : MonoBehaviour
         {
             if (enemy.TryGetComponent<EnemyAIBase>(out var enemyAI))
             {
-                enemyAI.TakeDamage(1);
+                enemyAI.TakeDamage(10);
             }
         }
 
@@ -348,7 +348,7 @@ public class PlayerObj : MonoBehaviour
     }
 
     public void Respawn() {
-        health = 100;
+        health = 150;
         transform.position = GameObject.Find("DefaultSpawnPoint").transform.position;
 
         rb.velocity = Vector2.zero;  // Ensure any residual velocity is cleared.

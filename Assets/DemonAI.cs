@@ -9,7 +9,7 @@ public class DemonAI : EnemyAIBase
         chaseRange = 5f;
         attackRange = 1f;
         attackCooldown = 2f;
-        maxHealth = 7; // Le démon meurt en 7 coups
+        maxHealth = 70; // Le démon meurt en 7 coups
         damageForce = 7; 
     }
 

@@ -15,7 +15,7 @@ public class DevilAI : EnemyAIBase
         chaseRange = 7f;
         attackRange = 1f;
         attackCooldown = 4f;
-        maxHealth = 10; 
+        maxHealth = 100; 
         // damageForce = 10; // No need to set it here because the Fire Projectile will handle it
     }
 

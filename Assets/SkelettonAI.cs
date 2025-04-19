@@ -7,7 +7,7 @@ public class SkeletonAI : EnemyAIBase
         chaseRange = 4f;
         attackRange = 1f;
         attackCooldown = 2f;
-        maxHealth = 5; // Skeletons die in 5 hits
+        maxHealth = 50; // Skeletons die in 5 hits
         damageForce = 5; 
     }
 
