@@ -151,7 +151,12 @@ public class PlayerObj : MonoBehaviour
         {
             if (enemy.TryGetComponent<EnemyAIBase>(out var enemyAI))
             {
-                enemyAI.TakeDamage(10);
+                // 🔥 Attaque magique si le bâton est actif
+                if (batonObject != null && batonObject.activeInHierarchy) {
+                    enemyAI.TakeDamage(10);
+                } else {
+                    enemyAI.TakeDamage(5); // Attaque de base
+                }
             }
         }
 

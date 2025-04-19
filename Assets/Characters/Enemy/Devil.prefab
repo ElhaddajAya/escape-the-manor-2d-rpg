@@ -4042,7 +4042,7 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 3
+  attackRange: 1.5
   attackCooldown: 4
   maxHealth: 100
   deathAnimationTime: 1
@@ -4063,7 +4063,7 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 3
+  attackRange: 1.5
   attackCooldown: 4
   maxHealth: 100
   deathAnimationTime: 3
