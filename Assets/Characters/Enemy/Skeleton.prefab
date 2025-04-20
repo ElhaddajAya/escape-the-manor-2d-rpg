@@ -7639,7 +7639,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 3
+  maxSpeed: 4
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -7658,9 +7658,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 10
-  pickNextWaypointDist: 3
-  endReachedDistance: 10
+  slowdownDistance: 5
+  pickNextWaypointDist: 2
+  endReachedDistance: 1
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -7695,12 +7695,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  speed: 3
+  speed: 4
   chaseRange: 4
   attackRange: 1
   attackCooldown: 3
-  maxHealth: 5
+  maxHealth: 50
   deathAnimationTime: 3
+  damageForce: 10
+  healthBar: {fileID: 0}
 --- !u!58 &8079580111076465977
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7762,7 +7764,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 92772
+  m_InstanceId: 55636
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -7778,13 +7780,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd90ceafe2fec64e8b25106c559b5fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints: []
+  patrolPoints:
+  - {fileID: 0}
   speed: 4
   chaseRange: 4
   attackRange: 1
   attackCooldown: 3
-  maxHealth: 4
+  maxHealth: 50
   deathAnimationTime: 3
+  damageForce: 10
+  healthBar: {fileID: 0}
 --- !u!1 &8827643254797090275
 GameObject:
   m_ObjectHideFlags: 0

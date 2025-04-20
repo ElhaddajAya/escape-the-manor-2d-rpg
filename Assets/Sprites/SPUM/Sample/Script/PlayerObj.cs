@@ -34,6 +34,7 @@ public class PlayerObj : MonoBehaviour
     public GameObject firePrefab; // Le feu à lancer (prefab avec animation)
     public Transform fireSpawnPoint; // Point de départ du feu (ex: la main du joueur)
     public GameObject batonObject; // L’objet "Bâton" dans la hiérarchie
+    public HealthBar healthBar;
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
@@ -86,6 +87,12 @@ public class PlayerObj : MonoBehaviour
         if (footstepsSound == null)
         {
             Debug.LogError("Le clip audio des pas n'est pas assigné !");
+        }
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(health);
+            healthBar.Hide(); // la cache au départ
         }
 
         // Assurez-vous que l'AudioSource est configuré pour la lecture en boucle
@@ -144,7 +151,12 @@ public class PlayerObj : MonoBehaviour
         {
             if (enemy.TryGetComponent<EnemyAIBase>(out var enemyAI))
             {
-                enemyAI.TakeDamage(1);
+                // 🔥 Attaque magique si le bâton est actif
+                if (batonObject != null && batonObject.activeInHierarchy) {
+                    enemyAI.TakeDamage(10);
+                } else {
+                    enemyAI.TakeDamage(5); // Attaque de base
+                }
             }
         }
 
@@ -164,7 +176,7 @@ public class PlayerObj : MonoBehaviour
         isAction = false;
 
         // Cooldown d'attaque
-        yield return new WaitForSeconds(0.2f);
+        // yield return new WaitForSeconds(0.2f);
         isAttacking = false;
     }
 
@@ -272,7 +284,7 @@ public class PlayerObj : MonoBehaviour
         isAction = false;
     }
 
-    public void TakeDamage() {
+    public void TakeDamage(int damage) {
         if (isAction) return; // Prevent taking damage multiple times rapidly
 
         // Play the damaged animation
@@ -283,7 +295,18 @@ public class PlayerObj : MonoBehaviour
         isAction = true; // Temporarily prevent movement
 
         // Reduce health
-        health -= 10;
+        health -= damage;
+
+        // Mettre à jour la barre de vie
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(health);
+            if (healthBar != null && !healthBar.gameObject.activeSelf)
+            {
+                healthBar.Show(); // Afficher la barre de vie
+            }
+        }
+
         if (health <= 0) {
             Die();
             return;
@@ -330,7 +353,7 @@ public class PlayerObj : MonoBehaviour
     }
 
     public void Respawn() {
-        health = 100;
+        health = 150;
         transform.position = GameObject.Find("DefaultSpawnPoint").transform.position;
 
         rb.velocity = Vector2.zero;  // Ensure any residual velocity is cleared.
@@ -338,6 +361,12 @@ public class PlayerObj : MonoBehaviour
 
         isDead = false;  // Set player as alive
         isAction = false;  // Allow movement again
+
+        // Refill health
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(health);
+        }
 
         // Make sure the player is not holding any previous directional input
         _goalPos = transform.position;  // Reset the goal position to the spawn point

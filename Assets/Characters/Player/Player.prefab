@@ -5343,14 +5343,15 @@ MonoBehaviour:
   _goalPos: {x: 0, y: 0, z: 0}
   isAction: 0
   footstepsSound: {fileID: 8300000, guid: f1bebbc0accefdb46957bff1c5243d68, type: 3}
-  health: 100
-  attackRange: 4
+  health: 150
+  attackRange: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   firePrefab: {fileID: 1688553382294080032, guid: 0fc6e7100b40d244c9669c7a7d8076c3, type: 3}
   fireSpawnPoint: {fileID: 6922491965291044359}
   batonObject: {fileID: 4316828965475164992}
+  healthBar: {fileID: 0}
 --- !u!212 &7082069840265155860
 SpriteRenderer:
   m_ObjectHideFlags: 0

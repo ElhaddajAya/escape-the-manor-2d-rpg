@@ -4001,7 +4001,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 4
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -4020,9 +4020,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 10
-  pickNextWaypointDist: 3
-  endReachedDistance: 10
+  slowdownDistance: 1.2
+  pickNextWaypointDist: 2
+  endReachedDistance: 1
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -4042,10 +4042,12 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 2
-  attackCooldown: 3
-  maxHealth: 6
+  attackRange: 1.5
+  attackCooldown: 4
+  maxHealth: 100
   deathAnimationTime: 1
+  damageForce: 10
+  healthBar: {fileID: 0}
 --- !u!114 &5783935268899546043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4061,10 +4063,12 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 2
-  attackCooldown: 5
-  maxHealth: 5
+  attackRange: 1.5
+  attackCooldown: 4
+  maxHealth: 100
   deathAnimationTime: 3
+  damageForce: 10
+  healthBar: {fileID: 0}
   firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
   retreatRange: 2
   fireSpeed: 7

@@ -5,10 +5,10 @@ using Pathfinding;
 public class EnemyAIBase : MonoBehaviour
 {
     public Transform[] patrolPoints;
-    public float speed = 4f;
-    public float chaseRange = 5f;
+    public float speed;
+    public float chaseRange;
     public float attackRange = 1f;
-    public float attackCooldown = 1f;
+    public float attackCooldown;
     protected int currentPatrolIndex = 0;
     protected Transform target;
     protected Seeker seeker;
@@ -22,10 +22,11 @@ public class EnemyAIBase : MonoBehaviour
     protected float lastAttackTime = 0.5f;
     private int patrolDirection = 1;
     private float lastDirection = 0f;
-    public int maxHealth = 5; // New variable
+    public int maxHealth; // New variable
     protected int currentHealth; // New variable
     public float deathAnimationTime = 3f; // New variable
-
+    public int damageForce = 10; // default damage value for player
+    public HealthBar healthBar;
 
     protected virtual void Start()
     {
@@ -38,12 +39,27 @@ public class EnemyAIBase : MonoBehaviour
         InvokeRepeating(nameof(UpdatePath), 0f, 1f);
 
         currentHealth = maxHealth; // Initialize health
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+            healthBar.Hide(); // la cache au départ
+        }
     }
 
     // NEW METHOD: Handle taking damage
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+            if (healthBar != null && !healthBar.gameObject.activeSelf)
+            {
+                healthBar.Show(); // Afficher la barre de vie
+            }
+        }
 
         if (currentHealth <= 0)
         {
@@ -192,6 +208,9 @@ public class EnemyAIBase : MonoBehaviour
     {
         if (isAttacking || player.GetComponent<PlayerObj>().isAction) return;
 
+        float playerDistance = Vector2.Distance(transform.position, player.position);
+        if (playerDistance > attackRange) return; // add this check
+
         isAttacking = true;
         rb.velocity = Vector2.zero;
         animator.SetTrigger("2_Attack");
@@ -199,6 +218,22 @@ public class EnemyAIBase : MonoBehaviour
         lastAttackTime = Time.time;
 
         StartCoroutine(ResumeAfterAttack());
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            PlayerObj playerObj = collision.GetComponent<PlayerObj>();
+            if (playerObj != null)
+            {
+                float playerDistance = Vector2.Distance(transform.position, playerObj.transform.position);
+                if (playerDistance <= attackRange)
+                {
+                    playerObj.TakeDamage(damageForce);
+                }
+            }
+        }
     }
 
     public IEnumerator ResumeAfterAttack()

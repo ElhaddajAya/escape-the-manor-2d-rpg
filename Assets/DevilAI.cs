@@ -13,7 +13,10 @@ public class DevilAI : EnemyAIBase
         base.Start();
         speed = 5.5f;
         chaseRange = 7f;
-        attackRange = 3f;
+        attackRange = 1f;
+        attackCooldown = 4f;
+        maxHealth = 100; 
+        // damageForce = 10; // No need to set it here because the Fire Projectile will handle it
     }
 
     protected override void Update()
@@ -40,21 +43,26 @@ public class DevilAI : EnemyAIBase
 
     IEnumerator FireAttack()
     {
-        // Attendre que l'animation d'attaque commence (ajuster ce délai selon ton animation)
-        yield return new WaitForSeconds(0.1f); // Attendre un peu pour que l'animation se lance
-
-        // Lancer le feu à la position des bras (firePoint)
-        if (firePrefab != null && firePoint != null)
+        while (isAttacking)
         {
-            GameObject fireball = Instantiate(firePrefab, firePoint.position, Quaternion.identity); // Utiliser firePoint
-            FireProjectile fireScript = fireball.GetComponent<FireProjectile>();
+            // Attendre que l'animation d'attaque commence (ajuster ce délai selon ton animation)
+            yield return new WaitForSeconds(0.1f); // Attendre un peu pour que l'animation se lance
 
-            if (fireScript != null)
+            // Lancer le feu à la position des bras (firePoint)
+            if (firePrefab != null && firePoint != null)
             {
-                // Calculer la direction du feu par rapport à l'ennemi
-                Vector2 direction = (player.position - firePoint.position).normalized; // Utiliser firePoint
-                fireScript.Launch(direction, fireSpeed);
+                GameObject fireball = Instantiate(firePrefab, firePoint.position, Quaternion.identity); // Utiliser firePoint
+                FireProjectile fireScript = fireball.GetComponent<FireProjectile>();
+
+                if (fireScript != null)
+                {
+                    // Calculer la direction du feu par rapport à l'ennemi
+                    Vector2 direction = (player.position - firePoint.position).normalized; // Utiliser firePoint
+                    fireScript.Launch(direction, fireSpeed);
+                }
             }
+
+            yield return new WaitForSeconds(0.3f); // Attendre un peu avant de lancer à nouveau
         }
     }
     
