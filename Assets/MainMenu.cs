@@ -1,14 +1,15 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    //public string gameSceneName = "Main_Scene";
+    public SceneFader sceneFader; // Reference to the fader
+    public string sceneToLoad = "Main_Scene";
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Main_Scene");
+        sceneFader.FadeToScene(sceneToLoad); // Use the fade instead of direct load
     }
+
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
