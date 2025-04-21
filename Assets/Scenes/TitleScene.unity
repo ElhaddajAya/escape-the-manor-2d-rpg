@@ -374,7 +374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -781,6 +781,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2742fe5c4fae2d49856d21ad3962b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneFader: {fileID: 1871949476}
+  sceneToLoad: Main_Scene
 --- !u!1 &912116056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,7 +1490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86be5afa97cf514a81ef0c546f431fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeImage: {fileID: 0}
+  fadeImage: {fileID: 627749498}
   fadeDuration: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
