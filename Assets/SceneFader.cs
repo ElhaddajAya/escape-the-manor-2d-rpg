@@ -7,7 +7,7 @@ public class SceneFader : MonoBehaviour
 {
     public Image fadeImage;
     public float fadeDuration = 1f;
-
+    public AudioSource fadeSound;
     void Start()
     {
         // Start by fading in
@@ -20,31 +20,38 @@ public class SceneFader : MonoBehaviour
     }
 
     IEnumerator FadeIn()
+{
+    float time = fadeDuration;
+    while (time > 0)
     {
-        float time = fadeDuration;
-        while (time > 0)
-        {
-            time -= Time.deltaTime;
-            float alpha = time / fadeDuration;
-            SetAlpha(alpha);
-            yield return null;
-        }
-        SetAlpha(0);
+        time -= Time.deltaTime;
+        float alpha = time / fadeDuration;
+        SetAlpha(alpha);
+        yield return null;
     }
+    SetAlpha(0);
+    //fadeImage.gameObject.SetActive(false); 
+}
+
 
     IEnumerator FadeOut(string sceneName)
+{
+    // 🔊 Play the sound effect at the start of the fade
+    if (fadeSound != null)
+        fadeSound.Play();
+
+    float time = 0;
+    while (time < fadeDuration)
     {
-        float time = 0;
-        while (time < fadeDuration)
-        {
-            time += Time.deltaTime;
-            float alpha = time / fadeDuration;
-            SetAlpha(alpha);
-            yield return null;
-        }
-        SetAlpha(1);
-        SceneManager.LoadScene(sceneName);
+        time += Time.deltaTime;
+        float alpha = time / fadeDuration;
+        SetAlpha(alpha);
+        yield return null;
     }
+    SetAlpha(1);
+    SceneManager.LoadScene(sceneName);
+}
+
 
     void SetAlpha(float a)
     {
