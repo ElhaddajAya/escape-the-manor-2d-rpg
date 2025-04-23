@@ -1,63 +1,41 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BatonPickup : MonoBehaviour
 {
-    public string playerTag = "Player";
-    public GameObject uiPrompt; // Le texte UI "Magic Wand - Press E to collect"
-
-    private bool isPlayerNear = false;
-    private GameObject player;
-
-    void Start()
-    {
-        if (uiPrompt != null)
-            uiPrompt.SetActive(false); // Cache le texte au début
-    }
+    private bool playerNearby = false;
+    private GameObject playerRef;
 
     void Update()
     {
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
+        if (playerNearby && Input.GetKeyDown(KeyCode.E))
         {
-            if (player != null)
+            PlayerObj player = playerRef.GetComponent<PlayerObj>();
+            if (player != null && player.batonObject != null)
             {
-                // Trouver automatiquement l'objet P_Weapon dans le joueur
-                Transform weapon = player.transform.Find("P_Weapon");
-                if (weapon != null)
-                {
-                    weapon.gameObject.SetActive(true);
-                    Debug.Log("Bâton magique équipé !");
-                }
-                else
-                {
-                    Debug.LogWarning("L'objet 'P_Weapon' n'a pas été trouvé dans le joueur !");
-                }
+                // Active le bâton dans la hiérarchie du joueur
+                player.batonObject.SetActive(true);
 
-                if (uiPrompt != null)
-                    uiPrompt.SetActive(false);
-
-                Destroy(gameObject); // Supprime l’objet au sol
+                // Détruit l'objet de la scène
+                Destroy(gameObject);
             }
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(playerTag))
+        if (other.CompareTag("Player"))
         {
-            player = other.gameObject;
-            isPlayerNear = true;
-            if (uiPrompt != null)
-                uiPrompt.SetActive(true);
+            playerNearby = true;
+            playerRef = other.gameObject;
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag(playerTag))
+        if (other.CompareTag("Player"))
         {
-            isPlayerNear = false;
-            if (uiPrompt != null)
-                uiPrompt.SetActive(false);
+            playerNearby = false;
         }
     }
 }

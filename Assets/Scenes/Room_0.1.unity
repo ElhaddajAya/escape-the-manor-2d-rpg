@@ -629905,12 +629905,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7364399851424692575, guid: a76852799265a52449a984aa8a1b8252, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3312421
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364399851424692575, guid: a76852799265a52449a984aa8a1b8252, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3312421
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364399851424692575, guid: a76852799265a52449a984aa8a1b8252, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3312421
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364399851424692575, guid: a76852799265a52449a984aa8a1b8252, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 127.39
+      value: 127.42
       objectReference: {fileID: 0}
     - target: {fileID: 7364399851424692575, guid: a76852799265a52449a984aa8a1b8252, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 69.15
+      value: 69.08
       objectReference: {fileID: 0}
     - target: {fileID: 7364399851424692575, guid: a76852799265a52449a984aa8a1b8252, type: 3}
       propertyPath: m_LocalPosition.z
@@ -629996,9 +630008,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.14134355, y: 0.0871772}
+  m_Offset: {x: 0.048365112, y: 0.046508744}
   serializedVersion: 2
-  m_Radius: 0.8608794
+  m_Radius: 0.84485865
 --- !u!114 &4577896707765588296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630011,7 +630023,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccecbf17a3fbe4c4fa1684e8c6286da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  batonInPlayer: {fileID: 0}
+  messageTitle: Magic Wand
+  messageAction: Press E to collect
+  uiTextObject: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
