@@ -16,7 +16,7 @@ TagManager:
   - UI
   - Walls
   - Decoratives
-  - 
+  - Furnitures
   - Enemy
   - Player
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: Decoratives
     uniqueID: 2589751549
+    locked: 0
+  - name: Furnitures
+    uniqueID: 2570353521
     locked: 0
   - name: Walls
     uniqueID: 2211625251

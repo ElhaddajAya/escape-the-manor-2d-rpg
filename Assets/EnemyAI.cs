@@ -250,7 +250,6 @@ public class EnemyAIBase : MonoBehaviour
             seeker.StartPath(rb.position, target.position, OnPathComplete);
         }
     }
-
     void OnPathComplete(Path p)
     {
         if (!p.error)
