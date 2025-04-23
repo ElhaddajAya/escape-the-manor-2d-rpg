@@ -30,7 +30,7 @@ public class SceneFader : MonoBehaviour
         yield return null;
     }
     SetAlpha(0);
-    fadeImage.gameObject.SetActive(false); 
+    //fadeImage.gameObject.SetActive(false); 
 }
 
 
