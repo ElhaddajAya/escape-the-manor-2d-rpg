@@ -18,7 +18,7 @@ public class ButtonClickSound : MonoBehaviour
     private System.Collections.IEnumerator PlayShortSound()
     {
         audioSource.Play();
-        yield return new WaitForSeconds(0.5f); // play only 0.5s
+        yield return new WaitForSeconds(0.1f); // play only 0.5s
         audioSource.Stop();
     }
 }
