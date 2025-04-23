@@ -4,7 +4,7 @@ using UnityEngine;
 public class DevilAI : EnemyAIBase
 {
     public GameObject firePrefab; // Assigné dans l'inspecteur
-    public float retreatRange = 2f;
+    // public float retreatRange = 2f;
     public float fireSpeed = 7f;
     public Transform firePoint; // Référence au point où le feu doit sortir
 
@@ -25,10 +25,10 @@ public class DevilAI : EnemyAIBase
 
         float playerDistance = Vector2.Distance(transform.position, player.position);
 
-        if (playerDistance < retreatRange)
-        {
-            Retreat();
-        }
+        // if (playerDistance < retreatRange)
+        // {
+        //     Retreat();
+        // }
     }
 
     protected override void Attack()
@@ -66,10 +66,10 @@ public class DevilAI : EnemyAIBase
         }
     }
     
-    void Retreat()
-    {
-        Vector2 retreatDirection = ((Vector2)transform.position - (Vector2)player.position).normalized;
-        rb.velocity = retreatDirection * (speed * 1.5f);
-        Debug.Log("Devil se retire stratégiquement !");
-    }
+    // void Retreat()
+    // {
+    //     Vector2 retreatDirection = ((Vector2)transform.position - (Vector2)player.position).normalized;
+    //     rb.velocity = retreatDirection * (speed * 1.5f);
+    //     Debug.Log("Devil se retire stratégiquement !");
+    // }
 }

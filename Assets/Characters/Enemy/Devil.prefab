@@ -4022,7 +4022,7 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 1.2
   pickNextWaypointDist: 2
-  endReachedDistance: 1
+  endReachedDistance: 0.6
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -4063,14 +4063,13 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 1.5
+  attackRange: 2.5
   attackCooldown: 4
   maxHealth: 100
   deathAnimationTime: 3
   damageForce: 10
   healthBar: {fileID: 0}
   firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
-  retreatRange: 2
   fireSpeed: 7
   firePoint: {fileID: 4055827116187663264}
 --- !u!1 &1694226004405638191
