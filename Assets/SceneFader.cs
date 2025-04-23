@@ -20,17 +20,19 @@ public class SceneFader : MonoBehaviour
     }
 
     IEnumerator FadeIn()
+{
+    float time = fadeDuration;
+    while (time > 0)
     {
-        float time = fadeDuration;
-        while (time > 0)
-        {
-            time -= Time.deltaTime;
-            float alpha = time / fadeDuration;
-            SetAlpha(alpha);
-            yield return null;
-        }
-        SetAlpha(0);
+        time -= Time.deltaTime;
+        float alpha = time / fadeDuration;
+        SetAlpha(alpha);
+        yield return null;
     }
+    SetAlpha(0);
+    fadeImage.gameObject.SetActive(false); 
+}
+
 
     IEnumerator FadeOut(string sceneName)
     {
