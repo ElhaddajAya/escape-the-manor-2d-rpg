@@ -35,6 +35,10 @@ public class PlayerObj : MonoBehaviour
     public Transform fireSpawnPoint; // Point de départ du feu (ex: la main du joueur)
     public GameObject batonObject; // L’objet "Bâton" dans la hiérarchie
     public HealthBar healthBar;
+    [SerializeField] private AudioClip attackMeleeSound;
+    [SerializeField] private AudioClip attackMagicSound;
+    [SerializeField] private AudioClip damageSound;
+    [SerializeField] private AudioClip deathSound;
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
@@ -142,6 +146,16 @@ public class PlayerObj : MonoBehaviour
 
         // Jouer l'animation d'attaque
         animator.SetTrigger("2_Attack");
+
+        // 🔊 Son attaque
+        if (batonObject != null && batonObject.activeInHierarchy)
+        {
+            audioSource.PlayOneShot(attackMagicSound); // Son magique
+        }
+        else
+        {
+            audioSource.PlayOneShot(attackMeleeSound); // Son mêlée
+        }
 
         yield return new WaitForSeconds(0.5f); // Petit délai avant d'agir
 
@@ -290,6 +304,8 @@ public class PlayerObj : MonoBehaviour
         // Play the damaged animation
         animator.SetTrigger("3_Damaged");
 
+        audioSource.PlayOneShot(damageSound); // Play damage sound
+
         // Stop movement
         rb.velocity = Vector2.zero;
         isAction = true; // Temporarily prevent movement
@@ -337,6 +353,7 @@ public class PlayerObj : MonoBehaviour
 
     public void Die() {
         animator.SetTrigger("4_Death");
+        audioSource.PlayOneShot(deathSound); // Play death sound
         Debug.Log("Player has died!");
 
         rb.velocity = Vector2.zero;
