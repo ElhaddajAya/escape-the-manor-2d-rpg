@@ -39,6 +39,7 @@ public class PlayerObj : MonoBehaviour
     [SerializeField] private AudioClip attackMagicSound;
     [SerializeField] private AudioClip damageSound;
     [SerializeField] private AudioClip deathSound;
+    private AudioSource audioSourceSFX;
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
@@ -126,6 +127,13 @@ public class PlayerObj : MonoBehaviour
         }
 
         animator = GetComponentInChildren<Animator>();
+
+        // Créer un AudioSource indépendant pour les SFX (attaque, dégâts, mort)
+        audioSourceSFX = gameObject.AddComponent<AudioSource>();
+        audioSourceSFX.playOnAwake = false;
+        audioSourceSFX.loop = false;
+        audioSourceSFX.spatialBlend = 0f;
+        audioSourceSFX.volume = 1f; // Tu peux ajuster
     }
 
     public void SetStateAnimationIndex(PlayerState state, int index = 0)
