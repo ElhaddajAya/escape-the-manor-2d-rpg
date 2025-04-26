@@ -85,8 +85,13 @@ public class EnemyAIBase : MonoBehaviour
         else
         {
             animator.SetTrigger("3_Damaged"); // joue l’anim de dégât
-            sfxSource.PlayOneShot(damageSound); // Play damage sound
-            StartCoroutine(DamageFeedback());
+
+            // Changer le pitch du sfx pour un effet plus natural
+            sfxSource.clip = damageSound;
+            sfxSource.pitch = Random.Range(0.9f, 1.2f); // Random pitch 🎯
+            sfxSource.Play(); // ✅ Utilise Play() pas PlayOneShot()
+            
+            StartCoroutine(DamageFeedback()); // Joue le feedback de dégât  
         }
     }
 
