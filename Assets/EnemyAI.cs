@@ -27,6 +27,11 @@ public class EnemyAIBase : MonoBehaviour
     public float deathAnimationTime = 3f; // New variable
     public int damageForce = 10; // default damage value for player
     public HealthBar healthBar;
+    public AudioClip detectionSound;
+    [SerializeField] private AudioClip damageSound;
+    [SerializeField] private AudioClip deathSound;
+    private AudioSource sfxSource;
+    private bool hasPlayedDetectionSound = false;
 
     protected virtual void Start()
     {
@@ -45,6 +50,13 @@ public class EnemyAIBase : MonoBehaviour
             healthBar.SetMaxHealth(maxHealth);
             healthBar.Hide(); // la cache au départ
         }
+
+        // 🔥 Créer un audio source dédié pour les SFX
+        sfxSource = gameObject.AddComponent<AudioSource>();
+        sfxSource.playOnAwake = false;
+        sfxSource.loop = false;
+        sfxSource.volume = 0.2f; // Volume à 50% pour tous les sons joués par ce AudioSource
+        sfxSource.spatialBlend = 0f; // 2D
     }
 
     // NEW METHOD: Handle taking damage
@@ -64,6 +76,7 @@ public class EnemyAIBase : MonoBehaviour
         if (currentHealth <= 0)
         {
             animator.SetTrigger("4_Death"); // joue l’anim
+            sfxSource.PlayOneShot(deathSound); // Play death sound
             rb.velocity = Vector2.zero;
             rb.simulated = false;
 
@@ -72,6 +85,7 @@ public class EnemyAIBase : MonoBehaviour
         else
         {
             animator.SetTrigger("3_Damaged"); // joue l’anim de dégât
+            sfxSource.PlayOneShot(damageSound); // Play damage sound
             StartCoroutine(DamageFeedback());
         }
     }
@@ -140,6 +154,7 @@ public class EnemyAIBase : MonoBehaviour
         {
             isChasing = false;
             target = patrolPoints[currentPatrolIndex];
+            hasPlayedDetectionSound = false; // 🔥 Remettre à zéro si player mort
             return;
         }
 
@@ -151,6 +166,14 @@ public class EnemyAIBase : MonoBehaviour
         }
         else if (playerDistance < chaseRange)
         {
+            if (!isChasing) // 🔥 Si on commence la chasse
+            {
+                if (detectionSound != null && sfxSource != null && !hasPlayedDetectionSound)
+                {
+                    sfxSource.PlayOneShot(detectionSound);
+                    hasPlayedDetectionSound = true;
+                }
+            }
             isChasing = true;
             target = player;
         }
@@ -158,6 +181,7 @@ public class EnemyAIBase : MonoBehaviour
         {
             isChasing = false;
             target = patrolPoints[currentPatrolIndex];
+            hasPlayedDetectionSound = false; // 🔥 Peut rejouer si perdu et retrouvé
         }
     }
 

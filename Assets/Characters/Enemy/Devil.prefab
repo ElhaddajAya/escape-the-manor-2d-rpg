@@ -3930,7 +3930,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -851756957
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 9
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4048,6 +4048,9 @@ MonoBehaviour:
   deathAnimationTime: 1
   damageForce: 10
   healthBar: {fileID: 0}
+  detectionSound: {fileID: 8300000, guid: b76a37fc85e91564ba67bf162f854288, type: 3}
+  damageSound: {fileID: 8300000, guid: 0c13693faf864744a988b6853bc836a6, type: 3}
+  deathSound: {fileID: 8300000, guid: 035c0fedbeaac23468143e5a3907654b, type: 3}
 --- !u!114 &5783935268899546043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4063,13 +4066,16 @@ MonoBehaviour:
   patrolPoints: []
   speed: 4
   chaseRange: 7
-  attackRange: 2.5
+  attackRange: 3
   attackCooldown: 4
   maxHealth: 100
   deathAnimationTime: 3
   damageForce: 10
   healthBar: {fileID: 0}
-  firePrefab: {fileID: 2907729292273292253, guid: c8bc22f6ba91ace43908109fc22d5031, type: 3}
+  detectionSound: {fileID: 8300000, guid: b76a37fc85e91564ba67bf162f854288, type: 3}
+  damageSound: {fileID: 8300000, guid: 0c13693faf864744a988b6853bc836a6, type: 3}
+  deathSound: {fileID: 8300000, guid: 035c0fedbeaac23468143e5a3907654b, type: 3}
+  firePrefab: {fileID: 55798241580407174, guid: 8e11ae273891cb448b97e3c464ae2e4f, type: 3}
   fireSpeed: 7
   firePoint: {fileID: 4055827116187663264}
 --- !u!1 &1694226004405638191
