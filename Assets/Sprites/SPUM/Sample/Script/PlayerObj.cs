@@ -158,11 +158,11 @@ public class PlayerObj : MonoBehaviour
         // 🔊 Son attaque
         if (batonObject != null && batonObject.activeInHierarchy)
         {
-            audioSource.PlayOneShot(attackMagicSound); // Son magique
+            audioSourceSFX.PlayOneShot(attackMagicSound); // Son magique
         }
         else
         {
-            audioSource.PlayOneShot(attackMeleeSound); // Son mêlée
+            audioSourceSFX.PlayOneShot(attackMeleeSound); // Son mêlée
         }
 
         yield return new WaitForSeconds(0.5f); // Petit délai avant d'agir
@@ -312,7 +312,7 @@ public class PlayerObj : MonoBehaviour
         // Play the damaged animation
         animator.SetTrigger("3_Damaged");
 
-        audioSource.PlayOneShot(damageSound); // Play damage sound
+        audioSourceSFX.PlayOneShot(damageSound); // Play damage sound
 
         // Stop movement
         rb.velocity = Vector2.zero;
@@ -361,7 +361,7 @@ public class PlayerObj : MonoBehaviour
 
     public void Die() {
         animator.SetTrigger("4_Death");
-        audioSource.PlayOneShot(deathSound); // Play death sound
+        audioSourceSFX.PlayOneShot(deathSound); // Play death sound
         Debug.Log("Player has died!");
 
         rb.velocity = Vector2.zero;

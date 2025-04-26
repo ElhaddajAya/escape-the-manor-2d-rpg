@@ -5350,8 +5350,12 @@ MonoBehaviour:
     m_Bits: 512
   firePrefab: {fileID: 1688553382294080032, guid: 0fc6e7100b40d244c9669c7a7d8076c3, type: 3}
   fireSpawnPoint: {fileID: 6922491965291044359}
-  batonObject: {fileID: 4316828965475164992}
+  batonObject: {fileID: 5172163965684254137}
   healthBar: {fileID: 0}
+  attackMeleeSound: {fileID: 8300000, guid: aa3b30b34fabe9444be0a1a099c10f1f, type: 3}
+  attackMagicSound: {fileID: 8300000, guid: 7dd05f9c802d5e14b9a54487ab523447, type: 3}
+  damageSound: {fileID: 8300000, guid: 36e06d64095427b41abe10e301d8dc2e, type: 3}
+  deathSound: {fileID: 8300000, guid: e150ee57aca12f34b8b92bd617b8915c, type: 3}
 --- !u!212 &7082069840265155860
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5391,7 +5395,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1403064485
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 10
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
