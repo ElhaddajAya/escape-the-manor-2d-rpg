@@ -151,6 +151,7 @@ public class EnemyAIBase : MonoBehaviour
         Destroy(gameObject, deathAnimationTime);
     }
 
+
     protected virtual void Update()
     {
         if (isAttacking) return;
