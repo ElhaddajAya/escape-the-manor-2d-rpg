@@ -7,15 +7,21 @@ public class ItemPickup : MonoBehaviour
     public Sprite itemSprite;
     public string itemName;
 
+    public GameObject promptText; // <- à glisser depuis l'inspecteur
+
     private bool playerNearby = false;
     private GameObject playerRef;
 
     void Start()
     {
-        // Vérifie si l'objet a déjà été ramassé
         if (PersistentManager.Instance != null && PersistentManager.Instance.HasItem(itemName))
         {
-            Destroy(gameObject); // Déjà ramassé, on ne l'affiche pas
+            Destroy(gameObject); // Déjà ramassé
+        }
+
+        if (promptText != null)
+        {
+            promptText.SetActive(false); // Assure qu'il est caché au départ
         }
     }
 
@@ -28,16 +34,13 @@ public class ItemPickup : MonoBehaviour
                 Inventory inventory = GameObject.FindGameObjectWithTag("InventoryManager")?.GetComponent<Inventory>();
                 if (inventory != null && !inventory.IsFull())
                 {
-                    // Ajouter dans UI
                     inventory.AddItem(itemSprite);
-
-                    // Ajouter dans la base de données globale
                     PersistentManager.Instance.AddItem(itemName);
 
-                    // Jouer son
                     AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
-                    // Supprimer objet
+                    if (promptText != null) promptText.SetActive(false);
+
                     Destroy(gameObject);
                 }
             }
@@ -50,6 +53,7 @@ public class ItemPickup : MonoBehaviour
         {
             playerNearby = true;
             playerRef = other.gameObject;
+            if (promptText != null) promptText.SetActive(true);
         }
     }
 
@@ -58,6 +62,7 @@ public class ItemPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNearby = false;
+            if (promptText != null) promptText.SetActive(false);
         }
     }
 }
