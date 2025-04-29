@@ -456,10 +456,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 237542797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1056, y: 594}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 128, y: -33}
+  m_SizeDelta: {x: 3457.0845, y: 1976.9258}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &627749498
 MonoBehaviour:
@@ -1688,6 +1688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeImage: {fileID: 627749498}
   fadeDuration: 1
+  fadeSound: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
