@@ -7,6 +7,7 @@ TagManager:
   - SpawnPoint
   - Obstacle
   - Enemy
+  - InventoryManager
   layers:
   - Default
   - TransparentFX
