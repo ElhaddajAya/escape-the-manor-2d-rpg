@@ -16,7 +16,18 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        items = new List<Sprite>(maxItems);
+        if (items == null)
+        {
+            items = new List<Sprite>(maxItems);
+        }
+
+        // Ensure slots are correctly assigned
+        if (slots == null || slots.Length == 0)
+        {
+            Debug.LogError("Slots array is not assigned or empty. Please assign the slots in the Inspector.");
+            return;
+        }
+
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i] != null)
@@ -31,6 +42,10 @@ public class Inventory : MonoBehaviour
                 rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
                 rectTransform.pivot = new Vector2(0.5f, 0.5f);
                 rectTransform.anchoredPosition = Vector2.zero;
+            }
+            else
+            {
+                Debug.LogError("Slot " + i + " is not assigned in the Inspector.");
             }
         }
     }
@@ -66,12 +81,12 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (i < items.Count)
+            if (slots[i] != null && i < items.Count)
             {
                 slots[i].GetComponent<Image>().sprite = items[i];
                 slots[i].GetComponent<Image>().color = new Color(1, 1, 1, 1); // Set alpha to 255
             }
-            else
+            else if (slots[i] != null)
             {
                 slots[i].GetComponent<Image>().sprite = null;
                 slots[i].GetComponent<Image>().color = new Color(1, 1, 1, 0); // Set alpha to 0
