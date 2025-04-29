@@ -5,6 +5,7 @@ public class BatonPickup : MonoBehaviour
 {
     private bool playerNearby = false;
     private GameObject playerRef;
+    public GameObject equipPromptUI;
 
     void Start()
     {
@@ -36,22 +37,33 @@ public class BatonPickup : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Player"))
     {
-        if (other.CompareTag("Player"))
+        playerNearby = true;
+        playerRef = other.gameObject;
+
+        if (equipPromptUI != null)
         {
-            playerNearby = true;
-            playerRef = other.gameObject;
+            equipPromptUI.SetActive(true);
         }
     }
+}
 
     void OnTriggerExit2D(Collider2D other)
+{
+    if (other.CompareTag("Player"))
     {
-        if (other.CompareTag("Player"))
+        playerNearby = false;
+
+        if (equipPromptUI != null)
         {
-            playerNearby = false;
+            equipPromptUI.SetActive(false);
         }
     }
+}
 }
