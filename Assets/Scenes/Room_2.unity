@@ -6003,7 +6003,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Blood Altar
+  m_text: Blood Rituals Altar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5fd1dc42c1e842a4db5f7a612641f8ca, type: 2}
   m_sharedMaterial: {fileID: -7732634133915799931, guid: 5fd1dc42c1e842a4db5f7a612641f8ca, type: 2}
