@@ -77,6 +77,11 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    public bool IsFull()
+    {
+        return items.Count >= maxItems;
+    }
+
     private void UpdateInventoryUI()
     {
         for (int i = 0; i < slots.Length; i++)

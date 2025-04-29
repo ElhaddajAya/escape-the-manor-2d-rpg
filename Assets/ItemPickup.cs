@@ -3,25 +3,19 @@ using UnityEngine.UI;
 
 public class ItemPickup : MonoBehaviour
 {
-    public AudioClip collectSound; // Sound to play when the item is collected
-    public Sprite itemSprite; // Sprite of the item to add to the inventory
-    public string itemName; // Name of the item (for debugging or UI purposes)
+    public AudioClip collectSound;
+    public Sprite itemSprite;
+    public string itemName;
 
     private bool playerNearby = false;
     private GameObject playerRef;
 
     void Start()
     {
-        // Check if the player already has this item
-        GameObject inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager");
-        if (inventoryManager != null)
+        // Vérifie si l'objet a déjà été ramassé
+        if (PersistentManager.Instance != null && PersistentManager.Instance.HasItem(itemName))
         {
-            Inventory inventory = inventoryManager.GetComponent<Inventory>();
-            if (inventory != null && inventory.HasItem(itemName))
-            {
-                // Player already has the item → destroy the object in the scene
-                Destroy(gameObject);
-            }
+            Destroy(gameObject); // Déjà ramassé, on ne l'affiche pas
         }
     }
 
@@ -29,19 +23,21 @@ public class ItemPickup : MonoBehaviour
     {
         if (playerNearby && Input.GetKeyDown(KeyCode.E))
         {
-            GameObject inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager");
-            if (inventoryManager != null)
+            if (PersistentManager.Instance != null)
             {
-                Inventory inventory = inventoryManager.GetComponent<Inventory>();
-                if (inventory != null)
+                Inventory inventory = GameObject.FindGameObjectWithTag("InventoryManager")?.GetComponent<Inventory>();
+                if (inventory != null && !inventory.IsFull())
                 {
-                    // Add item to inventory
+                    // Ajouter dans UI
                     inventory.AddItem(itemSprite);
 
-                    // Play collect sound
+                    // Ajouter dans la base de données globale
+                    PersistentManager.Instance.AddItem(itemName);
+
+                    // Jouer son
                     AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
-                    // Destroy the item object in the scene
+                    // Supprimer objet
                     Destroy(gameObject);
                 }
             }
@@ -54,7 +50,6 @@ public class ItemPickup : MonoBehaviour
         {
             playerNearby = true;
             playerRef = other.gameObject;
-            Debug.Log("Player detected nearby.");
         }
     }
 
@@ -63,7 +58,6 @@ public class ItemPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNearby = false;
-            Debug.Log("Player left the trigger area.");
         }
     }
 }
