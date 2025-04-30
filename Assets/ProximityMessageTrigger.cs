@@ -1,35 +1,28 @@
 using UnityEngine;
-using UnityEngine.UI; // or TMPro if using TextMeshPro
+using UnityEngine.UI;
 
 public class ProximityMessageTrigger : MonoBehaviour
 {
-    [TextArea]
-    public string messageToShow;
+    public GameObject uiPanel;           // Reference to the Panel (background)
+    public Text messageText;             // Reference to the Text
+    public string messageToShow;         // The message for this object
 
-    public GameObject uiPanel;       // The panel GameObject (from GUI Canvas)
-    public Text messageText;         // The UI Text component to display the message
-    // If using TextMeshPro instead: public TMP_Text messageText;
-
-    void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (uiPanel != null)
-            uiPanel.SetActive(false);
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && uiPanel != null && messageText != null)
+        if (other.CompareTag("Player"))
         {
             uiPanel.SetActive(true);
+            messageText.gameObject.SetActive(true);
             messageText.text = messageToShow;
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && uiPanel != null)
+        if (other.CompareTag("Player"))
         {
             uiPanel.SetActive(false);
+            messageText.gameObject.SetActive(false);
         }
     }
 }
