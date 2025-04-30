@@ -45,17 +45,19 @@ public class ItemPickup : MonoBehaviour
                 }
             }
         }
+        
     }
-
     void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Player"))
     {
-        if (other.CompareTag("Player"))
-        {
-            playerNearby = true;
-            playerRef = other.gameObject;
-            if (promptText != null) promptText.SetActive(true);
-        }
+        Debug.Log("Player entered trigger zone of: " + gameObject.name); // ← TEST
+        playerNearby = true;
+        playerRef = other.gameObject;
+        if (promptText != null) promptText.SetActive(true);
     }
+}
+
 
     void OnTriggerExit2D(Collider2D other)
     {
