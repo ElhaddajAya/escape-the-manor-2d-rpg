@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
     public GameObject[] slots; // Array to hold the slots (each slot should be the ItemImage GameObject)
     private List<Sprite> items; // List to hold the collected items
     public int maxItems = 4; // Maximum number of items in the inventory
+    public GameObject[] slotMarkers; // Drag & Drop dans l’Inspector
+    private int currentSelectedIndex = -1;
 
     void Awake()
     {
@@ -46,6 +48,51 @@ public class Inventory : MonoBehaviour
             else
             {
                 Debug.LogError("Slot " + i + " is not assigned in the Inspector.");
+            }
+        }
+
+        if (slotMarkers != null)
+        {
+            foreach (GameObject marker in slotMarkers)
+            {
+                marker.SetActive(false);
+            }
+        }
+    }
+
+    void Update()
+    {
+        HandleSlotSelection();
+    }
+
+    void HandleSlotSelection()
+    {
+        for (int i = 0; i < maxItems; i++)
+        {
+            if (Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)))
+            {
+                if (i < items.Count)
+                {
+                    currentSelectedIndex = i;
+
+                    // Désactiver toutes les flèches
+                    for (int j = 0; j < slotMarkers.Length; j++)
+                    {
+                        if (slotMarkers[j] != null)
+                            slotMarkers[j].SetActive(j == i); // Activer uniquement celle du slot sélectionné
+                    }
+
+                    Debug.Log("Slot " + (i + 1) + " sélectionné.");
+                }
+                else
+                {
+                    // Si slot vide, on désactive tout
+                    foreach (GameObject marker in slotMarkers)
+                    {
+                        marker.SetActive(false);
+                    }
+                    Debug.Log("Slot " + (i + 1) + " est vide.");
+                }
             }
         }
     }
