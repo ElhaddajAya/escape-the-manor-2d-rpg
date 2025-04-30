@@ -8751,17 +8751,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893028712}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.20470594, w: 0.97882354}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75117815, y: 0.75117815, z: 0.75117815}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1445024887}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 4577896707765588297}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 404.5, y: 227.4}
+  m_AnchoredPosition: {x: 143.0339, y: 192.36841}
   m_SizeDelta: {x: 809, y: 454.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1955018778
@@ -631462,7 +631462,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7364399851424692575, guid: a76852799265a52449a984aa8a1b8252, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1893028716}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6298103539492338486, guid: a76852799265a52449a984aa8a1b8252, type: 3}
       insertIndex: -1
@@ -631524,6 +631527,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipPromptUI: {fileID: 1445024886}
+--- !u!4 &4577896707765588297 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7364399851424692575, guid: a76852799265a52449a984aa8a1b8252, type: 3}
+  m_PrefabInstance: {fileID: 4577896707765588293}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -631535,7 +631543,6 @@ SceneRoots:
   - {fileID: 1277786660}
   - {fileID: 826559764}
   - {fileID: 4577896707765588293}
-  - {fileID: 1893028716}
   - {fileID: 2049627876}
   - {fileID: 268390207}
   - {fileID: 345661084}

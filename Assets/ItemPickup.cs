@@ -32,8 +32,16 @@ public class ItemPickup : MonoBehaviour
             if (PersistentManager.Instance != null)
             {
                 Inventory inventory = GameObject.FindGameObjectWithTag("InventoryManager")?.GetComponent<Inventory>();
-                if (inventory != null && !inventory.IsFull())
+                if (inventory != null)
                 {
+                    if (inventory.IsFull())
+                    {
+                        // 🔥 Affiche le message et bloque la collecte
+                        StartCoroutine(inventory.ShowTitleWithFade());
+                        return;
+                    }
+
+                    // ✅ Sinon, collecte normale
                     inventory.AddItem(itemSprite);
                     PersistentManager.Instance.AddItem(itemName);
 
@@ -53,6 +61,7 @@ public class ItemPickup : MonoBehaviour
         {
             playerNearby = true;
             playerRef = other.gameObject;
+            
             if (promptText != null) promptText.SetActive(true);
         }
     }

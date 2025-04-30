@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class Inventory : MonoBehaviour
     public int maxItems = 4; // Maximum number of items in the inventory
     public GameObject[] slotMarkers; // Drag & Drop dans l’Inspector
     private int currentSelectedIndex = -1;
+    public TextMeshProUGUI titleText;
+    public float fadeDuration = 1f;
+    public float displayTime = 3f; // Time fully visible before fade-out
 
     void Awake()
     {
@@ -60,6 +65,43 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public IEnumerator ShowTitleWithFade()
+    {
+        titleText.gameObject.SetActive(true);
+
+        // Fade In
+        float t = 0;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Clamp01(t / fadeDuration);
+            SetAlpha(alpha);
+            yield return null;
+        }
+
+        // Wait while fully visible
+        yield return new WaitForSeconds(displayTime);
+
+        // Fade Out
+        t = 0;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Clamp01(1 - (t / fadeDuration));
+            SetAlpha(alpha);
+            yield return null;
+        }
+
+        titleText.gameObject.SetActive(false);
+    }
+
+    void SetAlpha(float a)
+    {
+        Color color = titleText.color;
+        color.a = a;
+        titleText.color = color;
+    }
+
     void Update()
     {
         HandleSlotSelection();
@@ -107,6 +149,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
+            StartCoroutine(ShowTitleWithFade());
             Debug.Log("Inventory is full!");
         }
     }
@@ -137,6 +180,8 @@ public class Inventory : MonoBehaviour
             {
                 slots[i].GetComponent<Image>().sprite = items[i];
                 slots[i].GetComponent<Image>().color = new Color(1, 1, 1, 1); // Set alpha to 255
+                // set native size
+                slots[i].GetComponent<Image>().SetNativeSize(); // Set the size of the image to its native size
             }
             else if (slots[i] != null)
             {
