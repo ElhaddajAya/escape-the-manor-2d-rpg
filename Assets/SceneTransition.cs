@@ -139,7 +139,9 @@ public class SceneTransition : MonoBehaviour
                 // Mauvaise clé! On affiche un message d'erreur
                 if (wrongKeyText != null)
                 {
+                    // Activer d'abord le message d'erreur
                     wrongKeyText.SetActive(true);
+                    // Puis démarrer la coroutine qui le désactivera après un délai
                     StartCoroutine(ShowMessageTemporarily(wrongKeyText));
                     Debug.Log("Affichage du message d'erreur: mauvaise clé");
                 }
@@ -155,17 +157,30 @@ public class SceneTransition : MonoBehaviour
 
     private IEnumerator ShowMessageTemporarily(GameObject message)
     {
+        // Vérifier que le message existe
+        if (message == null)
+        {
+            Debug.LogError("Message GameObject est null dans ShowMessageTemporarily");
+            yield break;
+        }
+        
         // S'assurer que le message est bien activé
         message.SetActive(true);
+        Debug.Log("Message activé: " + message.name);
         
         // Attendre la durée spécifiée
         yield return new WaitForSeconds(messageDisplayTime);
         
         // Désactiver le message seulement si le joueur est toujours à proximité
         // (pour éviter de désactiver un message qui aurait déjà été désactivé par OnTriggerExit)
-        if (playerNearby)
+        if (playerNearby && message != null)
         {
             message.SetActive(false);
+            Debug.Log("Message désactivé après délai: " + message.name);
+        }
+        else
+        {
+            Debug.Log("Le joueur n'est plus à proximité ou le message est null, pas de désactivation");
         }
     }
 
