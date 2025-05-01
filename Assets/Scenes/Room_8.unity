@@ -8158,7 +8158,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 50
+    m_FontSize: 36
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -638080,6 +638080,12 @@ PrefabInstance:
       propertyPath: guiPanel
       value: 
       objectReference: {fileID: 684662699}
+    - target: {fileID: 8645396583276102610, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: noteText
+      value: 'When the clock strikes midnight, flesh shall awaken and <color=#950000>blood</color>
+        will spill. The treasure must stay hidden. If they find it, the seal will
+        break, and <color=#5F0000>hell</color> will rise again. '
+      objectReference: {fileID: 0}
     - target: {fileID: 8645396583276102610, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: messageText
       value: 
