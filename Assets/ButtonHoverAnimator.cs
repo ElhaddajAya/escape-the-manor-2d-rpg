@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonHoverAnimator : MonoBehaviour, IPointerEnterHandler
+public class ButtonHoverAnimator : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private Animator animator;
 
@@ -12,6 +12,11 @@ public class ButtonHoverAnimator : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        animator.SetTrigger("Hover");
+        animator.SetBool("Hover", true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        animator.SetBool("Hover", false);
     }
 }
