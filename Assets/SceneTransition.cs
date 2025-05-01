@@ -122,6 +122,8 @@ public class SceneTransition : MonoBehaviour
                 if (PersistentManager.Instance != null)
                 {
                     PersistentManager.Instance.UnlockDoor(doorID);
+                    // Marquer la clé comme utilisée
+                    PersistentManager.Instance.MarkKeyAsUsed(requiredKeyName);
                 }
                 
                 // On cache le message de clé nécessaire
