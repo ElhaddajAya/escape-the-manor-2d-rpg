@@ -25,8 +25,9 @@ public class ReadableNote : MonoBehaviour
         {
             if (guiPanel != null && messageText != null)
             {
-                guiPanel.SetActive(true);
-                messageText.text = noteText;
+                guiPanel.SetActive(true);// Replace placeholder with actual line breaks
+                messageText.text = noteText.Replace("||", "\n");
+                //messageText.text = noteText;
             }
 
             if (promptText != null)
