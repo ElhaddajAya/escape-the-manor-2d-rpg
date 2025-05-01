@@ -1,111 +1,52 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using TMPro;
 
 public class SceneTransition : MonoBehaviour
 {
-    [SerializeField] private string sceneToLoad;
-    [SerializeField] private AudioClip doorSound;
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private Animator animator;
-    [SerializeField] private string targetSpawnPointName;
-
-    [Header("🔐 Lock Settings")]
-    public bool requiresKey = false;
-    public string requiredKeyName = "MasterBedroomKey"; // À adapter pour chaque porte
-    public TextMeshProUGUI lockedTextUI; // UI Text (You need a key)
-    public float fadeDuration = 1f;
-    public float displayTime = 1.5f;
-
-    private Coroutine fadeCoroutine;
+    [SerializeField] private string sceneToLoad; // Nom de la scène à charger
+    [SerializeField] private AudioClip doorSound; // Effet sonore d'ouverture de porte
+    [SerializeField] private AudioSource audioSource; // Source audio pour jouer le son
+    [SerializeField] private Animator animator; // Référence à l'Animator
+    [SerializeField] private string targetSpawnPointName; // Nom du spawn point cible dans la scène principale
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            // Cas : PAS de clé requise
-            if (!requiresKey)
-            {
-                SpawnPointManager.SetTargetSpawnPoint(targetSpawnPointName);
-                StartCoroutine(LoadScene());
-                return;
-            }
+            // Stocker le spawn point cible dans un manager
+            SpawnPointManager.SetTargetSpawnPoint(targetSpawnPointName);
 
-            // Cas : Clé requise → vérifier si le joueur l’a
-            Inventory inventory = GameObject.FindGameObjectWithTag("InventoryManager")?.GetComponent<Inventory>();
-            if (inventory != null && inventory.HasItem(requiredKeyName))
-            {
-                // ✅ Le joueur possède la clé
-                SpawnPointManager.SetTargetSpawnPoint(targetSpawnPointName);
-                StartCoroutine(LoadScene());
-            }
-            else
-            {
-                // ❌ Pas de clé → afficher message
-                if (lockedTextUI != null)
-                {
-                    if (fadeCoroutine != null)
-                        StopCoroutine(fadeCoroutine);
-
-                    fadeCoroutine = StartCoroutine(ShowLockedText());
-                }
-            }
+            // Démarrer la coroutine de transition
+            StartCoroutine(LoadScene());
         }
     }
 
     private IEnumerator LoadScene()
     {
+        // Déclencher l'animation de fade in (Start)
         animator.SetTrigger("Start");
 
+        // Jouer l'effet sonore de la porte
         if (audioSource != null && doorSound != null)
         {
             audioSource.PlayOneShot(doorSound);
         }
 
+        // Attendre la fin de l'animation de fade in (1 seconde)
         yield return new WaitForSeconds(1.5f);
 
+        // Charger la scène
         SceneManager.LoadScene(sceneToLoad);
+
+        // Attendre que la scène soit complètement chargée
         yield return new WaitForEndOfFrame();
 
+        // Déclencher l'animation de fade out (End)
         animator.SetTrigger("End");
+
+        // Attendre la fin de l'animation de fade out (1 seconde)
         yield return new WaitForSeconds(1);
     }
 
-    private IEnumerator ShowLockedText()
-    {
-        lockedTextUI.gameObject.SetActive(true);
-
-        // Fade In
-        float t = 0f;
-        while (t < fadeDuration)
-        {
-            t += Time.deltaTime;
-            float alpha = Mathf.Clamp01(t / fadeDuration);
-            SetTextAlpha(alpha);
-            yield return null;
-        }
-
-        // Wait
-        yield return new WaitForSeconds(displayTime);
-
-        // Fade Out
-        t = 0f;
-        while (t < fadeDuration)
-        {
-            t += Time.deltaTime;
-            float alpha = Mathf.Clamp01(1f - (t / fadeDuration));
-            SetTextAlpha(alpha);
-            yield return null;
-        }
-
-        lockedTextUI.gameObject.SetActive(false);
-    }
-
-    private void SetTextAlpha(float alpha)
-    {
-        Color color = lockedTextUI.color;
-        color.a = alpha;
-        lockedTextUI.color = color;
-    }
 }
