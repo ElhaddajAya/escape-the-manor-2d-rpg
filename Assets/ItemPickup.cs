@@ -3,9 +3,14 @@ using UnityEngine.UI;
 
 public class ItemPickup : MonoBehaviour
 {
-    public AudioClip collectSound;
+    public AudioClip collectSound;  // Son lors de la collecte
+    public AudioClip useSound;      // Son lors de l'utilisation (pour les potions)
     public Sprite itemSprite;
     public string itemName;
+    
+    [Header("Item Type")]
+    public ItemType itemType = ItemType.Key;  // Type d'objet (Clé par défaut)
+    public int healthRestoreAmount = 15;      // Quantité de santé restaurée (pour les potions)
 
     public GameObject promptText; // <- à glisser depuis l'inspecteur
 
@@ -18,7 +23,7 @@ public class ItemPickup : MonoBehaviour
         {
             // Vérifier si l'item a déjà été collecté ou si c'est une clé déjà utilisée
             if (PersistentManager.Instance.HasItem(itemName) || 
-                (PersistentManager.Instance.WasKeyUsed(itemName)))
+                (itemType == ItemType.Key && PersistentManager.Instance.WasKeyUsed(itemName)))
             {
                 Destroy(gameObject); // Déjà ramassé ou utilisé
             }
@@ -47,8 +52,8 @@ public class ItemPickup : MonoBehaviour
                     }
 
                     // ✅ Sinon, collecte normale
-                    inventory.AddItem(itemSprite, itemName);  // Maintenant inclut le nom d'item
-                    PersistentManager.Instance.AddItem(itemName);
+                    inventory.AddItem(itemSprite, itemName, itemType, useSound, healthRestoreAmount);
+                    PersistentManager.Instance.AddItem(itemName, itemType);
 
                     AudioSource.PlayClipAtPoint(collectSound, transform.position);
 

@@ -6,6 +6,7 @@ public class PersistentManager : MonoBehaviour
     public static PersistentManager Instance { get; private set; }
 
     public List<string> collectedItems = new List<string>(); // 🔥 Contient les noms d'items collectés
+    public List<ItemType> collectedItemTypes = new List<ItemType>(); // 🆕 Types des items collectés
     private List<string> unlockedDoors = new List<string>(); // 🔑 Contient les IDs des portes déverrouillées
     private List<string> usedKeys = new List<string>(); // 🔑 Contient les noms des clés déjà utilisées
 
@@ -22,12 +23,13 @@ public class PersistentManager : MonoBehaviour
         }
     }
 
-    public void AddItem(string itemName)
+    public void AddItem(string itemName, ItemType itemType = ItemType.Key)
     {
         if (!collectedItems.Contains(itemName))
         {
             collectedItems.Add(itemName);
-            Debug.Log("Item ajouté au gestionnaire global : " + itemName);
+            collectedItemTypes.Add(itemType);
+            Debug.Log("Item ajouté au gestionnaire global : " + itemName + " (Type: " + itemType + ")");
         }
     }
 
@@ -36,10 +38,22 @@ public class PersistentManager : MonoBehaviour
         return collectedItems.Contains(itemName);
     }
 
+    public ItemType GetItemType(string itemName)
+    {
+        int index = collectedItems.IndexOf(itemName);
+        if (index >= 0 && index < collectedItemTypes.Count)
+        {
+            return collectedItemTypes[index];
+        }
+        return ItemType.Key; // Par défaut
+    }
+
     public void RemoveItem(string itemName)
     {
-        if (collectedItems.Contains(itemName))
+        int index = collectedItems.IndexOf(itemName);
+        if (index >= 0)
         {
+            collectedItemTypes.RemoveAt(index);
             collectedItems.Remove(itemName);
             Debug.Log("Item supprimé : " + itemName);
         }

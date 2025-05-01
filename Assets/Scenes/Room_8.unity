@@ -8698,6 +8698,14 @@ PrefabInstance:
       value: Health Potion 2
       objectReference: {fileID: 0}
     - target: {fileID: 7875146261804966052, guid: 60bd52614f1653f4d80186682a415355, type: 3}
+      propertyPath: itemType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875146261804966052, guid: 60bd52614f1653f4d80186682a415355, type: 3}
+      propertyPath: useSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 1d1f64753b5bccf4c84ecce8fe3aab09, type: 3}
+    - target: {fileID: 7875146261804966052, guid: 60bd52614f1653f4d80186682a415355, type: 3}
       propertyPath: promptText
       value: 
       objectReference: {fileID: 416913941}
