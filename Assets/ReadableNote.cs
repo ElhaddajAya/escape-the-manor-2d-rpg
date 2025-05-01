@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class ReadableNote : MonoBehaviour
 {
     public string noteText;              // The story snippet
     public GameObject guiPanel;         // GUI Canvas > Panel
-    public Text messageText;            // Panel > MessageText
+    public TextMeshProUGUI messageText;            // Panel > MessageText
     public GameObject promptText;       // Paper (1) > Canvas > PromptText
 
     private bool playerNearby = false;
