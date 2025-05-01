@@ -6,6 +6,7 @@ public class PersistentManager : MonoBehaviour
     public static PersistentManager Instance { get; private set; }
 
     public List<string> collectedItems = new List<string>(); // 🔥 Contient les noms d'items collectés
+    private List<string> unlockedDoors = new List<string>(); // 🔑 Contient les IDs des portes déverrouillées
 
     void Awake()
     {
@@ -41,5 +42,20 @@ public class PersistentManager : MonoBehaviour
             collectedItems.Remove(itemName);
             Debug.Log("Item supprimé : " + itemName);
         }
+    }
+    
+    // Méthodes pour gérer les portes déverrouillées
+    public void UnlockDoor(string doorID)
+    {
+        if (!unlockedDoors.Contains(doorID))
+        {
+            unlockedDoors.Add(doorID);
+            Debug.Log("Porte déverrouillée de façon permanente : " + doorID);
+        }
+    }
+    
+    public bool IsDoorUnlocked(string doorID)
+    {
+        return unlockedDoors.Contains(doorID);
     }
 }

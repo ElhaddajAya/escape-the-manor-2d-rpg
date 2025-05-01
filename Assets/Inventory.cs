@@ -8,8 +8,9 @@ public class Inventory : MonoBehaviour
 {
     public GameObject[] slots; // Array to hold the slots (each slot should be the ItemImage GameObject)
     private List<Sprite> items; // List to hold the collected items
+    private List<string> itemNames; // Pour stocker les noms des items 
     public int maxItems = 4; // Maximum number of items in the inventory
-    public GameObject[] slotMarkers; // Drag & Drop dans l’Inspector
+    public GameObject[] slotMarkers; // Drag & Drop dans l'Inspector
     private int currentSelectedIndex = -1;
     public TextMeshProUGUI titleText;
     public float fadeDuration = 1f;
@@ -26,6 +27,7 @@ public class Inventory : MonoBehaviour
         if (items == null)
         {
             items = new List<Sprite>(maxItems);
+            itemNames = new List<string>(maxItems);
         }
 
         // Ensure slots are correctly assigned
@@ -124,11 +126,12 @@ public class Inventory : MonoBehaviour
                             slotMarkers[j].SetActive(j == i); // Activer uniquement celle du slot sélectionné
                     }
 
-                    Debug.Log("Slot " + (i + 1) + " sélectionné.");
+                    Debug.Log("Slot " + (i + 1) + " sélectionné. Item: " + itemNames[i]);
                 }
                 else
                 {
                     // Si slot vide, on désactive tout
+                    currentSelectedIndex = -1;
                     foreach (GameObject marker in slotMarkers)
                     {
                         marker.SetActive(false);
@@ -139,13 +142,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItem(Sprite item)
+    // Ajouter un item avec son nom et son sprite
+    public void AddItem(Sprite item, string itemName)
     {
         if (items.Count < maxItems)
         {
             items.Add(item);
+            itemNames.Add(itemName);
             UpdateInventoryUI();
-            Debug.Log("Item added to inventory: " + item.name);
+            Debug.Log("Item added to inventory: " + itemName);
         }
         else
         {
@@ -154,17 +159,62 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // Méthode pour supprimer un item à un index spécifique
+    public void RemoveItemAtIndex(int index)
+    {
+        if (index >= 0 && index < items.Count)
+        {
+            string removedName = itemNames[index];
+            
+            // Supprimer l'item du PersistentManager aussi
+            if (PersistentManager.Instance != null)
+            {
+                PersistentManager.Instance.RemoveItem(removedName);
+            }
+            
+            // Supprimer l'item de l'inventaire
+            items.RemoveAt(index);
+            itemNames.RemoveAt(index);
+            
+            // Réinitialiser l'index sélectionné
+            currentSelectedIndex = -1;
+            
+            // Désactiver tous les marqueurs
+            if (slotMarkers != null)
+            {
+                foreach (GameObject marker in slotMarkers)
+                {
+                    marker.SetActive(false);
+                }
+            }
+            
+            // Mettre à jour l'UI
+            UpdateInventoryUI();
+            
+            Debug.Log("Item removed from inventory: " + removedName);
+        }
+    }
+    
+    // Obtenir l'index actuellement sélectionné
+    public int GetCurrentSelectedIndex()
+    {
+        return currentSelectedIndex;
+    }
+    
+    // Obtenir le nom de l'item sélectionné
+    public string GetSelectedItemName()
+    {
+        if (currentSelectedIndex >= 0 && currentSelectedIndex < itemNames.Count)
+        {
+            return itemNames[currentSelectedIndex];
+        }
+        return "";
+    }
+
     public bool HasItem(string itemName)
     {
         // Check if the item is already in the inventory
-        foreach (Sprite item in items)
-        {
-            if (item != null && item.name == itemName)
-            {
-                return true;
-            }
-        }
-        return false;
+        return itemNames.Contains(itemName);
     }
 
     public bool IsFull()

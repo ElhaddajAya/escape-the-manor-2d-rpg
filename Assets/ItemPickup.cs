@@ -42,7 +42,7 @@ public class ItemPickup : MonoBehaviour
                     }
 
                     // ✅ Sinon, collecte normale
-                    inventory.AddItem(itemSprite);
+                    inventory.AddItem(itemSprite, itemName);  // Maintenant inclut le nom d'item
                     PersistentManager.Instance.AddItem(itemName);
 
                     AudioSource.PlayClipAtPoint(collectSound, transform.position);
@@ -53,19 +53,18 @@ public class ItemPickup : MonoBehaviour
                 }
             }
         }
-        
     }
+    
     void OnTriggerEnter2D(Collider2D other)
-{
-    if (other.CompareTag("Player"))
     {
-        Debug.Log("Player entered trigger zone of: " + gameObject.name); // ← TEST
-        playerNearby = true;
-        playerRef = other.gameObject;
-        if (promptText != null) promptText.SetActive(true);
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player entered trigger zone of: " + gameObject.name); // ← TEST
+            playerNearby = true;
+            playerRef = other.gameObject;
+            if (promptText != null) promptText.SetActive(true);
+        }
     }
-}
-
 
     void OnTriggerExit2D(Collider2D other)
     {
