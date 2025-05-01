@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 public class ReadableNote : MonoBehaviour
 {
-    public string noteText; // What will show in the GUI
-    public GameObject guiPanel; // The GUI panel (Message + X button)
-    public Text messageText; // The UI text component in the GUI
-    public GameObject promptText; // The world-space "Press E to read" prompt
+    public string noteText;              // The story snippet
+    public GameObject guiPanel;         // GUI Canvas > Panel
+    public Text messageText;            // Panel > MessageText
+    public GameObject promptText;       // Paper (1) > Canvas > PromptText
 
     private bool playerNearby = false;
 
@@ -30,7 +30,7 @@ public class ReadableNote : MonoBehaviour
             }
 
             if (promptText != null)
-                promptText.SetActive(false); // Hide prompt when reading
+                promptText.SetActive(false);
         }
     }
 
@@ -40,7 +40,7 @@ public class ReadableNote : MonoBehaviour
             guiPanel.SetActive(false);
 
         if (playerNearby && promptText != null)
-            promptText.SetActive(true); // Reshow prompt after closing if still nearby
+            promptText.SetActive(true);
     }
 
     void OnTriggerEnter2D(Collider2D other)
