@@ -7428,7 +7428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -367.61, y: 271}
+  m_AnchoredPosition: {x: -570, y: 378}
   m_SizeDelta: {x: 90.7723, y: 65.366}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &794339226
@@ -8121,7 +8121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7784276273247969817, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8515540202654568644, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_IsActive
@@ -8134,8 +8134,8 @@ PrefabInstance:
     - target: {fileID: 8645396583276102610, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: noteText
       value: When the clock strikes midnight, flesh shall awaken and <color=#950000><b>blood</b></color>
-        will spill. The treasure must stay hidden. If they find it, the seal will
-        break, and <color=#950000><b>hell</b></color> will rise again.
+        will spill. ||||The treasure must stay hidden. ||If they find it, the seal
+        will break, and <color=#950000><b>hell</b></color> will rise again.
       objectReference: {fileID: 0}
     - target: {fileID: 8645396583276102610, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: messageText
