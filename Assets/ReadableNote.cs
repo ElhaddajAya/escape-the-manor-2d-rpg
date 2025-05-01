@@ -42,7 +42,6 @@ public class ReadableNote : MonoBehaviour
         if (playerNearby && promptText != null)
             promptText.SetActive(true);
     }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
