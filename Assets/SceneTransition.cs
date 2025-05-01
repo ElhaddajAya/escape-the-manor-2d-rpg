@@ -17,6 +17,7 @@ public class SceneTransition : MonoBehaviour
     [SerializeField] private string requiredKeyName = ""; // Nom de la clé requise
     [SerializeField] private GameObject keyPromptText; // Message "Vous avez besoin d'une clé"
     [SerializeField] private GameObject wrongKeyText; // Message "Mauvaise clé"
+    [SerializeField] private GameObject wrongItemTypeText; // Message "Ce n'est pas une clé" (à ajouter dans l'Inspector)
     [SerializeField] private float messageDisplayTime = 3f; // Durée d'affichage des messages
     
     // ID unique pour identifier cette porte dans le gestionnaire persistant
@@ -46,6 +47,9 @@ public class SceneTransition : MonoBehaviour
             
         if (wrongKeyText != null)
             wrongKeyText.SetActive(false);
+            
+        if (wrongItemTypeText != null)
+            wrongItemTypeText.SetActive(false);
     }
 
     private void Update()
@@ -93,6 +97,9 @@ public class SceneTransition : MonoBehaviour
                 
             if (wrongKeyText != null)
                 wrongKeyText.SetActive(false);
+                
+            if (wrongItemTypeText != null)
+                wrongItemTypeText.SetActive(false);
         }
     }
 
@@ -102,13 +109,33 @@ public class SceneTransition : MonoBehaviour
         
         if (inventory != null)
         {
-            // Vérifier si un slot est sélectionné et contient la bonne clé
+            // Vérifier si un slot est sélectionné
             string selectedItemName = inventory.GetSelectedItemName();
             
             // Si rien n'est sélectionné, on ne fait rien
             if (string.IsNullOrEmpty(selectedItemName))
                 return;
+            
+            // Vérifier si l'objet sélectionné est bien une clé
+            if (inventory.GetSelectedItemType() != ItemType.Key)
+            {
+                // Ce n'est pas une clé mais une potion!
+                if (wrongItemTypeText != null)
+                {
+                    wrongItemTypeText.SetActive(true);
+                    StartCoroutine(ShowMessageTemporarily(wrongItemTypeText));
+                }
                 
+                // Jouer un son d'erreur
+                if (audioSource != null && errorSound != null)
+                {
+                    audioSource.PlayOneShot(errorSound);
+                }
+                
+                return;
+            }
+                
+            // C'est une clé, vérifions si c'est la bonne
             if (selectedItemName == requiredKeyName)
             {
                 // Bonne clé! On peut ouvrir la porte
@@ -196,22 +223,14 @@ public class SceneTransition : MonoBehaviour
         {
             audioSource.PlayOneShot(doorSound);
         }
-
-        // Attendre la fin de l'animation de fade in (1 seconde)
-        yield return new WaitForSeconds(1.5f);
-
-        // Charger la scène
-        SceneManager.LoadScene(sceneToLoad);
-
-        // Attendre que la scène soit complètement chargée
-        yield return new WaitForEndOfFrame();
-
-        // Déclencher l'animation de fade out (End)
-        animator.SetTrigger("End");
-
-        // Attendre la fin de l'animation de fade out (1 seconde)
-        yield return new WaitForSeconds(1);
         
+        // Attendre que l'animation de fade in soit terminée (environ 1 seconde)
+        yield return new WaitForSeconds(1f);
+        
+        // Charger la nouvelle scène
+        SceneManager.LoadScene(sceneToLoad);
+        
+        // Réinitialiser le flag de transition
         isTransitioning = false;
     }
 }

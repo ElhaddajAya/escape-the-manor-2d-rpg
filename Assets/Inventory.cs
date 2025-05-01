@@ -8,13 +8,21 @@ public class Inventory : MonoBehaviour
 {
     public GameObject[] slots; // Array to hold the slots (each slot should be the ItemImage GameObject)
     private List<Sprite> items; // List to hold the collected items
-    private List<string> itemNames; // Pour stocker les noms des items 
+    private List<string> itemNames; // Pour stocker les noms des items
+    private List<ItemType> itemTypes; // Pour stocker les types d'items
+    private List<int> itemHealthAmounts; // Pour stocker les montants de santé des potions
+    private List<AudioClip> itemUseSounds; // Pour stocker les sons d'utilisation
+    
     public int maxItems = 4; // Maximum number of items in the inventory
     public GameObject[] slotMarkers; // Drag & Drop dans l'Inspector
     private int currentSelectedIndex = -1;
     public TextMeshProUGUI titleText;
     public float fadeDuration = 1f;
     public float displayTime = 3f; // Time fully visible before fade-out
+    
+    // Messages pour les potions
+    public string healthFullMessage = "Health is already full!";
+    public string healthRestoredMessage = "Restored +{0} health";
 
     void Awake()
     {
@@ -28,6 +36,9 @@ public class Inventory : MonoBehaviour
         {
             items = new List<Sprite>(maxItems);
             itemNames = new List<string>(maxItems);
+            itemTypes = new List<ItemType>(maxItems);
+            itemHealthAmounts = new List<int>(maxItems);
+            itemUseSounds = new List<AudioClip>(maxItems);
         }
 
         // Ensure slots are correctly assigned
@@ -67,8 +78,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public IEnumerator ShowTitleWithFade()
+    public IEnumerator ShowTitleWithFade(string message = null)
     {
+        // Si un message personnalisé est fourni, on l'utilise
+        if (!string.IsNullOrEmpty(message))
+        {
+            titleText.text = message;
+        }
+        
         titleText.gameObject.SetActive(true);
 
         // Fade In
@@ -95,6 +112,9 @@ public class Inventory : MonoBehaviour
         }
 
         titleText.gameObject.SetActive(false);
+        
+        // Réinitialiser le texte par défaut si nécessaire
+        titleText.text = "Inventory is full!"; // Ou tout autre texte par défaut
     }
 
     void SetAlpha(float a)
@@ -107,6 +127,7 @@ public class Inventory : MonoBehaviour
     void Update()
     {
         HandleSlotSelection();
+        HandleItemUse();
     }
 
     void HandleSlotSelection()
@@ -126,7 +147,7 @@ public class Inventory : MonoBehaviour
                             slotMarkers[j].SetActive(j == i); // Activer uniquement celle du slot sélectionné
                     }
 
-                    Debug.Log("Slot " + (i + 1) + " sélectionné. Item: " + itemNames[i]);
+                    Debug.Log("Slot " + (i + 1) + " sélectionné. Item: " + itemNames[i] + ", Type: " + itemTypes[i]);
                 }
                 else
                 {
@@ -141,16 +162,78 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+    
+    void HandleItemUse()
+    {
+        // Si la touche E est pressée et qu'un item est sélectionné
+        if (Input.GetKeyDown(KeyCode.E) && currentSelectedIndex >= 0 && currentSelectedIndex < itemTypes.Count)
+        {
+            // Si c'est une potion, on l'utilise directement
+            if (itemTypes[currentSelectedIndex] == ItemType.Potion)
+            {
+                UsePotion(currentSelectedIndex);
+            }
+            // Les clés sont utilisées uniquement via le script SceneTransition
+        }
+    }
+    
+    void UsePotion(int index)
+    {
+        if (index < 0 || index >= itemTypes.Count || itemTypes[index] != ItemType.Potion)
+            return;
+            
+        // Trouver le joueur
+        PlayerObj player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerObj>();
+        if (player != null)
+        {
+            int healthAmount = itemHealthAmounts[index];
+            
+            // Vérifier si le joueur a déjà sa santé au maximum
+            if (player.health >= 150) // 150 est la santé maximale dans votre code
+            {
+                StartCoroutine(ShowTitleWithFade(healthFullMessage));
+                return;
+            }
+            
+            // Jouer le son d'utilisation
+            if (itemUseSounds[index] != null)
+            {
+                AudioSource.PlayClipAtPoint(itemUseSounds[index], Camera.main.transform.position);
+            }
+            
+            // Ajouter de la santé au joueur
+            int oldHealth = player.health;
+            player.health = Mathf.Min(player.health + healthAmount, 150);
+            int actualRestored = player.health - oldHealth;
+            
+            // Mettre à jour la barre de vie
+            if (player.healthBar != null)
+            {
+                player.healthBar.SetHealth(player.health);
+                player.healthBar.Show();
+            }
+            
+            // Afficher le message
+            StartCoroutine(ShowTitleWithFade(string.Format(healthRestoredMessage, actualRestored)));
+            
+            // Supprimer la potion de l'inventaire
+            RemoveItemAtIndex(index);
+        }
+    }
 
-    // Ajouter un item avec son nom et son sprite
-    public void AddItem(Sprite item, string itemName)
+    // Ajouter un item avec son nom, son sprite et son type
+    public void AddItem(Sprite item, string itemName, ItemType itemType, AudioClip useSound = null, int healthAmount = 0)
     {
         if (items.Count < maxItems)
         {
             items.Add(item);
             itemNames.Add(itemName);
+            itemTypes.Add(itemType);
+            itemUseSounds.Add(useSound);
+            itemHealthAmounts.Add(healthAmount);
+            
             UpdateInventoryUI();
-            Debug.Log("Item added to inventory: " + itemName);
+            Debug.Log("Item added to inventory: " + itemName + " (Type: " + itemType + ")");
         }
         else
         {
@@ -175,6 +258,9 @@ public class Inventory : MonoBehaviour
             // Supprimer l'item de l'inventaire
             items.RemoveAt(index);
             itemNames.RemoveAt(index);
+            itemTypes.RemoveAt(index);
+            itemUseSounds.RemoveAt(index);
+            itemHealthAmounts.RemoveAt(index);
             
             // Réinitialiser l'index sélectionné
             currentSelectedIndex = -1;
@@ -209,6 +295,16 @@ public class Inventory : MonoBehaviour
             return itemNames[currentSelectedIndex];
         }
         return "";
+    }
+    
+    // Obtenir le type de l'item sélectionné
+    public ItemType GetSelectedItemType()
+    {
+        if (currentSelectedIndex >= 0 && currentSelectedIndex < itemTypes.Count)
+        {
+            return itemTypes[currentSelectedIndex];
+        }
+        return ItemType.Key; // Par défaut
     }
 
     public bool HasItem(string itemName)
