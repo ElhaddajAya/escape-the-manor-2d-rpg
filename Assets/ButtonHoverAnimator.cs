@@ -12,11 +12,11 @@ public class ButtonHoverAnimator : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        animator.SetBool("Hover", true);
+        animator.SetBool("Hover", true);  // now using bool
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        animator.SetBool("Hover", false);
+        animator.SetBool("Hover", false); // return to idle
     }
 }
