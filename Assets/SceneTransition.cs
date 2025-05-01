@@ -18,6 +18,9 @@ public class SceneTransition : MonoBehaviour
     [SerializeField] private GameObject keyPromptText; // Message "Vous avez besoin d'une clé"
     [SerializeField] private GameObject wrongKeyText; // Message "Mauvaise clé"
     [SerializeField] private float messageDisplayTime = 3f; // Durée d'affichage des messages
+    
+    // ID unique pour identifier cette porte dans le gestionnaire persistant
+    [SerializeField] private string doorID = "";
 
     private bool playerNearby = false;
     private GameObject playerRef;
@@ -25,6 +28,18 @@ public class SceneTransition : MonoBehaviour
 
     private void Start()
     {
+        // Générer un ID unique pour la porte si vide
+        if (string.IsNullOrEmpty(doorID))
+        {
+            doorID = gameObject.name + "_" + transform.position.ToString();
+        }
+        
+        // Vérifier si cette porte a déjà été déverrouillée
+        if (PersistentManager.Instance != null && PersistentManager.Instance.IsDoorUnlocked(doorID))
+        {
+            requiresKey = false;
+        }
+        
         // Assurez-vous que les messages sont désactivés au départ
         if (keyPromptText != null)
             keyPromptText.SetActive(false);
@@ -103,6 +118,12 @@ public class SceneTransition : MonoBehaviour
                 // On désactive la condition de clé pour cette porte
                 requiresKey = false;
                 
+                // On enregistre que cette porte est déverrouillée de façon permanente
+                if (PersistentManager.Instance != null)
+                {
+                    PersistentManager.Instance.UnlockDoor(doorID);
+                }
+                
                 // On cache le message de clé nécessaire
                 if (keyPromptText != null)
                     keyPromptText.SetActive(false);
@@ -116,7 +137,9 @@ public class SceneTransition : MonoBehaviour
                 // Mauvaise clé! On affiche un message d'erreur
                 if (wrongKeyText != null)
                 {
+                    wrongKeyText.SetActive(true);
                     StartCoroutine(ShowMessageTemporarily(wrongKeyText));
+                    Debug.Log("Affichage du message d'erreur: mauvaise clé");
                 }
                 
                 // Jouer un son d'erreur
@@ -130,9 +153,18 @@ public class SceneTransition : MonoBehaviour
 
     private IEnumerator ShowMessageTemporarily(GameObject message)
     {
+        // S'assurer que le message est bien activé
         message.SetActive(true);
+        
+        // Attendre la durée spécifiée
         yield return new WaitForSeconds(messageDisplayTime);
-        message.SetActive(false);
+        
+        // Désactiver le message seulement si le joueur est toujours à proximité
+        // (pour éviter de désactiver un message qui aurait déjà été désactivé par OnTriggerExit)
+        if (playerNearby)
+        {
+            message.SetActive(false);
+        }
     }
 
     private IEnumerator LoadScene()
