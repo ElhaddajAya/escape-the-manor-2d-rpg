@@ -7,6 +7,7 @@ public class PersistentManager : MonoBehaviour
 
     public List<string> collectedItems = new List<string>(); // 🔥 Contient les noms d'items collectés
     private List<string> unlockedDoors = new List<string>(); // 🔑 Contient les IDs des portes déverrouillées
+    private List<string> usedKeys = new List<string>(); // 🔑 Contient les noms des clés déjà utilisées
 
     void Awake()
     {
@@ -57,5 +58,20 @@ public class PersistentManager : MonoBehaviour
     public bool IsDoorUnlocked(string doorID)
     {
         return unlockedDoors.Contains(doorID);
+    }
+    
+    // Nouvelles méthodes pour garder trace des clés utilisées
+    public void MarkKeyAsUsed(string keyName)
+    {
+        if (!usedKeys.Contains(keyName))
+        {
+            usedKeys.Add(keyName);
+            Debug.Log("Clé marquée comme utilisée : " + keyName);
+        }
+    }
+    
+    public bool WasKeyUsed(string keyName)
+    {
+        return usedKeys.Contains(keyName);
     }
 }

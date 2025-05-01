@@ -14,9 +14,14 @@ public class ItemPickup : MonoBehaviour
 
     void Start()
     {
-        if (PersistentManager.Instance != null && PersistentManager.Instance.HasItem(itemName))
+        if (PersistentManager.Instance != null)
         {
-            Destroy(gameObject); // Déjà ramassé
+            // Vérifier si l'item a déjà été collecté ou si c'est une clé déjà utilisée
+            if (PersistentManager.Instance.HasItem(itemName) || 
+                (PersistentManager.Instance.WasKeyUsed(itemName)))
+            {
+                Destroy(gameObject); // Déjà ramassé ou utilisé
+            }
         }
 
         if (promptText != null)
