@@ -33,7 +33,7 @@ public class PlayerObj : MonoBehaviour
     public LayerMask enemyLayer; // Add this and set it in Inspector to "Enemy" layer
     public GameObject firePrefab; // Le feu à lancer (prefab avec animation)
     public Transform fireSpawnPoint; // Point de départ du feu (ex: la main du joueur)
-    public GameObject batonObject; // L’objet "Bâton" dans la hiérarchie
+    public GameObject batonObject; // L'objet "Bâton" dans la hiérarchie
     public HealthBar healthBar;
     [SerializeField] private AudioClip attackMeleeSound;
     [SerializeField] private AudioClip attackMagicSound;
@@ -53,11 +53,26 @@ public class PlayerObj : MonoBehaviour
             Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
             // Déplacer le joueur au spawn point
             transform.position = targetSpawnPoint.position;
+            
+            // IMPORTANT: Dégeler le jeu APRÈS avoir placé le joueur correctement
+            // On ajoute un petit délai pour s'assurer que tout est bien initialisé
+            StartCoroutine(UnfreezeAfterSpawn());
         }
         else
         {
             Debug.LogWarning("Le joueur n'a pas été déplacé car aucun spawn point n'a été trouvé.");
+            // Dégeler le jeu même si on n'a pas trouvé de spawn point
+            StartCoroutine(UnfreezeAfterSpawn());
         }
+    }
+    
+    // Nouveau: dégeler le jeu après un léger délai
+    private IEnumerator UnfreezeAfterSpawn()
+    {
+        // Attendre un court instant pour s'assurer que tout est prêt
+        yield return new WaitForSeconds(0.5f);
+        GameState.IsFrozen = false;
+        Debug.Log("Game unfrozen after scene transition");
     }
     
     void Awake()
@@ -146,9 +161,12 @@ public class PlayerObj : MonoBehaviour
         _prefabs.PlayAnimation(state, IndexPair[state]);
     }
 
-    // Replaced PerformAttack
     IEnumerator PerformAttack()
     {
+        // IMPORTANT: Ne pas attaquer si le jeu est gelé
+        if (GameState.IsFrozen)
+            yield break;
+            
         isAttacking = true;
         isAction = true;
 
@@ -193,91 +211,95 @@ public class PlayerObj : MonoBehaviour
             CreateSparkEffect(fireSpawnPoint.position); // Nouvelle fonction pour gérer l'étincelle
         }
 
-        // Attendre avant de pouvoir attaquer de nouveau
-        // yield return new WaitForSeconds(0.3f);
         isAction = false;
-
-        // Cooldown d'attaque
-        // yield return new WaitForSeconds(0.2f);
         isAttacking = false;
     }
 
     void CreateSparkEffect(Vector3 spawnPosition)
     {
         // Crée une petite étincelle ou un effet visuel au bout du bâton
-        // Utilise ton prefab d'étincelle, ici je suppose que tu as un prefab SparkPrefab
         GameObject spark = Instantiate(firePrefab, spawnPosition, Quaternion.identity); 
         // Tu peux personnaliser la durée de l'étincelle si nécessaire
         Destroy(spark, 0.2f); // Supprimer l'étincelle après un court délai
     }
 
     void Update()
-{
-    // 🔒 Freeze check: if the game is frozen, stop all input and actions
-    if (GameState.IsFrozen)
     {
-        if (isFootstepPlaying)
+        // 🔒 IMPORTANT: Freeze check - si le jeu est gelé, arrêter TOUT mouvement et interaction
+        if (GameState.IsFrozen)
         {
-            audioSource.Stop();
+            // S'assurer que tout son s'arrête
+            if (isFootstepPlaying)
+            {
+                audioSource.Stop();
+                isFootstepPlaying = false;
+            }
+            
+            // S'assurer que le joueur reste immobile
+            rb.velocity = Vector2.zero;
+            
+            // Garder la position actuelle
+            _goalPos = transform.position;
+            
+            // Rester en état IDLE
+            _currentState = PlayerState.IDLE;
+            
+            return; // Ne pas traiter le reste de la mise à jour
+        }
+
+        // 💀 Death check: stop everything if dead
+        if (isDead)
+        {
             isFootstepPlaying = false;
-        }
-        return;
-    }
-
-    // 💀 Death check: stop everything if dead
-    if (isDead)
-    {
-        isFootstepPlaying = false;
-        audioSource.Stop();
-        return;
-    }
-
-    // 🎮 Movement input
-    Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-    if (inputDirection != Vector2.zero)
-    {
-        SetMovePos(transform.position + (Vector3)inputDirection);
-
-        if (!isFootstepPlaying)
-        {
-            audioSource.clip = footstepsSound;
-            audioSource.Play();
-            isFootstepPlaying = true;
-        }
-    }
-    else
-    {
-        if (isFootstepPlaying)
-        {
             audioSource.Stop();
-            isFootstepPlaying = false;
+            return;
         }
+
+        // 🎮 Movement input
+        Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        if (inputDirection != Vector2.zero)
+        {
+            SetMovePos(transform.position + (Vector3)inputDirection);
+
+            if (!isFootstepPlaying)
+            {
+                audioSource.clip = footstepsSound;
+                audioSource.Play();
+                isFootstepPlaying = true;
+            }
+        }
+        else
+        {
+            if (isFootstepPlaying)
+            {
+                audioSource.Stop();
+                isFootstepPlaying = false;
+            }
+        }
+
+        // 🗡 Attack input
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) && !isAttacking)
+        {
+            StartCoroutine(PerformAttack());
+        }
+
+        // 🧭 Depth sorting
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
+
+        // 🧍‍♂️ State behavior
+        switch (_currentState)
+        {
+            case PlayerState.IDLE:
+                break;
+
+            case PlayerState.MOVE:
+                DoMove();
+                break;
+        }
+
+        // 🕺 Play animation
+        PlayStateAnimation(_currentState);
     }
-
-    // 🗡 Attack input
-    if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) && !isAttacking)
-    {
-        StartCoroutine(PerformAttack());
-    }
-
-    // 🧭 Depth sorting
-    transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
-
-    // 🧍‍♂️ State behavior
-    switch (_currentState)
-    {
-        case PlayerState.IDLE:
-            break;
-
-        case PlayerState.MOVE:
-            DoMove();
-            break;
-    }
-
-    // 🕺 Play animation
-    PlayStateAnimation(_currentState);
-}
-
 
     void DoMove()
     {
@@ -297,6 +319,10 @@ public class PlayerObj : MonoBehaviour
 
     public void SetMovePos(Vector2 pos)
     {
+        // IMPORTANT: Ne pas accepter de mouvement si le jeu est gelé
+        if (GameState.IsFrozen)
+            return;
+            
         isAction = false;
         _goalPos = pos;
         _currentState = PlayerState.MOVE;
@@ -304,7 +330,9 @@ public class PlayerObj : MonoBehaviour
 
     private void TriggerAttackAnimation()
     {
-        if (isAction) return;
+        // IMPORTANT: Ne pas attaquer si le jeu est gelé
+        if (GameState.IsFrozen || isAction)
+            return;
         
         animator.SetTrigger("2_Attack");
         isAction = true;
@@ -318,7 +346,9 @@ public class PlayerObj : MonoBehaviour
     }
 
     public void TakeDamage(int damage) {
-        if (isAction) return; // Prevent taking damage multiple times rapidly
+        // IMPORTANT: Ne pas prendre de dégâts si le jeu est gelé
+        if (GameState.IsFrozen || isAction)
+            return;
 
         // Play the damaged animation
         animator.SetTrigger("3_Damaged");
@@ -371,6 +401,10 @@ public class PlayerObj : MonoBehaviour
     }
 
     public void Die() {
+        // IMPORTANT: Ne pas mourir si le jeu est gelé
+        if (GameState.IsFrozen)
+            return;
+            
         animator.SetTrigger("4_Death");
         audioSourceSFX.PlayOneShot(deathSound); // Play death sound
         Debug.Log("Player has died!");
@@ -389,6 +423,10 @@ public class PlayerObj : MonoBehaviour
     }
 
     public void Respawn() {
+        // IMPORTANT: Ne pas respawn si le jeu est gelé
+        if (GameState.IsFrozen)
+            return;
+            
         health = 150;
         transform.position = GameObject.Find("DefaultSpawnPoint").transform.position;
 
@@ -410,5 +448,4 @@ public class PlayerObj : MonoBehaviour
 
         Debug.Log("Player has respawned with full health!");
     }
-
 }
