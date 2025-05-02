@@ -225,7 +225,7 @@ public class SceneTransition : MonoBehaviour
         }
         
         // Attendre que l'animation de fade in soit terminée (environ 1 seconde)
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.3f);
         
         // Charger la nouvelle scène
         SceneManager.LoadScene(sceneToLoad);

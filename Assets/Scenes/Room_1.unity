@@ -4237,7 +4237,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 596319799543874016, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 879271432804513068, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.082
+      objectReference: {fileID: 0}
+    - target: {fileID: 879271432804513068, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.023
+      objectReference: {fileID: 0}
+    - target: {fileID: 879271432804513068, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 985647781320322158, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
       propertyPath: m_LocalScale.x
@@ -4253,11 +4265,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 985647781320322158, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 262.31
+      value: 263.13
       objectReference: {fileID: 0}
     - target: {fileID: 985647781320322158, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 162.73
+      value: 163.52
       objectReference: {fileID: 0}
     - target: {fileID: 985647781320322158, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4481,6 +4493,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4060170965642471720, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4345038533347007643, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.029
+      objectReference: {fileID: 0}
+    - target: {fileID: 4345038533347007643, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.097
+      objectReference: {fileID: 0}
+    - target: {fileID: 4345038533347007643, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.294
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313878750086462231, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7800350016726113910, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
@@ -4846,6 +4874,14 @@ PrefabInstance:
       value: Paper 2
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: m_fontSize
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: m_margin.z
+      value: -1.4217162
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_fontColor.a
       value: 1
       objectReference: {fileID: 0}
@@ -4862,8 +4898,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4290965759
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7784276273247969817, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_Enabled
@@ -4932,9 +4972,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.5658321, y: 0}
+  m_Offset: {x: -0.36432847, y: -1.4568405}
   serializedVersion: 2
-  m_Radius: 2.6216981
+  m_Radius: 3.1483796
 --- !u!1 &1145228492
 GameObject:
   m_ObjectHideFlags: 0
