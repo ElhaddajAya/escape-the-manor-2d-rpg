@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class PlayerObj : MonoBehaviour
 {
     public SPUM_Prefabs _prefabs;
-    public float _charMS; // Character Movement Speed
+    public float _charMS = 8; // Character Movement Speed
     private PlayerState _currentState;
 
     // Reference to the Rigidbody2D component for physics-based movement

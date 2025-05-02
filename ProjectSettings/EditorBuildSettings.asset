@@ -58,6 +58,9 @@ EditorBuildSettings:
     guid: 5667b51644a684c40ad1936dd5083c8f
   - enabled: 1
     path: Assets/Scenes/Scene_3.unity
+    guid: b2a6f297fda01074f96364f6903382fe
+  - enabled: 0
+    path: Assets/Scenes/Copy scene 3.unity
     guid: 1fbd0a5395b504a42bbe5c0dc7c5152d
   - enabled: 1
     path: Assets/Scenes/Room_9.unity

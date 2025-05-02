@@ -8713,6 +8713,10 @@ PrefabInstance:
       propertyPath: collectSound
       value: 
       objectReference: {fileID: 8300000, guid: 9b2d4697bbedaf84bb6eb0dca0e95374, type: 3}
+    - target: {fileID: 7875146261804966052, guid: 60bd52614f1653f4d80186682a415355, type: 3}
+      propertyPath: healthRestoreAmount
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8166675960871761482, guid: 60bd52614f1653f4d80186682a415355, type: 3}
       propertyPath: m_Radius
       value: 0.60431415

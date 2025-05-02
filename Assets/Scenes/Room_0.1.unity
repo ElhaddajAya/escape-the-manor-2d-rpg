@@ -632057,6 +632057,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 113372501166766119, guid: 7d99c17bd6eff354c992f79e29817531, type: 3}
+      propertyPath: m_margin.w
+      value: 15.809814
+      objectReference: {fileID: 0}
+    - target: {fileID: 113372501166766119, guid: 7d99c17bd6eff354c992f79e29817531, type: 3}
+      propertyPath: m_margin.x
+      value: 39.524384
+      objectReference: {fileID: 0}
+    - target: {fileID: 113372501166766119, guid: 7d99c17bd6eff354c992f79e29817531, type: 3}
+      propertyPath: m_margin.y
+      value: 13.833496
+      objectReference: {fileID: 0}
+    - target: {fileID: 113372501166766119, guid: 7d99c17bd6eff354c992f79e29817531, type: 3}
+      propertyPath: m_margin.z
+      value: 45.453064
+      objectReference: {fileID: 0}
     - target: {fileID: 1231511218109940688, guid: 7d99c17bd6eff354c992f79e29817531, type: 3}
       propertyPath: m_Name
       value: GUI Canvas
@@ -632139,6 +632155,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3702205690896144376, guid: 7d99c17bd6eff354c992f79e29817531, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5294536937516120074, guid: 7d99c17bd6eff354c992f79e29817531, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7899046908665183701, guid: 7d99c17bd6eff354c992f79e29817531, type: 3}
