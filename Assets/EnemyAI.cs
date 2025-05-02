@@ -153,7 +153,9 @@ public class EnemyAIBase : MonoBehaviour
 
 
     protected virtual void Update()
-    {
+    {    
+        if (GameState.IsFrozen) return; // 🔒 Freeze game logic during transitions
+   
         if (isAttacking) return;
 
         if (player == null || player.GetComponent<PlayerObj>().health <= 0)

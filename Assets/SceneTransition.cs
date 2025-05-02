@@ -214,8 +214,8 @@ public class SceneTransition : MonoBehaviour
     private IEnumerator LoadScene()
     {
         isTransitioning = true;
+        GameState.IsFrozen = true; // Freeze game
         
-        // Déclencher l'animation de fade in (Start)
         animator.SetTrigger("Start");
 
         // Jouer l'effet sonore de la porte
@@ -227,10 +227,11 @@ public class SceneTransition : MonoBehaviour
         // Attendre que l'animation de fade in soit terminée (environ 1 seconde)
         yield return new WaitForSeconds(1.3f);
         
-        // Charger la nouvelle scène
-        SceneManager.LoadScene(sceneToLoad);
-        
-        // Réinitialiser le flag de transition
-        isTransitioning = false;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad);
+        asyncLoad.completed += (op) =>
+        {
+            GameState.IsFrozen = false; // ✅ Unfreeze AFTER load
+            isTransitioning = false;
+        };
     }
 }
