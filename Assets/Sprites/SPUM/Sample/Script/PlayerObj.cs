@@ -212,61 +212,72 @@ public class PlayerObj : MonoBehaviour
     }
 
     void Update()
+{
+    // 🔒 Freeze check: if the game is frozen, stop all input and actions
+    if (GameState.IsFrozen)
     {
-        // If the player is dead, stop all movement, actions, and footstep sounds
-        if (isDead)
+        if (isFootstepPlaying)
         {
-            isFootstepPlaying = false; // Stop footstep sound
-            audioSource.Stop(); // Stop any playing sound
-            return; // Skip the rest of the update logic when dead
+            audioSource.Stop();
+            isFootstepPlaying = false;
         }
+        return;
+    }
 
-        // Handle player input for movement
-        if (!isDead)
+    // 💀 Death check: stop everything if dead
+    if (isDead)
+    {
+        isFootstepPlaying = false;
+        audioSource.Stop();
+        return;
+    }
+
+    // 🎮 Movement input
+    Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+    if (inputDirection != Vector2.zero)
+    {
+        SetMovePos(transform.position + (Vector3)inputDirection);
+
+        if (!isFootstepPlaying)
         {
-            Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            if (inputDirection != Vector2.zero)
-            {
-                SetMovePos(transform.position + (Vector3)inputDirection);
-
-                // Play footstep sound if player starts moving
-                if (!isFootstepPlaying)
-                {
-                    audioSource.clip = footstepsSound;
-                    audioSource.Play();
-                    isFootstepPlaying = true;
-                }
-            }
-            else
-            {
-                // Stop footstep sound when the player stops moving
-                if (isFootstepPlaying)
-                {
-                    audioSource.Stop();
-                    isFootstepPlaying = false;
-                }
-            }
-
-            // Attack input (Mouse button left or right)
-            if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) && !isAttacking)
-            {
-                StartCoroutine(PerformAttack());
-            }
-
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
-            switch (_currentState)
-            {
-                case PlayerState.IDLE:
-                    break;
-
-                case PlayerState.MOVE:
-                    DoMove();
-                    break;
-            }
-
-            PlayStateAnimation(_currentState);
+            audioSource.clip = footstepsSound;
+            audioSource.Play();
+            isFootstepPlaying = true;
         }
     }
+    else
+    {
+        if (isFootstepPlaying)
+        {
+            audioSource.Stop();
+            isFootstepPlaying = false;
+        }
+    }
+
+    // 🗡 Attack input
+    if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) && !isAttacking)
+    {
+        StartCoroutine(PerformAttack());
+    }
+
+    // 🧭 Depth sorting
+    transform.position = new Vector3(transform.position.x, transform.position.y, transform.localPosition.y * 0.01f);
+
+    // 🧍‍♂️ State behavior
+    switch (_currentState)
+    {
+        case PlayerState.IDLE:
+            break;
+
+        case PlayerState.MOVE:
+            DoMove();
+            break;
+    }
+
+    // 🕺 Play animation
+    PlayStateAnimation(_currentState);
+}
+
 
     void DoMove()
     {
