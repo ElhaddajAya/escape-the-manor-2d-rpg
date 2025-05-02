@@ -260,12 +260,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 234165149012538737, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1.0131
+      objectReference: {fileID: 0}
+    - target: {fileID: 234165149012538737, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -260.65
+      value: -260.80972
       objectReference: {fileID: 0}
     - target: {fileID: 234165149012538737, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -172.42
+      value: -172.29657
       objectReference: {fileID: 0}
     - target: {fileID: 1100457647862371554, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_Sprite
@@ -332,6 +336,14 @@ PrefabInstance:
       value: Paper 2
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: m_fontSize
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: m_margin.z
+      value: -0.5082936
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_fontColor.a
       value: 1
       objectReference: {fileID: 0}
@@ -348,8 +360,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4290965759
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7784276273247969817, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_Enabled
@@ -8073,6 +8089,10 @@ PrefabInstance:
     - target: {fileID: 3132471310663861703, guid: 0306e88d703183540a6e2edcc57fcdb6, type: 3}
       propertyPath: m_Name
       value: Big GUI Canvas (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6602814043110150909, guid: 0306e88d703183540a6e2edcc57fcdb6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8106459601073431002, guid: 0306e88d703183540a6e2edcc57fcdb6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

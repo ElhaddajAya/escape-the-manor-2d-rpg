@@ -4303,6 +4303,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1465556982520030201, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1665904364599080849, guid: f37c92b840ac25543855c7e8a86dd575, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -4775,7 +4779,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 234165149012538737, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -260.65
+      value: -260.93
       objectReference: {fileID: 0}
     - target: {fileID: 234165149012538737, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4875,11 +4879,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_fontSize
-      value: 0.8
+      value: 0.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
+      propertyPath: m_margin.y
+      value: -0.6300988
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_margin.z
-      value: -1.4217162
+      value: -2.2474635
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_fontColor.a
@@ -4899,7 +4907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.8
+      value: 0.98
       objectReference: {fileID: 0}
     - target: {fileID: 6767943835149936510, guid: 19a66575dd114224fb309114d19c551e, type: 3}
       propertyPath: m_fontColor32.rgba
