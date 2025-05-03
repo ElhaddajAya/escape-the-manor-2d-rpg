@@ -40,7 +40,7 @@ public class PlayerObj : MonoBehaviour
     [SerializeField] private AudioClip damageSound;
     [SerializeField] private AudioClip deathSound;
     private AudioSource audioSourceSFX;
-
+    [SerializeField] private float _transitionBlendTime = 0.3f;
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
 {
     Debug.Log("Scène chargée : " + scene.name);
@@ -81,8 +81,16 @@ private IEnumerator CompleteTransitionReset()
     // Unfreeze the game
     GameState.IsFrozen = false;
     _isTransitioning = false;
+    // Optional: Gradually blend back to normal
+    float elapsed = 0f;
+    while (elapsed < _transitionBlendTime)
+    {
+        elapsed += Time.deltaTime;
+        yield return null;
+    }
     
-    Debug.Log("Transition complete - player fully reset");
+    _isTransitioning = false;
+    //Debug.Log("Transition complete - player fully reset");
 }
 private IEnumerator UnfreezeAfterSpawn()
 {
