@@ -4348,6 +4348,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartupLogic
       objectReference: {fileID: 0}
+    - target: {fileID: 2943388514675424817, guid: 5f4e1e33d9295844ca5e439bd45605cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4761252052685939280, guid: 5f4e1e33d9295844ca5e439bd45605cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 133.55928
