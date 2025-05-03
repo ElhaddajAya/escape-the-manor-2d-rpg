@@ -262,7 +262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &69308314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8949,6 +8949,14 @@ PrefabInstance:
     - target: {fileID: 3132471310663861703, guid: 0306e88d703183540a6e2edcc57fcdb6, type: 3}
       propertyPath: m_Name
       value: Big GUI Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6602814043110150909, guid: 0306e88d703183540a6e2edcc57fcdb6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6979846044737191347, guid: 0306e88d703183540a6e2edcc57fcdb6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8106459601073431002, guid: 0306e88d703183540a6e2edcc57fcdb6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
