@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-// This file contains a script that manages the player object in a 2D game.
-// The player object can move and play animations based on user input.
 public class PlayerObj : MonoBehaviour
 {
     public SPUM_Prefabs _prefabs;
@@ -20,20 +15,20 @@ public class PlayerObj : MonoBehaviour
     public Vector3 _goalPos;
     public bool isAction = false;
     public Dictionary<PlayerState, int> IndexPair = new();
-    private bool _isTransitioning = false; // Add this new flag
-    public AudioClip footstepsSound; // Son des pas
-    private AudioSource audioSource; // Composant AudioSource
-    private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
+    private bool _isTransitioning = false;
+    public AudioClip footstepsSound;
+    private AudioSource audioSource;
+    private bool isFootstepPlaying = false;
     private Animator animator;
     public int health = 150;
     private bool isAttacking = false;
-    private bool isDead = false; // New flag to track if the player is dead
+    private bool isDead = false;
 
-    public float attackRange = 3f; // Add this new variable
-    public LayerMask enemyLayer; // Add this and set it in Inspector to "Enemy" layer
-    public GameObject firePrefab; // Le feu à lancer (prefab avec animation)
-    public Transform fireSpawnPoint; // Point de départ du feu (ex: la main du joueur)
-    public GameObject batonObject; // L'objet "Bâton" dans la hiérarchie
+    public float attackRange = 3f;
+    public LayerMask enemyLayer;
+    public GameObject firePrefab;
+    public Transform fireSpawnPoint;
+    public GameObject batonObject;
     public HealthBar healthBar;
     [SerializeField] private AudioClip attackMeleeSound;
     [SerializeField] private AudioClip attackMagicSound;
@@ -41,75 +36,79 @@ public class PlayerObj : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
     private AudioSource audioSourceSFX;
     [SerializeField] private float _transitionBlendTime = 0.3f;
+    
+    // Ajout de nouveaux paramètres pour gérer l'attaque
+    [SerializeField] private float attackAnimationDuration = 0.43f; // Durée de l'animation d'attaque
+    [SerializeField] private float attackCooldown = 0.1f; // Temps de récupération entre les attaques
+    private float lastAttackTime = 0f; // Moment de la dernière attaque
+    [SerializeField] private float minPitchVariation = 0.9f; // Variation minimale du pitch
+    [SerializeField] private float maxPitchVariation = 1f; // Variation maximale du pitch
+    
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
-{
-    Debug.Log("Scène chargée : " + scene.name);
-    
-    // Reset all movement immediately
-    rb.velocity = Vector2.zero;
-    _goalPos = transform.position;
-    _currentState = PlayerState.IDLE;
-    
-    // Find target spawn point
-    Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
-
-    if (targetSpawnPoint != null)
     {
-        Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
-        // Move player to spawn point
-        transform.position = targetSpawnPoint.position;
-    }
-
-    // Force idle animation
-    PlayStateAnimation(PlayerState.IDLE);
-    
-    // Unfreeze after a slight delay
-    StartCoroutine(CompleteTransitionReset());
-}
-private IEnumerator CompleteTransitionReset()
-{
-    // Wait for one full physics frame
-    yield return new WaitForFixedUpdate();
-    yield return new WaitForFixedUpdate();
-    
-    // Reset all movement variables again
-    rb.velocity = Vector2.zero;
-    _goalPos = transform.position;
-    _currentState = PlayerState.IDLE;
-    isAction = false;
-    
-    // Unfreeze the game
-    GameState.IsFrozen = false;
-    _isTransitioning = false;
-    // Optional: Gradually blend back to normal
-    float elapsed = 0f;
-    while (elapsed < _transitionBlendTime)
-    {
-        elapsed += Time.deltaTime;
-        yield return null;
-    }
-    
-    _isTransitioning = false;
-    //Debug.Log("Transition complete - player fully reset");
-}
-private IEnumerator UnfreezeAfterSpawn()
-{
-    yield return new WaitForSeconds(0.5f);
-    GameState.IsFrozen = false;
-    Debug.Log("Game unfrozen after scene transition");
-}
-public void SetTransitioning(bool transitioning)
-{
-    _isTransitioning = transitioning;
-    if (transitioning)
-    {
-        // Immediately stop all movement
+        Debug.Log("Scène chargée : " + scene.name);
+        
+        // Reset all movement immediately
         rb.velocity = Vector2.zero;
         _goalPos = transform.position;
         _currentState = PlayerState.IDLE;
-        isAction = true; // Prevent any new actions
+        
+        // Find target spawn point
+        Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
+
+        if (targetSpawnPoint != null)
+        {
+            Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
+            // Move player to spawn point
+            transform.position = targetSpawnPoint.position;
+        }
+
+        // Force idle animation
+        PlayStateAnimation(PlayerState.IDLE);
+        
+        // Unfreeze after a slight delay
+        StartCoroutine(CompleteTransitionReset());
     }
-}   
+    
+    private IEnumerator CompleteTransitionReset()
+    {
+        // Wait for one full physics frame
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        
+        // Reset all movement variables again
+        rb.velocity = Vector2.zero;
+        _goalPos = transform.position;
+        _currentState = PlayerState.IDLE;
+        isAction = false;
+        
+        // Unfreeze the game
+        GameState.IsFrozen = false;
+        _isTransitioning = false;
+        // Optional: Gradually blend back to normal
+        float elapsed = 0f;
+        while (elapsed < _transitionBlendTime)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        _isTransitioning = false;
+    }
+    
+    public void SetTransitioning(bool transitioning)
+    {
+        _isTransitioning = transitioning;
+        if (transitioning)
+        {
+            // Immediately stop all movement
+            rb.velocity = Vector2.zero;
+            _goalPos = transform.position;
+            _currentState = PlayerState.IDLE;
+            isAction = true; // Prevent any new actions
+        }
+    }   
+    
     void Awake()
     {
         // Vérifie s'il existe déjà un Player dans la scène
@@ -183,7 +182,8 @@ public void SetTransitioning(bool transitioning)
         audioSourceSFX.playOnAwake = false;
         audioSourceSFX.loop = false;
         audioSourceSFX.spatialBlend = 0f;
-        audioSourceSFX.volume = 1f; // Tu peux ajuster
+        audioSourceSFX.volume = 1f;
+        audioSourceSFX.pitch = 1f; // Pitch par défaut
     }
 
     public void SetStateAnimationIndex(PlayerState state, int index = 0)
@@ -201,14 +201,26 @@ public void SetTransitioning(bool transitioning)
         // IMPORTANT: Ne pas attaquer si le jeu est gelé
         if (GameState.IsFrozen)
             yield break;
+        
+        // Vérifier si l'attaque est en cours de récupération
+        if (Time.time - lastAttackTime < attackCooldown)
+            yield break;
+            
+        // Enregistrer le temps d'attaque
+        lastAttackTime = Time.time;
             
         isAttacking = true;
-        isAction = true;
+        // Ne pas bloquer le mouvement pendant l'attaque
+        // isAction = true; <-- Supprimé pour permettre le mouvement pendant l'attaque
 
         // Jouer l'animation d'attaque
         animator.SetTrigger("2_Attack");
 
-        // 🔊 Son attaque
+        // Appliquer une variation aléatoire au pitch du son d'attaque
+        float randomPitch = UnityEngine.Random.Range(minPitchVariation, maxPitchVariation);
+        audioSourceSFX.pitch = randomPitch;
+
+        // Son attaque
         if (batonObject != null && batonObject.activeInHierarchy)
         {
             audioSourceSFX.PlayOneShot(attackMagicSound); // Son magique
@@ -218,15 +230,16 @@ public void SetTransitioning(bool transitioning)
             audioSourceSFX.PlayOneShot(attackMeleeSound); // Son mêlée
         }
 
-        yield return new WaitForSeconds(0.5f); // Petit délai avant d'agir
+        // Délai avant de faire des dégâts (pour synchroniser avec l'animation)
+        yield return new WaitForSeconds(0.2f); // Réduit pour être plus réactif
 
-        // 🎯 Attaque au corps (mains)
+        // Attaque au corps (mains)
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange, enemyLayer);
         foreach (Collider2D enemy in hitEnemies)
         {
             if (enemy.TryGetComponent<EnemyAIBase>(out var enemyAI))
             {
-                // 🔥 Attaque magique si le bâton est actif
+                // Attaque magique si le bâton est actif
                 if (batonObject != null && batonObject.activeInHierarchy) {
                     enemyAI.TakeDamage(10);
                 } else {
@@ -235,7 +248,7 @@ public void SetTransitioning(bool transitioning)
             }
         }
 
-        // 🔥 Attaque magique si le bâton est actif
+        // Attaque magique si le bâton est actif
         if (batonObject != null && batonObject.activeInHierarchy)
         {
             // Calcule la direction vers la souris ou un clic
@@ -243,10 +256,12 @@ public void SetTransitioning(bool transitioning)
             Vector2 direction = (mouseWorldPos - fireSpawnPoint.position).normalized;
 
             // Créer une étincelle à la fin du bâton
-            CreateSparkEffect(fireSpawnPoint.position); // Nouvelle fonction pour gérer l'étincelle
+            CreateSparkEffect(fireSpawnPoint.position);
         }
 
-        isAction = false;
+        // Attendre que l'animation se termine (mais ne pas bloquer le mouvement)
+        yield return new WaitForSeconds(attackAnimationDuration - 0.2f); // Reste de la durée
+        
         isAttacking = false;
     }
 
@@ -261,39 +276,18 @@ public void SetTransitioning(bool transitioning)
     void Update()
     {
         // Early exit if frozen or transitioning
-    if (GameState.IsFrozen || _isTransitioning)
-    {
-        rb.velocity = Vector2.zero;
-        _goalPos = transform.position;
-        if (isFootstepPlaying)
+        if (GameState.IsFrozen || _isTransitioning)
         {
-            audioSource.Stop();
-            isFootstepPlaying = false;
-        }
-        return;
-    }
-    // ...  
-        if (GameState.IsFrozen)
-        {
-            // S'assurer que tout son s'arrête
+            rb.velocity = Vector2.zero;
+            _goalPos = transform.position;
             if (isFootstepPlaying)
             {
                 audioSource.Stop();
                 isFootstepPlaying = false;
             }
-            
-            // S'assurer que le joueur reste immobile
-            rb.velocity = Vector2.zero;
-            
-            // Garder la position actuelle
-            _goalPos = transform.position;
-            
-            // Rester en état IDLE
-            _currentState = PlayerState.IDLE;
-            
-            return; // Ne pas traiter le reste de la mise à jour
+            return;
         }
-
+        
         // 💀 Death check: stop everything if dead
         if (isDead)
         {
@@ -324,8 +318,8 @@ public void SetTransitioning(bool transitioning)
             }
         }
 
-        // 🗡 Attack input
-        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)) && !isAttacking)
+        // 🗡 Attack input - permet des attaques répétées sans être bloqué par isAction
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space)))
         {
             StartCoroutine(PerformAttack());
         }
@@ -365,41 +359,28 @@ public void SetTransitioning(bool transitioning)
     }
 
     public void SetMovePos(Vector2 pos)
-{
-    if (GameState.IsFrozen || _isTransitioning || isAction)
-        return;
-        
-    // Reset velocity before setting new position
-    rb.velocity = Vector2.zero;
-    _goalPos = pos;
-    _currentState = PlayerState.MOVE;
-}
-
-    private void TriggerAttackAnimation()
     {
-        // IMPORTANT: Ne pas attaquer si le jeu est gelé
-        if (GameState.IsFrozen || isAction)
+        // Permet de bouger même pendant l'attaque, sauf si on est en transition ou mort
+        if (GameState.IsFrozen || _isTransitioning || isDead)
             return;
-        
-        animator.SetTrigger("2_Attack");
-        isAction = true;
-        StartCoroutine(ResetAfterAttack());
-    }
-
-    IEnumerator ResetAfterAttack()
-    {
-        yield return new WaitForSeconds(0.5f); // Match this to your attack animation length
-        isAction = false;
+            
+        // Reset velocity before setting new position
+        rb.velocity = Vector2.zero;
+        _goalPos = pos;
+        _currentState = PlayerState.MOVE;
     }
 
     public void TakeDamage(int damage) {
         // IMPORTANT: Ne pas prendre de dégâts si le jeu est gelé
-        if (GameState.IsFrozen || isAction)
+        if (GameState.IsFrozen || isDead)
             return;
 
         // Play the damaged animation
         animator.SetTrigger("3_Damaged");
 
+        // Variation aléatoire du pitch pour le son de dégât
+        float randomPitch = UnityEngine.Random.Range(minPitchVariation, maxPitchVariation);
+        audioSourceSFX.pitch = randomPitch;
         audioSourceSFX.PlayOneShot(damageSound); // Play damage sound
 
         // Stop movement
@@ -437,13 +418,8 @@ public void SetTransitioning(bool transitioning)
     }
 
     IEnumerator ResetVelocityAfterKnockback() {
-        yield return new WaitForSeconds(0.15f); // Short delay before stopping sliding
+        yield return new WaitForSeconds(0.10f); // Short delay before stopping sliding
         rb.velocity = Vector2.zero; // Stop any unwanted sliding
-        isAction = false; // Allow movement again
-    }
-    
-    IEnumerator RecoverFromHit() {
-        yield return new WaitForSeconds(0.3f); // Time to recover
         isAction = false; // Allow movement again
     }
 
@@ -453,6 +429,8 @@ public void SetTransitioning(bool transitioning)
             return;
             
         animator.SetTrigger("4_Death");
+        // Son de mort avec pitch légèrement plus grave
+        audioSourceSFX.pitch = UnityEngine.Random.Range(0.8f, 0.95f);
         audioSourceSFX.PlayOneShot(deathSound); // Play death sound
         Debug.Log("Player has died!");
 
