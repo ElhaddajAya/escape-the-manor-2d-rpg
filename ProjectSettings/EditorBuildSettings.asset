@@ -71,4 +71,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LongCorridor.unity
     guid: 1e9d0843a5a7e4b47a6931d44f689bc8
+  - enabled: 1
+    path: Assets/Scenes/OutroScene.unity
+    guid: 1a3326b479277de4cb5995b59f05f463
   m_configObjects: {}
