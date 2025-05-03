@@ -6,7 +6,8 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        sceneFader.FadeToScene("Main_Scene"); // 👈 Trigger fade instead of direct load
+        SpawnPointManager.SetTargetSpawnPoint("DefaultSpawnPoint"); // 👈 Définit le spawn point
+        sceneFader.FadeToScene("Main_Scene"); // 👈 Charge la scène
     }
 
     public void QuitGame()
