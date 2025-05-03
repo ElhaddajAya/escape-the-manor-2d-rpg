@@ -42,38 +42,34 @@ public class PlayerObj : MonoBehaviour
     private AudioSource audioSourceSFX;
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
-    {
-        Debug.Log("Scène chargée : " + scene.name);
+{
+    Debug.Log("Scène chargée : " + scene.name);
 
-        // Trouver le spawn point cible
-        Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
+    // Find target spawn point
+    Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
 
-        if (targetSpawnPoint != null)
-        {
-            Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
-            // Déplacer le joueur au spawn point
-            transform.position = targetSpawnPoint.position;
-            
-            // IMPORTANT: Dégeler le jeu APRÈS avoir placé le joueur correctement
-            // On ajoute un petit délai pour s'assurer que tout est bien initialisé
-            StartCoroutine(UnfreezeAfterSpawn());
-        }
-        else
-        {
-            Debug.LogWarning("Le joueur n'a pas été déplacé car aucun spawn point n'a été trouvé.");
-            // Dégeler le jeu même si on n'a pas trouvé de spawn point
-            StartCoroutine(UnfreezeAfterSpawn());
-        }
-    }
-    
-    // Nouveau: dégeler le jeu après un léger délai
-    private IEnumerator UnfreezeAfterSpawn()
+    if (targetSpawnPoint != null)
     {
-        // Attendre un court instant pour s'assurer que tout est prêt
-        yield return new WaitForSeconds(0.5f);
-        GameState.IsFrozen = false;
-        Debug.Log("Game unfrozen after scene transition");
+        Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
+        // Move player to spawn point
+        transform.position = targetSpawnPoint.position;
+        
+        // Unfreeze after positioning
+        StartCoroutine(UnfreezeAfterSpawn());
     }
+    else
+    {
+        Debug.LogWarning("Aucun spawn point trouvé.");
+        StartCoroutine(UnfreezeAfterSpawn());
+    }
+}
+
+private IEnumerator UnfreezeAfterSpawn()
+{
+    yield return new WaitForSeconds(0.5f);
+    GameState.IsFrozen = false;
+    Debug.Log("Game unfrozen after scene transition");
+}
     
     void Awake()
     {

@@ -212,37 +212,31 @@ public class SceneTransition : MonoBehaviour
     }
 
     private IEnumerator LoadScene()
-    {
-        isTransitioning = true;
-        
-        // IMPORTANT: Geler le jeu au début de la transition
-        GameState.IsFrozen = true;
-        
-        // Jouer l'animation de transition
-        animator.SetTrigger("Start");
+{
+    isTransitioning = true;
+    
+    // Freeze the game
+    GameState.IsFrozen = true;
+    
+    // Play transition animation
+    animator.SetTrigger("Start");
 
-        // Jouer l'effet sonore de la porte
-        if (audioSource != null && doorSound != null)
-        {
-            audioSource.PlayOneShot(doorSound);
-        }
-        
-        // Attendre que l'animation de fade in soit terminée
-        yield return new WaitForSeconds(1.3f);
-        
-        // Charger la nouvelle scène
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad);
-        
-        // Le jeu reste gelé même après le chargement de la scène (on a retiré le completed)
-        // GameState.IsFrozen reste true
-        
-        // Marquer la transition comme terminée
-        asyncLoad.completed += (op) => {
-            isTransitioning = false;
-            // IMPORTANT: On NE dégèle PAS le jeu ici
-            // GameState.IsFrozen reste true
-            
-            // Au lieu de cela, le PlayerObj doit gérer le dégel après avoir été placé correctement
-        };
+    // Play door sound
+    if (audioSource != null && doorSound != null)
+    {
+        audioSource.PlayOneShot(doorSound);
     }
+    
+    // Wait for animation
+    yield return new WaitForSeconds(1.3f);
+    
+    // Load the new scene
+    AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad);
+    
+    // No need to handle unfreezing here - PlayerObj will do it after positioning
+    asyncLoad.completed += (op) => {
+        isTransitioning = false;
+        // Don't unfreeze here - let PlayerObj handle it
+    };
+}
 }
