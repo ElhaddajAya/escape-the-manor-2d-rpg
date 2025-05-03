@@ -215,8 +215,13 @@ public class SceneTransition : MonoBehaviour
 {
     isTransitioning = true;
     
-    // Freeze the game
+    // Freeze the game and notify player object
     GameState.IsFrozen = true;
+    PlayerObj player = FindObjectOfType<PlayerObj>();
+    if (player != null)
+    {
+        player.SetTransitioning(true); // Add this method to PlayerObj
+    }
     
     // Play transition animation
     animator.SetTrigger("Start");
