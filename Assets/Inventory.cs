@@ -166,7 +166,7 @@ public class Inventory : MonoBehaviour
     void HandleItemUse()
     {
         // Si la touche E est pressée et qu'un item est sélectionné
-        if (Input.GetKeyDown(KeyCode.E) && currentSelectedIndex >= 0 && currentSelectedIndex < itemTypes.Count)
+        if (Input.GetKeyDown(KeyCode.F) && currentSelectedIndex >= 0 && currentSelectedIndex < itemTypes.Count)
         {
             // Si c'est une potion, on l'utilise directement
             if (itemTypes[currentSelectedIndex] == ItemType.Potion)
