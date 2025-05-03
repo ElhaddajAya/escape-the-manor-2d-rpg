@@ -48,6 +48,17 @@ public class PlayerObj : MonoBehaviour
     {
         Debug.Log("Scène chargée : " + scene.name);
         
+        // Vérification de sécurité pour les références nulles
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+            if (rb == null)
+            {
+                Debug.LogError("Rigidbody2D est null dans OnSceneLoaded!");
+                return;
+            }
+        }
+        
         // Reset all movement immediately
         rb.velocity = Vector2.zero;
         _goalPos = transform.position;
@@ -63,11 +74,34 @@ public class PlayerObj : MonoBehaviour
             transform.position = targetSpawnPoint.position;
         }
 
-        // Force idle animation
-        PlayStateAnimation(PlayerState.IDLE);
+        // IMPORTANT: Ne pas jouer l'animation tout de suite
+        // PlayStateAnimation peut causer une erreur si SPUM_Prefabs n'est pas prêt
+        // Attendre quelques frames avant de jouer l'animation
+        StartCoroutine(SafePlayAnimation());
         
         // Unfreeze after a slight delay
         StartCoroutine(CompleteTransitionReset());
+    }
+
+    // Nouvelle coroutine pour jouer l'animation en toute sécurité
+    private IEnumerator SafePlayAnimation()
+    {
+        // Attendre quelques frames pour s'assurer que tout est initialisé
+        yield return new WaitForSeconds(0.1f);
+        
+        // Vérifier que _prefabs est prêt
+        if (_prefabs != null)
+        {
+            // S'assurer que les listes d'animation sont initialisées
+            if (!_prefabs.allListsHaveItemsExist())
+            {
+                _prefabs.PopulateAnimationLists();
+                _prefabs.OverrideControllerInit();
+            }
+            
+            // Maintenant c'est sûr de jouer l'animation
+            PlayStateAnimation(PlayerState.IDLE);
+        }
     }
     
     private IEnumerator CompleteTransitionReset()
@@ -453,24 +487,70 @@ public class PlayerObj : MonoBehaviour
             return;
             
         health = 150;
-        transform.position = GameObject.Find("DefaultSpawnPoint").transform.position;
-
-        rb.velocity = Vector2.zero;  // Ensure any residual velocity is cleared.
-        rb.simulated = true;  // Resume physics simulation
-
-        isDead = false;  // Set player as alive
-        isAction = false;  // Allow movement again
-
-        // Refill health
-        if (healthBar != null)
+        
+        // Au lieu de charger la MainScene, utilisons toujours le DefaultSpawnPoint de la scène actuelle
+        GameObject spawnPoint = GameObject.Find("DefaultSpawnPoint");
+        if (spawnPoint != null)
         {
-            healthBar.SetHealth(health);
+            transform.position = spawnPoint.transform.position;
+            Debug.Log("Player respawned at DefaultSpawnPoint");
+        }
+        else
+        {
+            Debug.LogError("DefaultSpawnPoint not found in current scene!");
+            // Position de secours en cas d'absence de DefaultSpawnPoint
+            transform.position = Vector3.zero;
         }
 
-        // Make sure the player is not holding any previous directional input
-        _goalPos = transform.position;  // Reset the goal position to the spawn point
-        _currentState = PlayerState.IDLE;  // Make sure the player starts in the idle state
+        // Vérifier que rb existe
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;  // Ensure any residual velocity is cleared.
+            rb.simulated = true;  // Resume physics simulation
+        }
 
-        Debug.Log("Player has respawned with full health!");
+        isDead = false;  // Set player as alive 
+        isAction = false;  // Allow movement again 
+
+        // Refill health 
+        if (healthBar != null) 
+        { 
+            healthBar.SetHealth(health); 
+        } 
+
+        // Make sure the player is not holding any previous directional input 
+        _goalPos = transform.position;  // Reset the goal position to the spawn point 
+        _currentState = PlayerState.IDLE;  // Make sure the player starts in the idle state 
+        
+        // Jouer l'animation en toute sécurité avec une coroutine
+        StartCoroutine(SafePlayAnimationAfterRespawn());
+
+        Debug.Log("Player has respawned with full health!"); 
     }
-}
+
+    // Nouvelle coroutine pour jouer l'animation en toute sécurité après respawn
+    private IEnumerator SafePlayAnimationAfterRespawn()
+    {
+        // Attendre quelques frames pour s'assurer que tout est initialisé
+        yield return new WaitForSeconds(0.1f);
+        
+        // Vérifier que _prefabs est prêt
+        if (_prefabs != null)
+        {
+            // S'assurer que les listes d'animation sont initialisées
+            if (!_prefabs.allListsHaveItemsExist())
+            {
+                _prefabs.PopulateAnimationLists();
+                _prefabs.OverrideControllerInit();
+            }
+            
+            // Maintenant c'est sûr de jouer l'animation
+            PlayStateAnimation(PlayerState.IDLE);
+        }
+    }
+    }
