@@ -10,7 +10,10 @@ public class HiddenTreasureChest : MonoBehaviour
     [SerializeField] private string requiredKeyName = "Chest_Key"; // Nom de la clé requise
     [SerializeField] private GameObject wrongKeyText; // Message "Mauvaise clé"
     [SerializeField] private GameObject wrongItemTypeText; // Message "Ce n'est pas une clé" 
-    [SerializeField] private AudioClip unlockSound; // Son de déverrouillage
+    
+    [Header("Sons")]
+    [SerializeField] private AudioClip chestUnlockSound; // Son de déverrouillage du coffre
+    [SerializeField] private AudioClip stairsRevealSound; // Son de dévoilement des escaliers
     [SerializeField] private AudioClip errorSound; // Son d'erreur
     
     [Header("Tilemaps")]
@@ -163,8 +166,8 @@ public class HiddenTreasureChest : MonoBehaviour
                 if (promptText != null)
                     promptText.SetActive(false);
                 
-                // Jouer le son de déverrouillage
-                PlaySound(unlockSound);
+                // Jouer le son de déverrouillage du coffre
+                PlaySound(chestUnlockSound);
                 
                 // Révéler le coffre et le passage secret
                 StartCoroutine(RevealTreasureAndPassage());
@@ -203,8 +206,8 @@ public class HiddenTreasureChest : MonoBehaviour
         // Petite pause pour l'effet dramatique
         yield return new WaitForSeconds(0.5f);
         
-        // 3. Jouer un son pour le mur qui s'ouvre (utiliser le même son de déverrouillage)
-        PlaySound(unlockSound);
+        // 3. Jouer un son spécifique pour le mur qui s'ouvre (son des escaliers)
+        PlaySound(stairsRevealSound);
         
         // 4. Faire disparaître le mur qui cache l'escalier
         if (wallCamouflageTilemap != null)

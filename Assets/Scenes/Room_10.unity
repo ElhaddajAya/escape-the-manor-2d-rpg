@@ -11157,7 +11157,8 @@ MonoBehaviour:
   requiredKeyName: Chest_Key
   wrongKeyText: {fileID: 620150906}
   wrongItemTypeText: {fileID: 2007176152}
-  unlockSound: {fileID: 8300000, guid: 0c96f23d6bbd37845a78de9ec372a80f, type: 3}
+  chestUnlockSound: {fileID: 8300000, guid: 0c96f23d6bbd37845a78de9ec372a80f, type: 3}
+  stairsRevealSound: {fileID: 8300000, guid: 11067ed6416fd75458b6773f2e03aaa1, type: 3}
   errorSound: {fileID: 8300000, guid: 1ed8fb76fc64e4e46847348138782234, type: 3}
   chestCamouflageTilemap: {fileID: 953226908}
   openChestTilemap: {fileID: 645129668}
