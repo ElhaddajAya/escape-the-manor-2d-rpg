@@ -20,7 +20,7 @@ public class PlayerObj : MonoBehaviour
     public Vector3 _goalPos;
     public bool isAction = false;
     public Dictionary<PlayerState, int> IndexPair = new();
-
+    private bool _isTransitioning = false; // Add this new flag
     public AudioClip footstepsSound; // Son des pas
     private AudioSource audioSource; // Composant AudioSource
     private bool isFootstepPlaying = false; // Pour vérifier si le son est déjà joué
@@ -40,41 +40,76 @@ public class PlayerObj : MonoBehaviour
     [SerializeField] private AudioClip damageSound;
     [SerializeField] private AudioClip deathSound;
     private AudioSource audioSourceSFX;
-
+    [SerializeField] private float _transitionBlendTime = 0.3f;
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+{
+    Debug.Log("Scène chargée : " + scene.name);
+    
+    // Reset all movement immediately
+    rb.velocity = Vector2.zero;
+    _goalPos = transform.position;
+    _currentState = PlayerState.IDLE;
+    
+    // Find target spawn point
+    Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
+
+    if (targetSpawnPoint != null)
     {
-        Debug.Log("Scène chargée : " + scene.name);
+        Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
+        // Move player to spawn point
+        transform.position = targetSpawnPoint.position;
+    }
 
-        // Trouver le spawn point cible
-        Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
-
-        if (targetSpawnPoint != null)
-        {
-            Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
-            // Déplacer le joueur au spawn point
-            transform.position = targetSpawnPoint.position;
-            
-            // IMPORTANT: Dégeler le jeu APRÈS avoir placé le joueur correctement
-            // On ajoute un petit délai pour s'assurer que tout est bien initialisé
-            StartCoroutine(UnfreezeAfterSpawn());
-        }
-        else
-        {
-            Debug.LogWarning("Le joueur n'a pas été déplacé car aucun spawn point n'a été trouvé.");
-            // Dégeler le jeu même si on n'a pas trouvé de spawn point
-            StartCoroutine(UnfreezeAfterSpawn());
-        }
+    // Force idle animation
+    PlayStateAnimation(PlayerState.IDLE);
+    
+    // Unfreeze after a slight delay
+    StartCoroutine(CompleteTransitionReset());
+}
+private IEnumerator CompleteTransitionReset()
+{
+    // Wait for one full physics frame
+    yield return new WaitForFixedUpdate();
+    yield return new WaitForFixedUpdate();
+    
+    // Reset all movement variables again
+    rb.velocity = Vector2.zero;
+    _goalPos = transform.position;
+    _currentState = PlayerState.IDLE;
+    isAction = false;
+    
+    // Unfreeze the game
+    GameState.IsFrozen = false;
+    _isTransitioning = false;
+    // Optional: Gradually blend back to normal
+    float elapsed = 0f;
+    while (elapsed < _transitionBlendTime)
+    {
+        elapsed += Time.deltaTime;
+        yield return null;
     }
     
-    // Nouveau: dégeler le jeu après un léger délai
-    private IEnumerator UnfreezeAfterSpawn()
+    _isTransitioning = false;
+    //Debug.Log("Transition complete - player fully reset");
+}
+private IEnumerator UnfreezeAfterSpawn()
+{
+    yield return new WaitForSeconds(0.5f);
+    GameState.IsFrozen = false;
+    Debug.Log("Game unfrozen after scene transition");
+}
+public void SetTransitioning(bool transitioning)
+{
+    _isTransitioning = transitioning;
+    if (transitioning)
     {
-        // Attendre un court instant pour s'assurer que tout est prêt
-        yield return new WaitForSeconds(0.5f);
-        GameState.IsFrozen = false;
-        Debug.Log("Game unfrozen after scene transition");
+        // Immediately stop all movement
+        rb.velocity = Vector2.zero;
+        _goalPos = transform.position;
+        _currentState = PlayerState.IDLE;
+        isAction = true; // Prevent any new actions
     }
-    
+}   
     void Awake()
     {
         // Vérifie s'il existe déjà un Player dans la scène
@@ -225,7 +260,19 @@ public class PlayerObj : MonoBehaviour
 
     void Update()
     {
-        // 🔒 IMPORTANT: Freeze check - si le jeu est gelé, arrêter TOUT mouvement et interaction
+        // Early exit if frozen or transitioning
+    if (GameState.IsFrozen || _isTransitioning)
+    {
+        rb.velocity = Vector2.zero;
+        _goalPos = transform.position;
+        if (isFootstepPlaying)
+        {
+            audioSource.Stop();
+            isFootstepPlaying = false;
+        }
+        return;
+    }
+    // ...  
         if (GameState.IsFrozen)
         {
             // S'assurer que tout son s'arrête
@@ -318,15 +365,15 @@ public class PlayerObj : MonoBehaviour
     }
 
     public void SetMovePos(Vector2 pos)
-    {
-        // IMPORTANT: Ne pas accepter de mouvement si le jeu est gelé
-        if (GameState.IsFrozen)
-            return;
-            
-        isAction = false;
-        _goalPos = pos;
-        _currentState = PlayerState.MOVE;
-    }
+{
+    if (GameState.IsFrozen || _isTransitioning || isAction)
+        return;
+        
+    // Reset velocity before setting new position
+    rb.velocity = Vector2.zero;
+    _goalPos = pos;
+    _currentState = PlayerState.MOVE;
+}
 
     private void TriggerAttackAnimation()
     {
