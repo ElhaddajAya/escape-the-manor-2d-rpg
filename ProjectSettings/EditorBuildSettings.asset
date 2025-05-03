@@ -68,4 +68,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Room_10.unity
     guid: f78680836d978df4b935b09fad457bdd
+  - enabled: 1
+    path: Assets/Scenes/LongCorridor.unity
+    guid: 1e9d0843a5a7e4b47a6931d44f689bc8
   m_configObjects: {}
