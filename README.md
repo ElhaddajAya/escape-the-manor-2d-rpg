@@ -94,9 +94,9 @@ Mais dès que vous franchissez la porte, vous comprenez que ce lieu est maudit. 
 
 ## 🎬 Game DEMO (Vidéo)
 
-➡️ Lien vers la vidéo dans le dossier Google Drive ci-dessous :
+➡️ Lien vers la vidéo dans le dossier One Drive ci-dessous :
 
-🔗 [Lien Google Drive – Game Demo](https://drive.google.com/drive/folders/1UihSKLmq4ZHgNRMUjBA2IsHxekA475XG?usp=sharing)
+🔗 [Lien Google Drive – Game Demo](https://um5sma-my.sharepoint.com/:f:/g/personal/aya_elhaddaj_um5_ac_ma/ElY5vta3uSxIgFDioWcjwgYBfE3uo3SbGzlegocYN90w4A?e=zNrd1p)
 
 ---
 
