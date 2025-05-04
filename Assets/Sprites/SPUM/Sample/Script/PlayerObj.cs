@@ -45,43 +45,71 @@ public class PlayerObj : MonoBehaviour
     [SerializeField] private float maxPitchVariation = 1f; // Variation maximale du pitch
     
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+{
+    Debug.Log("Scène chargée : " + scene.name);
+    
+    // Vérification de sécurité pour les références nulles
+    if (rb == null)
     {
-        Debug.Log("Scène chargée : " + scene.name);
-        
-        // Vérification de sécurité pour les références nulles
+        rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
-            rb = GetComponent<Rigidbody2D>();
-            if (rb == null)
-            {
-                Debug.LogError("Rigidbody2D est null dans OnSceneLoaded!");
-                return;
-            }
+            Debug.LogError("Rigidbody2D est null dans OnSceneLoaded!");
+            return;
+        }
+    }
+    
+    // Reset all movement immediately
+    rb.velocity = Vector2.zero;
+    _goalPos = transform.position;
+    _currentState = PlayerState.IDLE;
+    
+    // Vérifier si le joueur vient de mourir et a besoin de respawn dans Main_Scene
+    if (GameState.PlayerNeedsRespawn && scene.name == "Main_Scene")
+    {
+        Debug.Log("Respawn dans Main_Scene après la mort dans: " + GameState.LastSceneBeforeDeath);
+        
+        // Forcer le joueur au DefaultSpawnPoint
+        GameObject defaultSpawn = GameObject.Find("DefaultSpawnPoint");
+        if (defaultSpawn != null)
+        {
+            transform.position = defaultSpawn.transform.position;
+            _goalPos = transform.position;
+            Debug.Log("Joueur replacé au DefaultSpawnPoint");
         }
         
-        // Reset all movement immediately
-        rb.velocity = Vector2.zero;
-        _goalPos = transform.position;
-        _currentState = PlayerState.IDLE;
+        // Reset player state
+        rb.simulated = true;
+        health = 150;
+        isDead = false;
+        isAction = false;
         
-        // Find target spawn point
+        // Update health display
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(health);
+        }
+        
+        GameState.PlayerNeedsRespawn = false;
+    }
+    else
+    {
+        // Fonctionnement normal pour les transitions de scène non-respawn
         Transform targetSpawnPoint = SpawnPointManager.GetTargetSpawnPoint();
-
         if (targetSpawnPoint != null)
         {
             Debug.Log("Spawn point trouvé : " + targetSpawnPoint.name);
-            // Move player to spawn point
             transform.position = targetSpawnPoint.position;
+            _goalPos = transform.position;
         }
-
-        // IMPORTANT: Ne pas jouer l'animation tout de suite
-        // PlayStateAnimation peut causer une erreur si SPUM_Prefabs n'est pas prêt
-        // Attendre quelques frames avant de jouer l'animation
-        StartCoroutine(SafePlayAnimation());
-        
-        // Unfreeze after a slight delay
-        StartCoroutine(CompleteTransitionReset());
     }
+
+    // IMPORTANT: Ne pas jouer l'animation tout de suite
+    StartCoroutine(SafePlayAnimation());
+    
+    // Unfreeze after a slight delay
+    StartCoroutine(CompleteTransitionReset());
+}
 
     // Nouvelle coroutine pour jouer l'animation en toute sécurité
     private IEnumerator SafePlayAnimation()
@@ -458,80 +486,101 @@ public class PlayerObj : MonoBehaviour
     }
 
     public void Die() {
-        // IMPORTANT: Ne pas mourir si le jeu est gelé
-        if (GameState.IsFrozen)
-            return;
+    // IMPORTANT: Ne pas mourir si le jeu est gelé
+    if (GameState.IsFrozen)
+        return;
             
-        animator.SetTrigger("4_Death");
-        // Son de mort avec pitch légèrement plus grave
-        audioSourceSFX.pitch = UnityEngine.Random.Range(0.8f, 0.95f);
-        audioSourceSFX.PlayOneShot(deathSound); // Play death sound
-        Debug.Log("Player has died!");
+    animator.SetTrigger("4_Death");
+    // Son de mort avec pitch légèrement plus grave
+    audioSourceSFX.pitch = UnityEngine.Random.Range(0.8f, 0.95f);
+    audioSourceSFX.PlayOneShot(deathSound); // Play death sound
+    Debug.Log("Player has died!");
 
-        rb.velocity = Vector2.zero;
-        rb.simulated = false;  // Stop physics simulation
-        isAction = true;
-        isDead = true;  // Set player as dead
+    rb.velocity = Vector2.zero;
+    rb.simulated = false;  // Stop physics simulation
+    isAction = true;
+    isDead = true;  // Set player as dead
+    
+    // Enregistrer la scène actuelle où le joueur est mort
+    GameState.LastSceneBeforeDeath = SceneManager.GetActiveScene().name;
+    GameState.PlayerNeedsRespawn = true;
+    
+    StartCoroutine(RespawnCoroutine()); // Start respawn process
+}
 
-        StartCoroutine(RespawnCoroutine()); // Start respawn process
-    }
-
-    IEnumerator RespawnCoroutine() {
-        yield return new WaitForSeconds(5f); // Wait before respawning
-        Respawn();
-    }
-
-    public void Respawn() {
-        // IMPORTANT: Ne pas respawn si le jeu est gelé
-        if (GameState.IsFrozen)
-            return;
-            
-        health = 150;
+IEnumerator RespawnCoroutine() {
+    yield return new WaitForSeconds(3f); // Réduit de 5 à 3 secondes
+    
+    // IMPORTANT: On charge directement la Main_Scene
+    health = 150;
+    isDead = false;
+    
+    // Vérifier si nous sommes déjà dans la Main_Scene
+    if (SceneManager.GetActiveScene().name != "Main_Scene")
+    {
+        // On s'assure que le SpawnPointManager utilisera DefaultSpawnPoint
+        SpawnPointManager.SetTargetSpawnPoint("DefaultSpawnPoint");
         
-        // Au lieu de charger la MainScene, utilisons toujours le DefaultSpawnPoint de la scène actuelle
-        GameObject spawnPoint = GameObject.Find("DefaultSpawnPoint");
-        if (spawnPoint != null)
+        // On charge la Main_Scene
+        SceneFader fader = FindObjectOfType<SceneFader>();
+        if (fader != null)
         {
-            transform.position = spawnPoint.transform.position;
-            Debug.Log("Player respawned at DefaultSpawnPoint");
+            fader.FadeToScene("Main_Scene");
         }
         else
         {
-            Debug.LogError("DefaultSpawnPoint not found in current scene!");
-            // Position de secours en cas d'absence de DefaultSpawnPoint
-            transform.position = Vector3.zero;
+            SceneManager.LoadScene("Main_Scene");
         }
-
-        // Vérifier que rb existe
-        if (rb == null)
-        {
-            rb = GetComponent<Rigidbody2D>();
-        }
-        
-        if (rb != null)
-        {
-            rb.velocity = Vector2.zero;  // Ensure any residual velocity is cleared.
-            rb.simulated = true;  // Resume physics simulation
-        }
-
-        isDead = false;  // Set player as alive 
-        isAction = false;  // Allow movement again 
-
-        // Refill health 
-        if (healthBar != null) 
-        { 
-            healthBar.SetHealth(health); 
-        } 
-
-        // Make sure the player is not holding any previous directional input 
-        _goalPos = transform.position;  // Reset the goal position to the spawn point 
-        _currentState = PlayerState.IDLE;  // Make sure the player starts in the idle state 
-        
-        // Jouer l'animation en toute sécurité avec une coroutine
-        StartCoroutine(SafePlayAnimationAfterRespawn());
-
-        Debug.Log("Player has respawned with full health!"); 
     }
+    else
+    {
+        // Si déjà dans Main_Scene, téléporter directement au DefaultSpawnPoint
+        ForceRespawnInMainScene();
+    }
+}
+
+// Nouvelle méthode pour forcer le respawn dans la Main_Scene
+private void ForceRespawnInMainScene()
+{
+    // Trouver le DefaultSpawnPoint dans la scène actuelle
+    GameObject defaultSpawn = GameObject.Find("DefaultSpawnPoint");
+    if (defaultSpawn != null)
+    {
+        transform.position = defaultSpawn.transform.position;
+        Debug.Log("Player respawned at DefaultSpawnPoint in Main_Scene");
+    }
+    else
+    {
+        Debug.LogError("DefaultSpawnPoint not found in Main_Scene!");
+        transform.position = Vector3.zero;
+    }
+    
+    // Reset player state
+    health = 150;
+    if (rb != null)
+    {
+        rb.velocity = Vector2.zero;
+        rb.simulated = true;
+    }
+    
+    isDead = false;
+    isAction = false;
+    _goalPos = transform.position;
+    _currentState = PlayerState.IDLE;
+    
+    // Restore health display
+    if (healthBar != null)
+    {
+        healthBar.SetHealth(health);
+    }
+    
+    // Play idle animation
+    StartCoroutine(SafePlayAnimation());
+    
+    GameState.PlayerNeedsRespawn = false;
+}
+
+// Replaced Respawn() method with ForceRespawnInMainScene() method
 
     // Nouvelle coroutine pour jouer l'animation en toute sécurité après respawn
     private IEnumerator SafePlayAnimationAfterRespawn()
