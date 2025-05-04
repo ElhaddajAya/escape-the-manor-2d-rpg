@@ -96,7 +96,7 @@ Mais dès que vous franchissez la porte, vous comprenez que ce lieu est maudit. 
 
 ---
 
-##🎬 Game DEMO (Vidéo)
+## 🎬 Game DEMO (Vidéo)
 
 ⚠️ En raison de problèmes de connexion rencontrés ce matin, le fichier vidéo de démonstration n’a pas encore été entièrement téléversé.
 
