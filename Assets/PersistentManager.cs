@@ -16,11 +16,23 @@ public class PersistentManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            ResetGameState(); // Réinitialiser l'état au premier démarrage
         }
         else if (Instance != this)
         {
             Destroy(gameObject);
         }
+    }
+
+    // Nouvelle méthode pour réinitialiser complètement le jeu
+    public void ResetGameState()
+    {
+        collectedItems.Clear();
+        collectedItemTypes.Clear();
+        unlockedDoors.Clear();
+        usedKeys.Clear();
+        
+        Debug.Log("Game state has been completely reset");
     }
 
     public void AddItem(string itemName, ItemType itemType = ItemType.Key)

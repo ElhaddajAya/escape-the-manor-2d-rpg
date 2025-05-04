@@ -44,6 +44,32 @@ public class PlayerObj : MonoBehaviour
     [SerializeField] private float minPitchVariation = 0.9f; // Variation minimale du pitch
     [SerializeField] private float maxPitchVariation = 1f; // Variation maximale du pitch
     
+    public void ResetPlayer()
+    {
+        // Réinitialiser la santé
+        health = 150;
+        
+        // Mettre à jour la barre de vie
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(health);
+            healthBar.SetHealth(health);
+            healthBar.Hide(); // ou Show() selon vos besoins
+        }
+        
+        // Désactiver le bâton
+        if (batonObject != null)
+        {
+            batonObject.SetActive(false);
+        }
+
+        // Réinitialiser d'autres états si nécessaire
+        _isTransitioning = false;
+        GameState.IsFrozen = false;
+        GameState.PlayerNeedsRespawn = false;
+        isDead = false;
+    }
+
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
 {
     Debug.Log("Scène chargée : " + scene.name);
@@ -204,10 +230,12 @@ public class PlayerObj : MonoBehaviour
             Debug.LogError("Le clip audio des pas n'est pas assigné !");
         }
 
+        // Initialisation de la barre de vie
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(health);
-            healthBar.Hide(); // la cache au départ
+            healthBar.SetHealth(health); // Assure que la valeur actuelle est bien mise à jour
+            healthBar.Hide(); // ou Show() selon vos besoins
         }
 
         // Assurez-vous que l'AudioSource est configuré pour la lecture en boucle
@@ -609,4 +637,5 @@ private void ForceRespawnInMainScene()
             PlayStateAnimation(PlayerState.IDLE);
         }
     }
-    }
+    
+}
