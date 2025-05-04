@@ -1,4 +1,4 @@
-# Escape the Castle – 2D RPG d’Horreur en Pixel Art
+# Escape the Castle – 2D RPG d’Horreur en Pixel Art (Version Unity 2022.3.59f1)
 
 ![intro](https://github.com/user-attachments/assets/093e0ce3-5a1d-4212-84f7-487d68b89106)
 
@@ -90,8 +90,6 @@ Mais dès que vous franchissez la porte, vous comprenez que ce lieu est maudit. 
 ![Blood altar](https://github.com/user-attachments/assets/d85dd1aa-0234-49d7-83c8-c697cd008a13)
 ![WhatsApp Image 2025-05-04 at 03 46 08_faea372e](https://github.com/user-attachments/assets/83f87937-c20b-4aee-9cdf-a55726af86f2)
 ![WhatsApp Image 2025-05-04 at 03 46 14_c7e41597](https://github.com/user-attachments/assets/7a2b8ac4-578c-4759-a1f9-95c6a45414fe)
-
-
 ![outro_scene](https://github.com/user-attachments/assets/7ae78da1-df91-4a04-9a86-738bbdf9042b)
 
 ---
@@ -111,7 +109,7 @@ Merci pour votre patience !
 
 ## 📬 Contact
 
-* **Développeur :** 
+* **Équipe de développement :** 
 
   * Aya El Haddaj – [ElhaddajAya](https://github.com/ElhaddajAya)
   * Salma Akjij – [sally-ak](https://github.com/sally-ak)
