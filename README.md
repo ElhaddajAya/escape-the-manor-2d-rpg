@@ -35,8 +35,8 @@ Mais dès que vous franchissez la porte, vous comprenez que ce lieu est maudit. 
 | ↑ / ↓  | Monter / Descendre            |   |
 | Espace | Attaque (Bâton sacré)         |   |
 | E      | Interagir / Ramasser un objet |   |
-| I      | Ouvrir l’inventaire           |   |
 | 1-4    | Sélectionner un objet rapide  |   |
+| F      | Utiliser un objet sélectionné |   |
 
 ---
 
