@@ -163,13 +163,12 @@ public class PlayerObj : MonoBehaviour
         _isTransitioning = transitioning;
         if (transitioning)
         {
-            // Immediately stop all movement
             rb.velocity = Vector2.zero;
             _goalPos = transform.position;
             _currentState = PlayerState.IDLE;
-            isAction = true; // Prevent any new actions
+            isAction = true;
         }
-    }   
+    } 
     
     void Awake()
     {
@@ -340,13 +339,21 @@ public class PlayerObj : MonoBehaviour
         // Early exit if frozen or transitioning
         if (GameState.IsFrozen || _isTransitioning)
         {
+            // Stop movement
             rb.velocity = Vector2.zero;
             _goalPos = transform.position;
+            _currentState = PlayerState.IDLE;
+
+            // Stop footstep sound if playing
             if (isFootstepPlaying)
             {
                 audioSource.Stop();
                 isFootstepPlaying = false;
             }
+
+            // Force idle animation
+            PlayStateAnimation(PlayerState.IDLE);
+
             return;
         }
         

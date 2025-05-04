@@ -214,34 +214,23 @@ public class SceneTransition : MonoBehaviour
     private IEnumerator LoadScene()
 {
     isTransitioning = true;
-    
-    // Freeze the game and notify player object
     GameState.IsFrozen = true;
+
     PlayerObj player = FindObjectOfType<PlayerObj>();
     if (player != null)
     {
-        player.SetTransitioning(true); // Add this method to PlayerObj
+        player.SetTransitioning(true);
     }
-    
-    // Play transition animation
-    animator.SetTrigger("Start");
 
-    // Play door sound
+    animator.SetTrigger("Start");
     if (audioSource != null && doorSound != null)
-    {
         audioSource.PlayOneShot(doorSound);
-    }
-    
-    // Wait for animation
+
     yield return new WaitForSeconds(1.3f);
-    
-    // Load the new scene
+
     AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad);
-    
-    // No need to handle unfreezing here - PlayerObj will do it after positioning
     asyncLoad.completed += (op) => {
         isTransitioning = false;
-        // Don't unfreeze here - let PlayerObj handle it
     };
 }
 }
