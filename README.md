@@ -88,7 +88,6 @@ Mais dès que vous franchissez la porte, vous comprenez que ce lieu est maudit. 
 ![looks like you need akey](https://github.com/user-attachments/assets/0a932fbb-17d0-4861-b0de-f3a8390880dc)
 ![GUI note](https://github.com/user-attachments/assets/0cefd9d1-cc09-41e7-a39a-bcaeed41881b)
 ![Blood altar](https://github.com/user-attachments/assets/d85dd1aa-0234-49d7-83c8-c697cd008a13)
-![outro_scene](https://github.com/user-attachments/assets/7ae78da1-df91-4a04-9a86-738bbdf9042b)
 
 ---
 
