@@ -99,9 +99,7 @@ Mais dès que vous franchissez la porte, vous comprenez que ce lieu est maudit. 
 
 ---
 
-## 📬 Contact
-
-* **Équipe de développement :** 
+## 💻 Équipe de développement
 
   * Aya El Haddaj – [ElhaddajAya](https://github.com/ElhaddajAya)
   * Salma Akjij – [sally-ak](https://github.com/sally-ak)
