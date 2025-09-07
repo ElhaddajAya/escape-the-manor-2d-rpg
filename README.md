@@ -29,14 +29,14 @@ Mais dès que vous franchissez la porte, vous comprenez que ce lieu est maudit. 
 
 ## 🕹️ Contrôles
 
-| Touche | Action                        |   |
-| ------ | ----------------------------- | - |
-| ← / →  | Déplacement gauche / droite   |   |
-| ↑ / ↓  | Monter / Descendre            |   |
-| Espace | Attaque (Bâton sacré)         |   |
-| E      | Interagir / Ramasser un objet |   |
-| 1-4    | Sélectionner un objet rapide  |   |
-| F      | Utiliser un objet sélectionné |   |
+| Touche | Action                        |
+| ------ | ----------------------------- |
+| ← / →  | Déplacement gauche / droite   |
+| ↑ / ↓  | Monter / Descendre            |
+| Espace | Attaque (Bâton sacré)         |
+| E      | Interagir / Ramasser un objet |
+| 1-4    | Sélectionner un objet rapide  |
+| F      | Utiliser un objet sélectionné |
 
 ---
 
