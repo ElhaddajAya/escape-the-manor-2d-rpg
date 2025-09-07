@@ -103,9 +103,3 @@ Mais dès que vous franchissez la porte, vous comprenez que ce lieu est maudit. 
 
   * Aya El Haddaj – [ElhaddajAya](https://github.com/ElhaddajAya)
   * Salma Akjij – [sally-ak](https://github.com/sally-ak)
-
----
-
-
-*Escape the Castle* est un projet passionné visant à offrir une expérience immersive d’horreur en 2D. N'hésitez pas à explorer, contribuer et partager vos retours !
-
